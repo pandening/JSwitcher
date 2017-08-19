@@ -86,7 +86,7 @@ public class SwitchExecutorService {
      * error handler
      */
     static Thread.UncaughtExceptionHandler exceptionHandler =
-            (t, e) -> LOGGER.error("Uncaught Exception from asyncCommandExecutor. threadName:" +
+            (t, e) -> LOGGER.error("Uncaught Exception. threadName:" +
                     t.getName() + " error:" + e);
 
     /**
@@ -115,7 +115,6 @@ public class SwitchExecutorService {
         ThreadFactory threadFactory =
                 new ThreadFactory() {
                     private final AtomicInteger threadNumber = new AtomicInteger(1);
-
                     @Override
                     public Thread newThread(Runnable r) {
                         Thread t = new Thread(r, "SwitcherThread-I/O-"
@@ -155,7 +154,6 @@ public class SwitchExecutorService {
         ThreadFactory threadFactory =
                 new ThreadFactory() {
                     private final AtomicInteger threadNumber = new AtomicInteger(1);
-
                     @Override
                     public Thread newThread(Runnable r) {
                         Thread t = new Thread(r, "SwitcherThread-Compute-"
@@ -178,7 +176,6 @@ public class SwitchExecutorService {
         ThreadFactory threadFactory =
                 new ThreadFactory() {
                     private final AtomicInteger threadNumber = new AtomicInteger(1);
-
                     @Override
                     public Thread newThread(Runnable r) {
                         Thread t = new Thread(r, "SwitcherThread-"
