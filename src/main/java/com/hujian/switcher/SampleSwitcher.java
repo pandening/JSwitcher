@@ -1,4 +1,4 @@
-package com.hujian;
+package com.hujian.switcher;
 
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;

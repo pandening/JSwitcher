@@ -1,4 +1,4 @@
-package com.hujian;
+package com.hujian.switcher;
 
 /**
  * Created by hujian06 on 2017/8/18.
@@ -34,6 +34,15 @@ public class SwitchDemo {
 
         System.out.println("current executor Service name:" + executorName);
 
+        SwitcherFactory.createShareRichnessSwitcher()
+                .assignName("empty")
+                .switchToNewIoExecutor()
+                .switchToComputeExecutor(true)
+                .transToRichnessSwitcher()
+                .assignName("Assigned-Compute-Executor")
+                .switchBackToComputeExecutor(true)
+                .apply(stupidWorker, false)
+                .clear();
     }
 
     /**
