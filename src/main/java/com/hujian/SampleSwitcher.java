@@ -1,17 +1,17 @@
 package com.hujian;
 
+import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hujian06 on 2017/8/18.
  */
-public final class SampleSwitcher implements Switcher {
+public class SampleSwitcher implements Switcher {
     private static Logger LOGGER = Logger.getLogger(SampleSwitcher.class);
 
     private static final String IO_EXECUTOR_NAME = "io-executorService";
@@ -23,7 +23,7 @@ public final class SampleSwitcher implements Switcher {
 
     private static final String UPSUPPORTED_OPERATOR_ERROR = "unsupported operator now";
 
-    private static volatile BlockingDeque<SwitchExecutorServiceEntry> switchExecutorServicesQueue;
+    protected static volatile BlockingDeque<SwitchExecutorServiceEntry> switchExecutorServicesQueue;
 
     /**
      * the current executor Service
@@ -41,7 +41,7 @@ public final class SampleSwitcher implements Switcher {
      * switch.
      * @param activityExecutorService
      */
-    private static synchronized void
+    protected static synchronized void
         switchExecutorService(String activityExecutorType,
                           ExecutorService activityExecutorService) throws InterruptedException {
         if (activityExecutorService == null) {
@@ -58,7 +58,7 @@ public final class SampleSwitcher implements Switcher {
         currentExecutorService = new SwitchExecutorServiceEntry(activityExecutorType, activityExecutorService);
     }
 
-    private static ExecutorService createExecutorService(String executorType) throws InterruptedException {
+    protected static ExecutorService createExecutorService(String executorType) throws InterruptedException {
         ExecutorService executorService = SwitchExecutorService.createNewExecutorService(executorType);
         switchExecutorService(executorType, executorService);
         return executorService;
@@ -66,9 +66,14 @@ public final class SampleSwitcher implements Switcher {
 
     private static ExecutorService getOrCreateExecutorService(String executorType, Boolean isCreateMode)
             throws InterruptedException {
-
+        Preconditions.checkArgument(executorType != null && !executorType.isEmpty(),
+                "the executor type is null or empty");
         //debug
         //DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
+
+        if (currentExecutorService != null && currentExecutorService.getExecutorType().equals(executorType)) {
+            return currentExecutorService.getExecutorService();
+        }
 
         ExecutorService executorService = null;
         Iterator iterator = switchExecutorServicesQueue.iterator();
@@ -138,6 +143,11 @@ public final class SampleSwitcher implements Switcher {
         switchExecutorService(executorType, executorService);
 
         return executorService;
+    }
+
+    @Override
+    public SwitchExecutorServiceEntry getCurrentExecutorService() {
+        return currentExecutorService;
     }
 
     @Override
@@ -379,6 +389,11 @@ public final class SampleSwitcher implements Switcher {
     public Switcher switchBeforeWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws InterruptedException {
         throw new UnsupportedOperationException(UPSUPPORTED_OPERATOR_ERROR);
+    }
+
+    @Override
+    public RichnessSwitcher transToRichnessSwitcher() {
+        return (RichnessSwitcher) this;
     }
 
 }

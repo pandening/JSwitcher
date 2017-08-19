@@ -1,11 +1,15 @@
 package com.hujian;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by hujian06 on 2017/8/18.
  */
 public interface Switcher {
+
+    /**
+     * get current executorService
+     * @return
+     */
+    SwitchExecutorServiceEntry getCurrentExecutorService();
 
     /**
      * clear the executor queue
@@ -183,5 +187,11 @@ public interface Switcher {
      * @return
      */
     Switcher switchBeforeWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode) throws InterruptedException;
+
+    /**
+     * trans.
+     * @return
+     */
+    RichnessSwitcher transToRichnessSwitcher();
 
 }
