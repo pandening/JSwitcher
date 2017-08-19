@@ -1,7 +1,5 @@
 package com.hujian;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by hujian06 on 2017/8/18.
  */
