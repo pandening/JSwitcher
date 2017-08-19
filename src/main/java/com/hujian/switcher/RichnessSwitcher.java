@@ -1,4 +1,4 @@
-package com.hujian;
+package com.hujian.switcher;
 
 import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
@@ -16,8 +16,9 @@ public class RichnessSwitcher extends SampleSwitcher implements RichnessSwitcher
     public RichnessSwitcherIface assignName(String executorName) {
         Preconditions.checkArgument(executorName != null && !executorName.isEmpty(),
                 "empty executor Named at 'assign' action time.");
-        if (null == getCurrentExecutorService() || getCurrentExecutorService().isAssignedName()) {
-            LOGGER.warn("oops,the current executor had been assigned, or it is null.");
+        if (ExecutorType.EMPTY_EXECUTOR_SERVICE.getName().equals(getCurrentExecutorService().getExecutorType())
+                || getCurrentExecutorService().isAssignedName()) {
+            LOGGER.error("oops,the current executor had been assigned, or it is null.");
             return this;
         }
 

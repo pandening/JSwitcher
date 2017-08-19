@@ -1,4 +1,4 @@
-package com.hujian;
+package com.hujian.switcher;
 
 /**
  * Created by hujian06 on 2017/8/19.
