@@ -6,6 +6,7 @@ package com.hujian;
 public class SwitchDemo {
 
     private static SampleSwitcher sampleSwitcher = new SampleSwitcher();
+    private static RichnessSwitcher richnessSwitcher = new RichnessSwitcher();
     private static StupidWorker stupidWorker = new StupidWorker();
 
     public static void main(String ... args) throws InterruptedException, SwitchRunntimeException {
@@ -20,6 +21,18 @@ public class SwitchDemo {
                 .switchToNewSingleExecutor() // switch to an new single executor
                 .apply(stupidWorker, false) // do the stupidWorker on the single executorService
                 .clear();
+
+        String executorName = (String) richnessSwitcher
+                .switchToIoExecutor(true)
+                .transToRichnessSwitcher()
+                .assignName("hujian")
+                .apply(stupidWorker, false)
+                .switchToNewSingleExecutor()
+                .transToRichnessSwitcher()
+                .getSwitcherWithExtraData()
+                .getData();
+
+        System.out.println("current executor Service name:" + executorName);
 
     }
 
