@@ -21,6 +21,7 @@ import com.hujian.switcher.core.ExecutorType;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.SwitchRunntimeException;
 import com.hujian.switcher.core.Switcher;
+import com.hujian.switcher.utils.DebugHelper;
 import org.apache.log4j.Logger;
 
 import java.util.Iterator;
@@ -64,6 +65,11 @@ public class SampleSwitcher implements Switcher {
     protected static synchronized void
         switchExecutorService(String activityExecutorType,
                           ExecutorService activityExecutorService) throws InterruptedException {
+        if (activityExecutorType == null) {
+            LOGGER.error("null activityExecutorType");
+            return;
+        }
+
         if (activityExecutorService == null) {
             LOGGER.error("null activityExecutorService");
             return;
@@ -89,9 +95,9 @@ public class SampleSwitcher implements Switcher {
         Preconditions.checkArgument(executorType != null && !executorType.isEmpty(),
                 "the executor type is null or empty");
         //debug
-        //DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
+        DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
 
-        if (currentExecutorService != null && currentExecutorService.getExecutorType().equals(executorType)) {
+        if (currentExecutorService != null && executorType.equals(currentExecutorService.getExecutorType())) {
             return currentExecutorService.getExecutorService();
         }
 
@@ -232,6 +238,32 @@ public class SampleSwitcher implements Switcher {
                 currentExecutorService.getExecutorService().submit(job);
             }
         }
+        return this;
+    }
+
+    @Override
+    public Switcher switchToExecutor(ExecutorService executorService) throws InterruptedException {
+        return switchToExecutor(executorService, "");
+    }
+
+    @Override
+    public Switcher switchToExecutor(ExecutorService executorService, String name)
+            throws InterruptedException {
+        Preconditions.checkArgument(executorService != null,
+                "executorService is null");
+        Preconditions.checkArgument(name != null, "executor name is null");
+
+        String executorType = ExecutorType.CUSTOM_EXECUTOR_SERVICE.getName();
+
+        SwitchExecutorServiceEntry executorServiceEntry =
+                new SwitchExecutorServiceEntry(executorType, executorService, name);
+
+        //append to the queue
+        switchExecutorServicesQueue.putFirst(executorServiceEntry);
+
+        //switch executorService
+        switchExecutorService(executorType, executorService);
+
         return this;
     }
 

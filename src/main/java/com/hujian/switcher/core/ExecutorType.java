@@ -27,6 +27,7 @@ public enum ExecutorType {
     SINGLE_EXECUTOR_SERVICE(5, "single-executorService"),
     NEW_EXECUTOR_SERVICE(6, "new-executorService"),
     EMPTY_EXECUTOR_SERVICE(7, "empty-executorService"),
+    CUSTOM_EXECUTOR_SERVICE(8, "custom-executorService"),
     DEFAULT_RUN_EXECUTOR_SERVICE(8, "default-executorService");
 
     private int index;

@@ -19,6 +19,7 @@ package com.hujian.switcher;
 import com.google.common.base.Preconditions;
 import com.hujian.switcher.core.ExecutorType;
 import com.hujian.switcher.core.SwitchExecutorService;
+import com.hujian.switcher.core.SwitchRunntimeException;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -37,12 +38,18 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
         //set the executorService
         ExecutorService curExecutorService = getCurrentExecutorService().getExecutorService();
 
+        System.out.println("set a|sync executorService....");
+
         try {
             curExecutorService.submit(() -> {
                 //TODO just test if this executor is at "Rejected" status (had been shutdown)
             });
-            runner.setExecutorService(curExecutorService);
-            switchExecutorService(getCurrentExecutorService().getExecutorType(), curExecutorService);
+            try {
+                runner.setExecutorService(curExecutorService);
+                switchExecutorService(getCurrentExecutorService().getExecutorType(), curExecutorService);
+            } catch (SwitchRunntimeException e) {
+                e.printStackTrace();
+            }
         } catch (RejectedExecutionException e) {
             LOGGER.warn("E1:oops,the current executorService error:" + e);
             curExecutorService = SwitchExecutorService.defaultRunExecutorService;
@@ -55,9 +62,13 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
             } catch (RejectedExecutionException re) {
                 LOGGER.warn("E2:oops,the current executorService error:" + re);
                 curExecutorService = createExecutorService(NEW_EXECUTOR_SERVICE);
+                try {
+                    runner.setExecutorService(curExecutorService);
+                    switchExecutorService(ExecutorType.NEW_EXECUTOR_SERVICE.getName(), curExecutorService);
+                } catch (SwitchRunntimeException e1) {
+                    e1.printStackTrace();
+                }
             }
-
-            runner.setExecutorService(curExecutorService);
         }
     }
 
