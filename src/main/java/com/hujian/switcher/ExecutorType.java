@@ -10,7 +10,8 @@ public enum ExecutorType {
     MULTI_COMPUTE_EXECUTOR_SERVICE(4, "multi-compute-executorService"),
     SINGLE_EXECUTOR_SERVICE(5, "single-executorService"),
     NEW_EXECUTOR_SERVICE(6, "new-executorService"),
-    EMPTY_EXECUTOR_SERVICE(7, "empty-executorService");
+    EMPTY_EXECUTOR_SERVICE(7, "empty-executorService"),
+    DEFAULT_RUN_EXECUTOR_SERVICE(8, "default-executorService");
 
     private int index;
     private String name;

@@ -105,4 +105,9 @@ public class RichnessSwitcher extends SampleSwitcher implements RichnessSwitcher
         return this;
     }
 
+    @Override
+    public ResultfulSwitcher transToResultfulSwitcher() {
+        return (ResultfulSwitcher) this;
+    }
+
 }
