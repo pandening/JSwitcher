@@ -24,8 +24,8 @@ public class SwitchDemo {
                 // first of all switch to an compute executor,then do the stupidWorker on the new compute executorService
                 .switchBeforeIoWork(stupidWorker, true, false)
                 .switchToNewSingleExecutor() // switch to an new single executor
-                .apply(stupidWorker, false) // do the stupidWorker on the single executorService
-                .clear();
+                .apply(stupidWorker, false); // do the stupidWorker on the single executorService
+
 
         String executorName = (String) richnessSwitcher
                 .switchToIoExecutor(true)
@@ -46,9 +46,7 @@ public class SwitchDemo {
                 .transToRichnessSwitcher()
                 .assignName("Assigned-Compute-Executor")
                 .switchBackToComputeExecutor(true)
-                .apply(stupidWorker, false)
-                .clear();
-
+                .apply(stupidWorker, false);
 
         SwitcherResultfulEntry<String> stringSwitcherResultfulEntry
                 = SwitcherResultfulEntry.emptyEntry();
@@ -82,8 +80,9 @@ public class SwitchDemo {
                     protected Object fallback() {
                         return "i am fallback";
                     }
-                }, switcherResultfulEntry)
-                .clear();
+                }, switcherResultfulEntry);
+
+        SwitcherFactory.shutdown();
 
         System.out.println("sync:" +
                 stringSwitcherResultfulEntry.getResultfulData());

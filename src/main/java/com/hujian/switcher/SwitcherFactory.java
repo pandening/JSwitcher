@@ -42,4 +42,28 @@ public final class SwitcherFactory {
         return resultfulSwitcherIfac;
     }
 
+    public static void shutdownSwitcher() throws InterruptedException {
+        if (null != switcher) {
+            switcher.clear();
+        }
+    }
+
+    public static void shutdownRichnessSwitcher() throws InterruptedException {
+        if (null != richnessSwitcherIface) {
+            richnessSwitcherIface.clear();
+        }
+    }
+
+    public static void shutdownResultfulSwitcher() throws InterruptedException {
+        if (null != resultfulSwitcherIfac) {
+            resultfulSwitcherIfac.clear();
+        }
+    }
+
+    public static void shutdown() throws InterruptedException {
+        shutdownSwitcher();;
+        shutdownRichnessSwitcher();
+        shutdownResultfulSwitcher();
+    }
+
 }
