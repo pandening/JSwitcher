@@ -15,18 +15,116 @@
        在设计上，JSwitcher希望能不停的扩展，吸收一些优秀的技术以及思想，使得JSwitcher的能力更加完善。所以JSwitcher设计了核心“core”，这些内容不
     太可能随着时间而改变，除了“core”的内容都可以是“插件式”的内容，可插拔，但是是有顺序的，现存的一些内容之间是互相继承的关系（或者未来会变得没有关   系？），总之未来对JSwitcher的扩展是不会停歇的。
     
-```
-
-        
-  
-  
-```
+ ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure.png)   
+    
+     上面展示的就是JSwitcher中核心类图，ResufulSwitcher目前来说是集大成者，所以你可以使用它来完成你需要做的事情。
 
 
 
 ## JSwitcher可以用来做什么事情？
 
+        我非常喜欢漂亮的代码，看着就舒服，对于我来说，漂亮的代码就是风格统一，逻辑清晰。说白了就是看了就知道在做什么事情。毕竟很多时候我们写的代码是为
+     业务服务的，而不是各种难以理解的算法代码。再进一步，什么样的代码看起来就明白是做什么事情呢？对我来说就是“链式代码”，一环扣一环，从头读到尾就可以看
+     明白是什么功能的代码，这样维护起来也方便。而JSwitcher不仅仅可以随意切换线程（线程池？），而且还加入了可提交任务的功能，你可以继承下面的这个类来      实现你想要完成的业务代码：AbstractSwitcherRunner，在你完成“逻辑链条”代码的部署之后，你可以取回业务的返回值，你可以选择以同步或者异步的方式来
+     来完成你想要做的任务，JSwitcher有时候是“智能”的，比如在你让他以同步的方式来做一件事情的时候，它会先去使用当前的线程池来初始化，因为有可能当前的      线程池在别的地方被shutdown了，所以可能出现你提交的任务呗线程池拒绝的情况，JSwitcher会首先使用一个“空”的任务去尝试往当前线程池提交任务，如果发      现拒绝任务的情况，JSwitcher会使用一个默认的线程池来为你完成任务，如果这个默认的线程已经被你shutdown了，那JSwitcher会选择创建一个新的线程池来      运行你的任务，总之，JSwitcher会想尽办法为你运行任务，当然，这样JSwitcher的维护成本就会变大，后期会逐渐优化。
+     
+        所以如果你讨厌自己的代码中出现过长的“链条代码”的话，你可以止步于此了！！但是如果你还是希望看看JSwitcher是如何实现的话，可以进一步观察！！！
+     如果你希望你的代码可以从头至尾串起来，看起来更炫酷一些，你可以点进去看代码，并且给出你的建议。JSwitcher的起源是线程切换，所以更适合在需要多线程
+     参与的场景下，而且不是那么“核心”的功能模块可以“试探性”的进行部署。
+     
+        总之，你要是希望减少线程切换的琐事，而且希望写出来的代码和自己的思维一样可以串起来，那么JSwitcher就是适合你的！！
 
 
 
 ## 怎么在项目中使用JSwitcher？
+
+    使用ResultfulSwitcher可以满足你大部分的场景，使用JSwitcher，你想怎么做，可以最快速的实现在代码上，比如下面这个需求：
+    
+       我希望在一个新的IO线程里面读取一堆文件，然后将结果送到一个计算密集的线程来做一些处理，然后我希望在前面的那个IO线程中把结果写回磁盘，然后我
+       闲的蛋疼希望切换一次线程，到一个计算密集型线程，并且我希望给这个线程去一个响亮的名字，以便我后面可以很快速的找到它.......
+       
+       好吧，我不知道怎么编下去了，但是我可以肯定，再怎么“无理取闹”的要求，JSwitcher都可以轻松帮你搞定，你可以通过下面的代码来体验一下JSwitcher
+       带来的便利性：
+       
+       
+```java
+
+        sampleSwitcher
+                .switchToMultiIoExecutor(true) //switch to a multi-io-executor[first executorService]
+                .apply(stupidWorker, true) //do the stupidWorker on the multi-io-executor executorService
+                .switchToMultiComputeExecutor(true) //switch to a multi-compute-executor
+                .apply(stupidWorker, false) //do the stupidWorker on the multi-compute-executor
+                // first of all switch to an compute executor,then do the stupidWorker on the new compute executorService
+                .switchBeforeIoWork(stupidWorker, true, false)
+                .switchToNewSingleExecutor() // switch to an new single executor
+                .apply(stupidWorker, false); // do the stupidWorker on the single executorService
+
+
+        String executorName = (String) richnessSwitcher
+                .switchToIoExecutor(true)
+                .transToRichnessSwitcher()
+                .assignName("hujian")
+                .apply(stupidWorker, false)
+                .switchToNewSingleExecutor()
+                .transToRichnessSwitcher()
+                .getSwitcherWithExtraData()
+                .getData();
+
+        System.out.println("current executor Service name:" + executorName);
+
+        SwitcherFactory.createShareRichnessSwitcher()
+                .assignName("empty")
+                .switchToNewIoExecutor()
+                .switchToComputeExecutor(true)
+                .transToRichnessSwitcher()
+                .assignName("Assigned-Compute-Executor")
+                .switchBackToComputeExecutor(true)
+                .apply(stupidWorker, false);
+
+        SwitcherResultfulEntry<String> stringSwitcherResultfulEntry
+                = SwitcherResultfulEntry.emptyEntry();
+        SwitcherResultfulEntry<Integer> switcherResultfulEntry
+                = SwitcherResultfulEntry.emptyEntry();
+
+        SwitcherFactory.createResultfulSwitcher()
+                .switchToMultiComputeExecutor(true)
+                .transToRichnessSwitcher()
+                .transToResultfulSwitcher()
+                .asyncApply(new AbstractSwitcherRunner() {
+                    @Override
+                    protected Object run() {
+                        return "i am switcher:" + Thread.currentThread().getName();
+                    }
+                    @Override
+                    protected Object fallback() {
+                        return "i am fallback";
+                    }
+                }, stringSwitcherResultfulEntry)
+                .switchAfterIOWork(stupidWorker, true, false)
+                .transToRichnessSwitcher()
+                .transToResultfulSwitcher()
+                .asyncApply(new AbstractSwitcherRunner() {
+                    @Override
+                    protected Object run() {
+                        return "i am switcher:" + Thread.currentThread().getName();
+                    }
+
+                    @Override
+                    protected Object fallback() {
+                        return "i am fallback";
+                    }
+                }, switcherResultfulEntry);
+
+        SwitcherFactory.shutdown();
+
+        System.out.println("sync:" +
+                stringSwitcherResultfulEntry.getResultfulData());
+
+        System.out.println("async:" + switcherResultfulEntry.getResultfulData());
+
+
+```
+
+
+
+
