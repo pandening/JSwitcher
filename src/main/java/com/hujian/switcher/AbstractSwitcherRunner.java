@@ -17,7 +17,6 @@
 package com.hujian.switcher;
 
 import com.google.common.base.Preconditions;
-import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.SwitchRunntimeException;
 import org.apache.log4j.Logger;
 
@@ -62,7 +61,7 @@ public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
     @Override
     public T execute() throws Exception {
         try {
-            return doRun();
+            return queue().get();
         } catch (Exception e) {
             LOGGER.error("execute error:" + e);
             return doFallback(e);
@@ -108,7 +107,7 @@ public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
     public void setExecutorService(ExecutorService executorService) throws SwitchRunntimeException {
         this._executorService = executorService;
         if (_executorService == null) { //set the default executorService
-            LOGGER.error("null executorService,set as default");
+            LOGGER.error("null executorService,no ExecutorService to run job.");
             throw new SwitchRunntimeException("Switcher RunningTime Error.");
         }
     }

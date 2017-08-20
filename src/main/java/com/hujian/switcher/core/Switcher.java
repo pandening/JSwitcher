@@ -19,6 +19,8 @@ package com.hujian.switcher.core;
 import com.hujian.switcher.RichnessSwitcher;
 import com.hujian.switcher.SwitchExecutorServiceEntry;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * Created by hujian06 on 2017/8/18.
  */
@@ -52,6 +54,22 @@ public interface Switcher {
      * @param isCreateMode
      */
     Switcher apply(Runnable job, Boolean isCreateMode) throws SwitchRunntimeException, InterruptedException;
+
+    /**
+     * you want to set your own executorService
+     * @param executorService
+     * @return
+     */
+    Switcher switchToExecutor(ExecutorService executorService) throws InterruptedException;
+
+    /**
+     * you want to set your own executorService
+     * @param executorService
+     * @param name
+     * @return
+     * @throws InterruptedException
+     */
+    Switcher switchToExecutor(ExecutorService executorService, String name) throws InterruptedException;
 
     /**
      * you want to switch the thread to a "io" executorService

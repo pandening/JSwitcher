@@ -34,7 +34,8 @@ public final class DebugHelper {
         if (deque == null || deque.isEmpty()) {
             System.out.println("trackExecutorQueue:null or empty deque");
         } else {
-            System.out.println("expectExecutorType:" + expectExecutorType);
+            System.out.println("expectExecutorType:" + expectExecutorType + " Current ExecutorService " +
+                    "size:" + deque.size());
             Iterator iterator = deque.iterator();
             while (iterator.hasNext()) {
                 SwitchExecutorServiceEntry switchExecutorServiceEntry = (SwitchExecutorServiceEntry) iterator.next();
