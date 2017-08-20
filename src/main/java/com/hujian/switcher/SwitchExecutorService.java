@@ -5,7 +5,10 @@ import org.apache.log4j.Logger;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -26,6 +29,7 @@ public class SwitchExecutorService {
     private static final String MULTI_COMPUTE_EXECUTOR_SERVICE = "multi-compute-executorService";
     private static final String SINGLE_EXECUTOR_SERVICE = "single-executorService";
     private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
+    private static final String DEFAULT_RUN_EXECUTOR_SERVICE = "default-run-executor-service";
 
     static ExecutorService ioExecutorService;
     static ExecutorService multiIoExecutorService;
@@ -33,6 +37,7 @@ public class SwitchExecutorService {
     static ExecutorService multiComputeExecutorService;
     static ExecutorService newExecutorService;
     static ExecutorService singleExecutorService;
+    static ExecutorService defaultRunExecutorService;
 
     /**
      * you want to force to get an new executor.
@@ -77,6 +82,7 @@ public class SwitchExecutorService {
         initSingleExecutorService();
         initMultiIoExecutorService();
         initMultiComputeExecutorService();
+        initDefaultRunExecutorService();
 
         LOGGER.info("init executorServices done:" + CPU_CORE_SIZE + "/" +
                 MULTI_IO_THREAD_SIZE + "/" + MULTI_COMPUTE_THREAD_SIZE);
@@ -214,6 +220,17 @@ public class SwitchExecutorService {
     private static void initMultiComputeExecutorService() {
         multiComputeExecutorService =
                 Executors.newFixedThreadPool(MULTI_COMPUTE_THREAD_SIZE, getMultiComputeThreadFactory());
+    }
+
+    private static void initDefaultRunExecutorService() {
+        defaultRunExecutorService =
+                new ThreadPoolExecutor(
+                        50,
+                        500,
+                        300,
+                        TimeUnit.SECONDS,
+                        new SynchronousQueue<>()
+                );
     }
 
 }

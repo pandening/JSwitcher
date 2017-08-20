@@ -7,6 +7,7 @@ public final class SwitcherFactory {
 
     private static Switcher switcher;
     private static RichnessSwitcherIface richnessSwitcherIface;
+    private static ResultfulSwitcherIfac resultfulSwitcherIfac;
 
     public static Switcher createShareSwitcher() {
         if(switcher == null) {
@@ -28,6 +29,17 @@ public final class SwitcherFactory {
             }
         }
         return richnessSwitcherIface;
+    }
+
+    public static ResultfulSwitcherIfac createResultfulSwitcher() {
+        if(resultfulSwitcherIfac == null) {
+            synchronized (SwitcherFactory.class) {
+                if (resultfulSwitcherIfac == null) {
+                    resultfulSwitcherIfac = new ResultfulSwitcher();
+                }
+            }
+        }
+        return resultfulSwitcherIfac;
     }
 
 }

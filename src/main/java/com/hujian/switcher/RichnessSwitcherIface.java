@@ -40,6 +40,11 @@ public interface RichnessSwitcherIface extends Switcher {
      */
     RichnessSwitcherIface apply(Runnable job, String executorName, Boolean isCreateMode, String createExecutorType) throws InterruptedException, SwitchRunntimeException;
 
+    /**
+     * trans to resultful switcher
+     * @return
+     */
+    ResultfulSwitcher transToResultfulSwitcher();
 
      class SwitcherWithExtraData<T> {
         private T data;

@@ -1,5 +1,7 @@
 package com.hujian.switcher;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by hujian06 on 2017/8/18.
  */
@@ -9,7 +11,10 @@ public class SwitchDemo {
     private static RichnessSwitcher richnessSwitcher = new RichnessSwitcher();
     private static StupidWorker stupidWorker = new StupidWorker();
 
-    public static void main(String ... args) throws InterruptedException, SwitchRunntimeException {
+    @SuppressWarnings(value = "unchecked")
+    public static void main(String ... args)
+            throws InterruptedException, SwitchRunntimeException, ExecutionException {
+
 
         sampleSwitcher
                 .switchToMultiIoExecutor(true) //switch to a multi-io-executor[first executorService]
@@ -43,6 +48,48 @@ public class SwitchDemo {
                 .switchBackToComputeExecutor(true)
                 .apply(stupidWorker, false)
                 .clear();
+
+
+        SwitcherResultfulEntry<String> stringSwitcherResultfulEntry
+                = SwitcherResultfulEntry.emptyEntry();
+        SwitcherResultfulEntry<Integer> switcherResultfulEntry
+                = SwitcherResultfulEntry.emptyEntry();
+
+        SwitcherFactory.createResultfulSwitcher()
+                .switchToMultiComputeExecutor(true)
+                .transToRichnessSwitcher()
+                .transToResultfulSwitcher()
+                .asyncApply(new AbstractSwitcherRunner() {
+                    @Override
+                    protected Object run() {
+                        return "i am switcher:" + Thread.currentThread().getName();
+                    }
+                    @Override
+                    protected Object fallback() {
+                        return "i am fallback";
+                    }
+                }, stringSwitcherResultfulEntry)
+                .switchAfterIOWork(stupidWorker, true, false)
+                .transToRichnessSwitcher()
+                .transToResultfulSwitcher()
+                .asyncApply(new AbstractSwitcherRunner() {
+                    @Override
+                    protected Object run() {
+                        return "i am switcher:" + Thread.currentThread().getName();
+                    }
+
+                    @Override
+                    protected Object fallback() {
+                        return "i am fallback";
+                    }
+                }, switcherResultfulEntry)
+                .clear();
+
+        System.out.println("sync:" +
+                stringSwitcherResultfulEntry.getResultfulData());
+
+        System.out.println("async:" + switcherResultfulEntry.getResultfulData());
+
     }
 
     /**
