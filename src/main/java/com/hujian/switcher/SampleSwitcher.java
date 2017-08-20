@@ -95,7 +95,7 @@ public class SampleSwitcher implements Switcher {
         Preconditions.checkArgument(executorType != null && !executorType.isEmpty(),
                 "the executor type is null or empty");
         //debug
-        DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
+        //DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
 
         if (currentExecutorService != null && executorType.equals(currentExecutorService.getExecutorType())) {
             return currentExecutorService.getExecutorService();
