@@ -45,15 +45,14 @@ public class SwitchExecutorService {
     private static final String MULTI_COMPUTE_EXECUTOR_SERVICE = "multi-compute-executorService";
     private static final String SINGLE_EXECUTOR_SERVICE = "single-executorService";
     private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
-    private static final String DEFAULT_RUN_EXECUTOR_SERVICE = "default-run-executor-service";
 
-    static ExecutorService ioExecutorService;
-    static ExecutorService multiIoExecutorService;
-    static ExecutorService computeExecutorService;
-    static ExecutorService multiComputeExecutorService;
-    static ExecutorService newExecutorService;
-    static ExecutorService singleExecutorService;
-    static ExecutorService defaultRunExecutorService;
+    public static ExecutorService ioExecutorService;
+    public static ExecutorService multiIoExecutorService;
+    public static ExecutorService computeExecutorService;
+    public static ExecutorService multiComputeExecutorService;
+    public static ExecutorService newExecutorService;
+    public static ExecutorService singleExecutorService;
+    public static ExecutorService defaultRunExecutorService;
 
     /**
      * you want to force to get an new executor.
