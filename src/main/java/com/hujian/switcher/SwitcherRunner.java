@@ -16,6 +16,8 @@
 
 package com.hujian.switcher;
 
+import com.hujian.switcher.core.SwitchRunntimeException;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
@@ -41,6 +43,6 @@ public interface SwitcherRunner<T> {
      * also,you can not call this function,the switcher will call this function auto-ly.
      * @param executorService
      */
-    void setExecutorService(ExecutorService executorService);
+    void setExecutorService(ExecutorService executorService) throws SwitchRunntimeException;
 
 }

@@ -21,6 +21,7 @@ import com.hujian.switcher.ResultfulSwitcherIfac;
 import com.hujian.switcher.RichnessSwitcher;
 import com.hujian.switcher.RichnessSwitcherIface;
 import com.hujian.switcher.SampleSwitcher;
+import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.Switcher;
 
 /**
@@ -87,6 +88,9 @@ public final class SwitcherFactory {
         shutdownSwitcher();;
         shutdownRichnessSwitcher();
         shutdownResultfulSwitcher();
+
+        //do not forget the default-executorService
+        SwitchExecutorService.defaultRunExecutorService.shutdownNow();
     }
 
 }
