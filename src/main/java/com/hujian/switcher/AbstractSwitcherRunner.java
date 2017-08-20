@@ -105,11 +105,11 @@ public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
      * @return
      */
     @Override
-    public void setExecutorService(ExecutorService executorService) {
+    public void setExecutorService(ExecutorService executorService) throws SwitchRunntimeException {
         this._executorService = executorService;
         if (_executorService == null) { //set the default executorService
-            LOGGER.warn("null executorService,set as default");
-            this._executorService = SwitchExecutorService.defaultRunExecutorService;
+            LOGGER.error("null executorService,set as default");
+            throw new SwitchRunntimeException("Switcher RunningTime Error.");
         }
     }
 }

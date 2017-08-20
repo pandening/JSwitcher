@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="" />
+    <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherRunner.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherRunner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,18 +22,28 @@
       <file leaf-file-name="SampleSwitcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="149" column="42" lean-forward="true" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
+            <state relative-caret-position="270">
+              <caret line="82" column="29" lean-forward="false" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResultfulSwitcher.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResultfulSwitcher.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="48" column="9" lean-forward="true" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
+            <state relative-caret-position="344">
+              <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SwitcherFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="499">
+              <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -47,8 +62,8 @@
       <file leaf-file-name="SwitcherResultfulEntry.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherResultfulEntry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="667">
-              <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            <state relative-caret-position="-164">
+              <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -57,8 +72,8 @@
       <file leaf-file-name="SwitcherRunner.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherRunner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="943">
-              <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+            <state relative-caret-position="293">
+              <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -67,8 +82,8 @@
       <file leaf-file-name="SwitchExecutorService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchExecutorService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1219">
-              <caret line="57" column="46" lean-forward="false" selection-start-line="57" selection-start-column="46" selection-end-line="57" selection-end-column="46" />
+            <state relative-caret-position="78">
+              <caret line="51" column="62" lean-forward="true" selection-start-line="51" selection-start-column="62" selection-end-line="51" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -77,8 +92,8 @@
       <file leaf-file-name="AbstractSwitcherRunner.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="112" column="9" lean-forward="false" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
+            <state relative-caret-position="1403">
+              <caret line="106" column="13" lean-forward="true" selection-start-line="106" selection-start-column="13" selection-end-line="106" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -94,11 +109,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwitchRunntimeException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchRunntimeException.java">
+      <file leaf-file-name="SwitchDemo.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="20" column="3" lean-forward="false" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+            <state relative-caret-position="328">
+              <caret line="114" column="5" lean-forward="true" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -156,10 +171,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/RichnessSwitcherIface.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/SwitcherFactory.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/DebugHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ExecutorType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcherIfac.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/RichnessSwitcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/RichnessSwitcherIface.java" />
@@ -176,6 +189,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherStatisticer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherStatisticerEntry.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchExecutorService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" />
       </list>
     </option>
   </component>
@@ -835,12 +851,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1503043980890</updated>
-      <workItem from="1503043982318" duration="45594000" />
+      <workItem from="1503043982318" duration="47548000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45594000" />
+    <option name="totallyTimeSpent" value="47548000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="0" />
@@ -993,22 +1009,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchRunntimeException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="460">
@@ -1025,22 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherResultfulEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="667">
-          <caret line="29" column="22" lean-forward="false" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherStatisticerEntry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
@@ -1053,30 +1037,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="112" column="9" lean-forward="false" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="149" column="42" lean-forward="true" selection-start-line="149" selection-start-column="42" selection-end-line="149" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchExecutorService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1219">
-          <caret line="57" column="46" lean-forward="false" selection-start-line="57" selection-start-column="46" selection-end-line="57" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1112,10 +1072,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="82" column="29" lean-forward="false" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="48" column="9" lean-forward="true" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
+        <state relative-caret-position="344">
+          <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1403">
+          <caret line="106" column="13" lean-forward="true" selection-start-line="106" selection-start-column="13" selection-end-line="106" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchExecutorService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="51" column="62" lean-forward="true" selection-start-line="51" selection-start-column="62" selection-end-line="51" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherRunner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="38" column="33" lean-forward="true" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/SwitcherResultfulEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-164">
+          <caret line="16" column="28" lean-forward="true" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/utils/SwitcherFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="499">
+          <caret line="90" column="0" lean-forward="true" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="114" column="5" lean-forward="true" selection-start-line="114" selection-start-column="5" selection-end-line="114" selection-end-column="5" />
           <folding />
         </state>
       </provider>

@@ -31,6 +31,8 @@ import java.util.concurrent.RejectedExecutionException;
 public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulSwitcherIfac {
     private static final Logger LOGGER = Logger.getLogger(ResultfulSwitcher.class);
 
+    private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
+
     private void setExecutorService(SwitcherRunner runner) throws InterruptedException {
         //set the executorService
         ExecutorService curExecutorService = getCurrentExecutorService().getExecutorService();
@@ -40,12 +42,22 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
                 //TODO just test if this executor is at "Rejected" status (had been shutdown)
             });
             runner.setExecutorService(curExecutorService);
+            switchExecutorService(getCurrentExecutorService().getExecutorType(), curExecutorService);
         } catch (RejectedExecutionException e) {
-            LOGGER.warn("oops,the current executorService error:" + e);
-            runner.setExecutorService(null);
+            LOGGER.warn("E1:oops,the current executorService error:" + e);
             curExecutorService = SwitchExecutorService.defaultRunExecutorService;
-            //switch the executor
-            switchExecutorService(ExecutorType.DEFAULT_RUN_EXECUTOR_SERVICE.getName(), curExecutorService);
+            try {
+                curExecutorService.submit(() -> {
+                    //TODO just test if this executor is at "Rejected" status (had been shutdown)
+                });
+
+                switchExecutorService(ExecutorType.DEFAULT_RUN_EXECUTOR_SERVICE.getName(), curExecutorService);
+            } catch (RejectedExecutionException re) {
+                LOGGER.warn("E2:oops,the current executorService error:" + re);
+                curExecutorService = createExecutorService(NEW_EXECUTOR_SERVICE);
+            }
+
+            runner.setExecutorService(curExecutorService);
         }
     }
 
