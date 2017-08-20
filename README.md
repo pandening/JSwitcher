@@ -45,6 +45,33 @@
        
        
 ```java
+
+    private static ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private static StupidRunner stupidRunner = new StupidRunner();
+    private static StupidWorker stupidWorker = new StupidWorker();
+    private static SwitcherResultfulEntry<String> asyncResultfulEntry = SwitcherResultfulEntry.emptyEntry();
+    private static SwitcherResultfulEntry<String> syncResultfulEntry = SwitcherResultfulEntry.emptyEntry();
+
+    private static class StupidWorker implements Runnable {
+        @Override
+        public void run() {
+            System.out.println("i am in:" + Thread.currentThread().getName());
+        }
+    }
+
+    private static class StupidRunner extends AbstractSwitcherRunner<String> {
+
+        @Override
+        protected String run() {
+            return "funny + [" + Thread.currentThread().getName() + "]";
+        }
+
+        @Override
+        protected String fallback() {
+            return "fallback + [" + Thread.currentThread().getName() + "]";
+        }
+    }
+    
  SwitcherFactory.createResultfulSwitcher()
                     .switchToExecutor(executorService, "Funy-Executor")
                     .apply(stupidWorker, false)
