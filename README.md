@@ -17,6 +17,22 @@
  ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure.png)   
     
      上面展示的就是JSwitcher中核心类图，ResufulSwitcher目前来说是集大成者，所以你可以使用它来完成你需要做的事情。
+     
+     JSwitcher 还支持线程类别适配，你可以为你的工作切换到合适类别的线程，比如I/O密集型、计算密集型，下面展示了你可以切换到的线程类别：
+     
+```java
+
+    IO_EXECUTOR_SERVICE(1, "io-executorService"),
+    MULTI_IO_EXECUTOR_SERVICE(2, "multi-io-executorService"),
+    COMPUTE_EXECUTOR_SERVICE(3, "compute-executorService"),
+    MULTI_COMPUTE_EXECUTOR_SERVICE(4, "multi-compute-executorService"),
+    SINGLE_EXECUTOR_SERVICE(5, "single-executorService"),
+    NEW_EXECUTOR_SERVICE(6, "new-executorService"),
+    EMPTY_EXECUTOR_SERVICE(7, "empty-executorService"),
+    CUSTOM_EXECUTOR_SERVICE(8, "custom-executorService"),
+    DEFAULT_RUN_EXECUTOR_SERVICE(8, "default-executorService");
+
+```
 
 
 
