@@ -69,7 +69,7 @@ public class SwitchExecutorService {
                 executorService = Executors.newSingleThreadExecutor(getIoThreadFactory());
                 break;
             case MULTI_IO_EXECUTOR_SERVICE:
-                executorService = Executors.newFixedThreadPool(MULTI_IO_THREAD_SIZE, getIoThreadFactory());
+                executorService = Executors.newFixedThreadPool(MULTI_IO_THREAD_SIZE, getMultiIoThreadFactory());
                 break;
             case COMPUTE_EXECUTOR_SERVICE:
                 executorService = Executors.newSingleThreadExecutor(getComputeThreadFactory());
