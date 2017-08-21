@@ -44,6 +44,8 @@ public class SampleSwitcher implements Switcher {
 
     private static final String UPSUPPORTED_OPERATOR_ERROR = "unsupported operator now";
 
+    private Boolean isMainThread = false; // set the main thread
+
     protected static volatile BlockingDeque<SwitchExecutorServiceEntry> switchExecutorServicesQueue;
 
     /**
@@ -220,6 +222,10 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher apply(Runnable job, Boolean isCreateMode) throws SwitchRunntimeException, InterruptedException {
         synchronized (SampleSwitcher.class) {
+            if (isMainThread) { // run the job on the main thread
+                job.run();
+                return this;
+            }
             if (ExecutorType.EMPTY_EXECUTOR_SERVICE.getName().equals(currentExecutorService.getExecutorType())) {
                 if (isCreateMode) {
                     LOGGER.info("No Executor To Run Job: " + job + " , try to get an new Executor..");
@@ -242,13 +248,21 @@ public class SampleSwitcher implements Switcher {
     }
 
     @Override
+    public Switcher switchToMain() {
+        isMainThread = true;
+        return this;
+    }
+
+    @Override
     public Switcher switchToExecutor(ExecutorService executorService) throws InterruptedException {
+        isMainThread = false;
         return switchToExecutor(executorService, "");
     }
 
     @Override
     public Switcher switchToExecutor(ExecutorService executorService, String name)
             throws InterruptedException {
+        isMainThread = false;
         Preconditions.checkArgument(executorService != null,
                 "executorService is null");
         Preconditions.checkArgument(name != null, "executor name is null");
@@ -269,90 +283,105 @@ public class SampleSwitcher implements Switcher {
 
     @Override
     public Switcher switchToIoExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(IO_EXECUTOR_NAME, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchToMultiIoExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(MULTI_IO_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchToNewIoExecutor() throws InterruptedException {
+        isMainThread = false;
         createExecutorService(IO_EXECUTOR_NAME);
         return this;
     }
 
     @Override
     public Switcher switchToNewMultiIoExecutor() throws InterruptedException {
+        isMainThread = false;
         createExecutorService(MULTI_IO_EXECUTOR_SERVICE);
         return this;
     }
 
     @Override
     public Switcher switchToComputeExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(COMPUTE_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchToMultiComputeExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(MULTI_COMPUTE_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchToNewComputeExecutor() throws InterruptedException {
+        isMainThread = false;
         createExecutorService(COMPUTE_EXECUTOR_SERVICE);
         return this;
     }
 
     @Override
     public Switcher switchToNewMultiComputeExecutor() throws InterruptedException {
+        isMainThread = false;
         createExecutorService(MULTI_COMPUTE_EXECUTOR_SERVICE);
         return this;
     }
 
     @Override
     public Switcher switchToSingleExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(SINGLE_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchToNewSingleExecutor() throws InterruptedException {
+        isMainThread = false;
         createExecutorService(SINGLE_EXECUTOR_SERVICE);
         return this;
     }
 
     @Override
     public Switcher switchToNewExecutor() throws InterruptedException {
+        isMainThread = false;
         getOrCreateExecutorService(NEW_EXECUTOR_SERVICE, true);
         return this;
     }
 
     @Override
     public Switcher switchBackToIoExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getBackExecutorService(IO_EXECUTOR_NAME, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchBackToMultiIoExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getBackExecutorService(MULTI_IO_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchBackToComputeExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getBackExecutorService(COMPUTE_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
 
     @Override
     public Switcher switchBackToMultiComputeExecutor(Boolean isCreateMode) throws InterruptedException {
+        isMainThread = false;
         getBackExecutorService(MULTI_COMPUTE_EXECUTOR_SERVICE, isCreateMode);
         return this;
     }
@@ -385,6 +414,7 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher switchAfterIOWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws SwitchRunntimeException, InterruptedException {
+        isMainThread = false;
         doWorkInExecutorService(job, isCreateMode, IO_EXECUTOR_NAME);
         return switchToIoExecutor(isCreateMode);
     }
@@ -392,6 +422,7 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher switchAfterComputeWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws SwitchRunntimeException, InterruptedException {
+        isMainThread = false;
         doWorkInExecutorService(job, isCreateMode, COMPUTE_EXECUTOR_SERVICE);
         return switchToComputeExecutor(isCreateMode);
     }
@@ -399,6 +430,7 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher switchAfterWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws SwitchRunntimeException, InterruptedException {
+        isMainThread = false;
         doWorkInExecutorService(job, isCreateMode, SINGLE_EXECUTOR_SERVICE);
         return switchToSingleExecutor(isCreateMode);
     }
@@ -406,6 +438,7 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher switchBeforeIoWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws InterruptedException {
+        isMainThread = false;
         ExecutorService executorService;
         if (isMultiMode) {
             executorService = getOrCreateExecutorService(MULTI_IO_EXECUTOR_SERVICE, isCreateMode);
@@ -423,6 +456,7 @@ public class SampleSwitcher implements Switcher {
     @Override
     public Switcher switchBeforeComputeWork(Runnable job, Boolean isMultiMode, Boolean isCreateMode)
             throws InterruptedException {
+        isMainThread = false;
         ExecutorService executorService;
         if (!isMultiMode) {
             executorService = getOrCreateExecutorService(COMPUTE_EXECUTOR_SERVICE, isCreateMode);
@@ -445,6 +479,7 @@ public class SampleSwitcher implements Switcher {
 
     @Override
     public RichnessSwitcher transToRichnessSwitcher() {
+        isMainThread = false;
         return (RichnessSwitcher) this;
     }
 

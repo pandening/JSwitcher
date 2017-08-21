@@ -56,6 +56,12 @@ public interface Switcher {
     Switcher apply(Runnable job, Boolean isCreateMode) throws SwitchRunntimeException, InterruptedException;
 
     /**
+     * you can switch to main thread and run the job on the main thread
+     * @return
+     */
+    Switcher switchToMain();
+
+    /**
      * you want to set your own executorService
      * @param executorService
      * @return

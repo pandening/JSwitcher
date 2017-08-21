@@ -28,7 +28,8 @@ public enum ExecutorType {
     NEW_EXECUTOR_SERVICE(6, "new-executorService"),
     EMPTY_EXECUTOR_SERVICE(7, "empty-executorService"),
     CUSTOM_EXECUTOR_SERVICE(8, "custom-executorService"),
-    DEFAULT_RUN_EXECUTOR_SERVICE(8, "default-executorService");
+    DEFAULT_RUN_EXECUTOR_SERVICE(8, "default-executorService"),
+    MAIN_THREAD(9, "main-thread");
 
     private int index;
     private String name;

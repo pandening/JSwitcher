@@ -53,6 +53,7 @@ public class SwitchExecutorService {
     public static ExecutorService newExecutorService;
     public static ExecutorService singleExecutorService;
     public static ExecutorService defaultRunExecutorService;
+    public static ExecutorService mainExecutorService; // fake
 
     /**
      * you want to force to get an new executor.
@@ -74,7 +75,7 @@ public class SwitchExecutorService {
                 executorService = Executors.newSingleThreadExecutor(getComputeThreadFactory());
                 break;
             case MULTI_COMPUTE_EXECUTOR_SERVICE:
-                executorService = Executors.newFixedThreadPool(MULTI_COMPUTE_THREAD_SIZE, getComputeThreadFactory());
+                executorService = Executors.newFixedThreadPool(MULTI_COMPUTE_THREAD_SIZE, getMultiComputeThreadFactory());
                 break;
             case SINGLE_EXECUTOR_SERVICE:
                 executorService = Executors.newSingleThreadExecutor(getThreadFactory());
@@ -98,6 +99,7 @@ public class SwitchExecutorService {
         initMultiIoExecutorService();
         initMultiComputeExecutorService();
         initDefaultRunExecutorService();
+        initMainExecutorService();
 
         LOGGER.info("init executorServices done:" + CPU_CORE_SIZE + "/" +
                 MULTI_IO_THREAD_SIZE + "/" + MULTI_COMPUTE_THREAD_SIZE);
@@ -235,6 +237,10 @@ public class SwitchExecutorService {
     private static void initMultiComputeExecutorService() {
         multiComputeExecutorService =
                 Executors.newFixedThreadPool(MULTI_COMPUTE_THREAD_SIZE, getMultiComputeThreadFactory());
+    }
+
+    private static void initMainExecutorService() {
+        mainExecutorService = null;
     }
 
     private static void initDefaultRunExecutorService() {
