@@ -18,6 +18,7 @@ package com.hujian.switcher.annotation;
 
 import com.google.common.base.Strings;
 import com.hujian.switcher.ResultfulSwitcherIfac;
+import com.hujian.switcher.core.SwitchRunntimeException;
 import com.hujian.switcher.utils.SwitcherFactory;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
@@ -51,17 +52,21 @@ public class SwitcherAnnotationResolver {
 
     private Reflections reflections = null;
 
+    private String switchToExecutorServiceType = null;
+    private String switchToExecutorServiceName = null;
+    private String CreateType = null;
+
     private ConcurrentMap<Runnable, ExecutorService> runnableExecutorServiceConcurrentMap = null;
 
     public SwitcherAnnotationResolver() {
 
     }
 
-    public SwitcherAnnotationResolver(String scanPath) {
+    private SwitcherAnnotationResolver(String scanPath) {
         _scanPath = scanPath;
     }
 
-    public SwitcherAnnotationResolver(String scanPath, Reflections reflections) {
+    private SwitcherAnnotationResolver(String scanPath, Reflections reflections) {
         this._scanPath = scanPath;
         this.reflections = reflections;
     }
@@ -101,11 +106,11 @@ public class SwitcherAnnotationResolver {
             //get the runnable
             Runnable runnable = (Runnable) constructor.newInstance();
 
-            String switchToExecutorServiceType = switcher.switchToExecutorServiceType();
-            String switchToExecutorServiceName = switcher.switchToExecutorServiceName();
-            String CreateType = switcher.CreateType();
+            switchToExecutorServiceType = switcher.switchToExecutorServiceType();
+            switchToExecutorServiceName = switcher.switchToExecutorServiceName();
+            CreateType = switcher.CreateType();
 
-            ExecutorService executorService = null;
+            ExecutorService executorService;
 
             ResultfulSwitcherIfac resultfulSwitcherIfac =
                     SwitcherFactory.getCurResultfulSwitcherIfac();
@@ -185,7 +190,7 @@ public class SwitcherAnnotationResolver {
     }
 
     public void execute() throws InvocationTargetException, NoSuchMethodException,
-            InstantiationException, InterruptedException, IllegalAccessException {
+            InstantiationException, InterruptedException, IllegalAccessException, SwitchRunntimeException {
         initEnv();
         scanPackage();
 
