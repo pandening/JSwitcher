@@ -38,6 +38,12 @@ public interface Switcher {
     void clear() throws InterruptedException;
 
     /**
+     * get current switcher
+     * @return
+     */
+    Switcher getCurrentSwitcher();
+
+    /**
      * shutdown
      */
     Switcher shutdown();

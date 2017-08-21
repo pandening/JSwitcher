@@ -78,7 +78,7 @@ public class SampleSwitcher implements Switcher {
             return;
         }
         if (! ExecutorType.EMPTY_EXECUTOR_SERVICE.getName().equals(currentExecutorService.getExecutorType())) {
-            switchExecutorServicesQueue.putFirst(currentExecutorService);
+            //switchExecutorServicesQueue.putFirst(currentExecutorService);
             LOGGER.info("switch executorService from [" + currentExecutorService.getExecutorService() +"] " +
                     "to [" + activityExecutorService + "]");
         } else {
@@ -89,6 +89,9 @@ public class SampleSwitcher implements Switcher {
 
     protected static ExecutorService createExecutorService(String executorType) throws InterruptedException {
         ExecutorService executorService = SwitchExecutorService.createNewExecutorService(executorType);
+        if (executorService != null && !switchExecutorServicesQueue.contains(executorService)) {
+            switchExecutorServicesQueue.putFirst(new SwitchExecutorServiceEntry(executorType, executorService));
+        }
         switchExecutorService(executorType, executorService);
         return executorService;
     }
@@ -98,7 +101,7 @@ public class SampleSwitcher implements Switcher {
         Preconditions.checkArgument(executorType != null && !executorType.isEmpty(),
                 "the executor type is null or empty");
         //debug
-        //DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
+        DebugHelper.trackExecutorQueue(executorType, switchExecutorServicesQueue);
 
         if (currentExecutorService != null && executorType.equals(currentExecutorService.getExecutorType())) {
             return currentExecutorService.getExecutorService();
@@ -114,11 +117,13 @@ public class SampleSwitcher implements Switcher {
             }
         }
         if (executorService != null) {
-            switchExecutorServicesQueue.remove(executorService);
+            //switchExecutorServicesQueue.remove(executorService);
         } else if (isCreateMode){
             executorService =  SwitchExecutorService.createNewExecutorService(executorType);
-            switchExecutorServicesQueue
-                    .putFirst(new SwitchExecutorServiceEntry(executorType, executorService));
+            if (executorService != null && !switchExecutorServicesQueue.contains(executorService)) {
+                switchExecutorServicesQueue
+                        .putFirst(new SwitchExecutorServiceEntry(executorType, executorService));
+            }
         }
 
         //do switch
@@ -198,6 +203,11 @@ public class SampleSwitcher implements Switcher {
         if (!currentExecutorService.getExecutorService().isShutdown()) {
             currentExecutorService.getExecutorService().shutdownNow();
         }
+    }
+
+    @Override
+    public Switcher getCurrentSwitcher() {
+        return this;
     }
 
     @Override

@@ -33,6 +33,18 @@ public final class SwitcherFactory {
     private static RichnessSwitcherIface richnessSwitcherIface;
     private static ResultfulSwitcherIfac resultfulSwitcherIfac;
 
+    public static ResultfulSwitcherIfac getCurResultfulSwitcherIfac() {
+        if (resultfulSwitcherIfac != null) {
+            return (ResultfulSwitcherIfac) resultfulSwitcherIfac.getCurrentSwitcher();
+        } else if (richnessSwitcherIface != null) {
+            return (ResultfulSwitcherIfac) richnessSwitcherIface.getCurrentSwitcher();
+        } else if (switcher != null) {
+            return (ResultfulSwitcherIfac) switcher.getCurrentSwitcher();
+        } else {
+            return null;
+        }
+    }
+
     public static Switcher createShareSwitcher() {
         if(switcher == null) {
             synchronized (SwitcherFactory.class) {

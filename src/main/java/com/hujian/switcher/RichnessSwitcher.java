@@ -61,7 +61,7 @@ public class RichnessSwitcher extends SampleSwitcher implements RichnessSwitcher
         Preconditions.checkArgument(executorName != null && !executorName.isEmpty(),
                 "empty executor Named at 'assign' action time.");
 
-        if (getCurrentExecutorService() != null && getCurrentExecutorService().getExecutorName().equals(executorName)) {
+        if (getCurrentExecutorService() != null && executorName.equals(getCurrentExecutorService().getExecutorName())) {
             return this;
         }
 
@@ -91,7 +91,7 @@ public class RichnessSwitcher extends SampleSwitcher implements RichnessSwitcher
 
             //still null.just create an new
             if (null == executorService) {
-                executorService = createExecutorService(executorName);
+                executorService = createExecutorService(createExecutorType);
             }
         }
 
