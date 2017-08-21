@@ -38,8 +38,6 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
         //set the executorService
         ExecutorService curExecutorService = getCurrentExecutorService().getExecutorService();
 
-        System.out.println("set a|sync executorService....");
-
         try {
             curExecutorService.submit(() -> {
                 //TODO just test if this executor is at "Rejected" status (had been shutdown)

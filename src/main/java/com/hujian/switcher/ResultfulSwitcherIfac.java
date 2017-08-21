@@ -37,4 +37,6 @@ public interface ResultfulSwitcherIfac<T> extends RichnessSwitcherIface {
      */
     ResultfulSwitcherIfac asyncApply(SwitcherRunner<T> runner, SwitcherResultfulEntry resultfulEntry) throws InterruptedException;
 
+
+
 }

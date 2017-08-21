@@ -44,7 +44,7 @@ public class SampleSwitcher implements Switcher {
 
     private static final String UPSUPPORTED_OPERATOR_ERROR = "unsupported operator now";
 
-    private Boolean isMainThread = false; // set the main thread
+    private volatile Boolean isMainThread = false; // set the main thread
 
     protected static volatile BlockingDeque<SwitchExecutorServiceEntry> switchExecutorServicesQueue;
 
@@ -63,6 +63,7 @@ public class SampleSwitcher implements Switcher {
     /**
      * switch.
      * @param activityExecutorService
+     * @param activityExecutorType
      */
     protected static synchronized void
         switchExecutorService(String activityExecutorType,
