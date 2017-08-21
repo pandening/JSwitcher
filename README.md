@@ -114,8 +114,59 @@
             System.out.println("sync Result:" + syncData + "\nasync Result:" + asyncData);
 
 ```
+
+也或者：
+
+```java
+
+    private static final String IO_EXECUTOR_NAME = "io-executorService";
+    private static final String MULTI_IO_EXECUTOR_SERVICE = "multi-io-executorService";
+    private static final String COMPUTE_EXECUTOR_SERVICE = "compute-executorService";
+    private static final String MULTI_COMPUTE_EXECUTOR_SERVICE = "multi-compute-executorService";
+    private static final String SINGLE_EXECUTOR_SERVICE = "single-executorService";
+    private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
+
+    @Switcher(switchToExecutorServiceType = IO_EXECUTOR_NAME)
+    public static StupidRunner stupidRunnerA;
+
+    @Switcher(switchToExecutorServiceName = "stupidExecutorService")
+    public static StupidRunner stupidRunnerB;
+
+    @Switcher(CreateType = MULTI_COMPUTE_EXECUTOR_SERVICE)
+    public static StupidRunner stupidRunnerC;
+
+    public static class StupidRunner implements Runnable {
+
+        @Override
+        public void run() {
+            System.out.println("i am stupid runner at :" + Thread.currentThread().getName());
+        }
+     }
+       
+        SwitcherFactory
+                .createResultfulSwitcher()
+                .transToRichnessSwitcher()
+                .transToResultfulSwitcher()
+                .switchTo("stupidExecutorService",
+                        true, true, MULTI_IO_EXECUTOR_SERVICE);
+
+        SwitcherAnnotationResolver resolver = new SwitcherAnnotationResolver();
+
+        resolver.execute();
+
+        SwitcherFactory.shutdown();
+
+```
+
    哈哈哈，就问你怕不怕？！！！
    
+   当然，在结束任务的时候，需要显示的shutdown，通过SwitcherFactory.shutdown可以完成。 
+   
+更新  
+--------------------------------
+2017-08-21：【1】增加注解支持，现在，你可以使用注解来切换线程，并且在切换到的线程里面执行你的代码。
+          ：【2】1.0.0
+
 
 和我联系？
 ---------------------------------
