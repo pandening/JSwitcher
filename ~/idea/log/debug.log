@@ -34,3 +34,27 @@
 2017-08-21 10:01:25  [ main:65 ] - [ INFO ]  init executorServices done:8/40/16
 2017-08-21 10:01:25  [ main:66 ] - [ INFO ]  this is the first executorService on the BlockingDeque.[java.util.concurrent.ThreadPoolExecutor@22927a81[Running, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0]]
 2017-08-21 10:01:26  [ main:1068 ] - [ INFO ]  switch executorService from [java.util.concurrent.ThreadPoolExecutor@22927a81[Running, pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1]] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@61e4705b]
+2017-08-21 10:23:57  [ main:0 ] - [ INFO ]  switchExecutorServicesQueue has been initialized
+2017-08-21 10:23:57  [ main:62 ] - [ INFO ]  init executorServices done:8/40/16
+2017-08-21 10:23:57  [ main:63 ] - [ INFO ]  this is the first executorService on the BlockingDeque.[java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:23:57  [ main:65 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:23:57  [ main:72 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:23:57  [ main:73 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:25:38  [ main:0 ] - [ INFO ]  switchExecutorServicesQueue has been initialized
+2017-08-21 10:25:38  [ main:62 ] - [ INFO ]  init executorServices done:8/40/16
+2017-08-21 10:25:38  [ main:63 ] - [ INFO ]  this is the first executorService on the BlockingDeque.[java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:25:38  [ main:65 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:25:38  [ main:70 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:25:38  [ main:70 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:25:57  [ main:0 ] - [ INFO ]  switchExecutorServicesQueue has been initialized
+2017-08-21 10:25:57  [ main:63 ] - [ INFO ]  init executorServices done:8/40/16
+2017-08-21 10:25:57  [ main:64 ] - [ INFO ]  this is the first executorService on the BlockingDeque.[java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:25:57  [ main:65 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:25:57  [ main:71 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:25:57  [ main:71 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:26:45  [ main:0 ] - [ INFO ]  switchExecutorServicesQueue has been initialized
+2017-08-21 10:26:45  [ main:65 ] - [ INFO ]  init executorServices done:8/40/16
+2017-08-21 10:26:45  [ main:66 ] - [ INFO ]  this is the first executorService on the BlockingDeque.[java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:26:45  [ main:67 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81]
+2017-08-21 10:26:45  [ main:73 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@22927a81] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
+2017-08-21 10:26:45  [ main:73 ] - [ INFO ]  switch executorService from [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2] to [java.util.concurrent.Executors$FinalizableDelegatedExecutorService@73c6c3b2]
