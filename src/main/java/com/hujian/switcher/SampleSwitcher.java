@@ -17,6 +17,7 @@
 package com.hujian.switcher;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.hujian.switcher.core.ExecutorType;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.SwitchRunntimeException;
@@ -228,6 +229,22 @@ public class SampleSwitcher implements Switcher {
                 && !currentExecutorService.getExecutorService().isShutdown()) {
             currentExecutorService.getExecutorService().shutdownNow();
         }
+        return this;
+    }
+
+    @Override
+    public Switcher assignExecutorName(String name) {
+        Preconditions.checkArgument(name != null && !name.isEmpty(),
+                "name must not null and empty");
+        Preconditions.checkArgument(currentExecutorService != null,
+                "currentExecutorService is null");
+        if (Strings.isNullOrEmpty(currentExecutorService.getExecutorName())) {
+            currentExecutorService.setExecutorName(name);
+        } else {
+            LOGGER.warn("currentExecutorService had been assigned an " +
+                    "name:" + currentExecutorService.getExecutorName());
+        }
+
         return this;
     }
 

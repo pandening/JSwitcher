@@ -55,6 +55,13 @@ public interface Switcher {
     Switcher shutdownNow();
 
     /**
+     * assign name for current executorSer
+     * @param name
+     * @return
+     */
+    Switcher assignExecutorName(String name);
+
+    /**
      * apply the job on the current executorService
      * @param job
      * @param isCreateMode
