@@ -80,11 +80,13 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
      * init the env
      */
     private void initEnv() {
-        reflections = new Reflections(
-                new ConfigurationBuilder()
-                        .setUrls(ClasspathHelper.forPackage(_scanPath))
-                        .addScanners(new FieldAnnotationsScanner())
-        );
+        if (reflections == null) {
+            reflections = new Reflections(
+                    new ConfigurationBuilder()
+                            .setUrls(ClasspathHelper.forPackage(_scanPath))
+                            .addScanners(new FieldAnnotationsScanner())
+            );
+        }
         runnableExecutorServiceConcurrentMap = new ConcurrentHashMap<>();
         moveStatusEntryBlockingDeque = new LinkedBlockingDeque<>();
     }
