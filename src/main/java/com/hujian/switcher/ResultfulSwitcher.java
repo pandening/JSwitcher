@@ -34,7 +34,7 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
 
     private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
 
-    private void setExecutorService(SwitcherRunner runner) throws InterruptedException {
+    private synchronized void setExecutorService(SwitcherRunner runner) throws InterruptedException {
         //set the executorService
         ExecutorService curExecutorService = getCurrentExecutorService().getExecutorService();
 

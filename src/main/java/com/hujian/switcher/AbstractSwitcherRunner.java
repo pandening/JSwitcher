@@ -18,6 +18,8 @@ package com.hujian.switcher;
 
 import com.google.common.base.Preconditions;
 import com.hujian.switcher.core.SwitchRunntimeException;
+import com.hujian.switcher.statistic.SampleSwitcherStatistic;
+import com.hujian.switcher.statistic.Statistic;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -31,13 +33,17 @@ import java.util.concurrent.RejectedExecutionException;
 public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
     private static final Logger LOGGER = Logger.getLogger(AbstractSwitcherRunner.class);
 
+    private Statistic statistic = SampleSwitcherStatistic.getInstance();
+
+    private static final String DEFAULT_SESSION_ID = "switcher-runner-statistic";
+    private final String TAG = this.getClass().getName();
+
     private ExecutorService _executorService;
 
     @Override
     public CompletableFuture<T> queue() {
         Preconditions.checkArgument(_executorService != null,
                 "ExecutorService is null");
-
         try {
             return CompletableFuture.supplyAsync(() -> {
                 try {
@@ -73,10 +79,27 @@ public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
      * @return
      */
     private T doRun() throws Exception {
+        Exception exception = null;
+        Exception errCopy = null;
+        long startTime = System.currentTimeMillis();
         try {
             return run();
         } catch (Exception e) {
-            return doFallback(e);
+            exception = e;
+            try {
+                return doFallback(e);
+            } catch (Exception err) {
+                throw err;
+            }
+        } finally {
+            long costTime = System.currentTimeMillis() -startTime;
+            if (exception == null) { // success
+                statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
+                statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
+            } else { // error
+                statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
+                statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
+            }
         }
     }
 
@@ -106,7 +129,7 @@ public abstract class AbstractSwitcherRunner<T> implements SwitcherRunner<T> {
     @Override
     public void setExecutorService(ExecutorService executorService) throws SwitchRunntimeException {
         this._executorService = executorService;
-        if (_executorService == null) { //set the default executorService
+        if (_executorService == null) {
             LOGGER.error("null executorService,no ExecutorService to run job.");
             throw new SwitchRunntimeException("Switcher RunningTime Error.");
         }

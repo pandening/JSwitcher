@@ -35,20 +35,20 @@ public class AnnotationServcie {
     private static final String SINGLE_EXECUTOR_SERVICE = "single-executorService";
     private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
 
-    @Switcher(switchToExecutorServiceType = IO_EXECUTOR_NAME)
+    //@Switcher(switchToExecutorServiceType = COMPUTE_EXECUTOR_SERVICE)
     public static StupidRunner stupidRunnerA;
 
-    @Switcher(switchToExecutorServiceName = "stupidExecutorService")
+    //@Switcher(switchToExecutorServiceName = "stupidExecutorService")
     public static StupidRunner stupidRunnerB;
 
-    @Switcher(CreateType = MULTI_COMPUTE_EXECUTOR_SERVICE)
+    //@Switcher(CreateType = MULTI_COMPUTE_EXECUTOR_SERVICE)
     public static StupidRunner stupidRunnerC;
 
     public static class StupidRunner implements Runnable {
 
         @Override
         public void run() {
-            System.out.println("i am stupid runner at :" + Thread.currentThread().getName());
+            System.out.println("ok->i am stupid runner at :" + Thread.currentThread().getName());
         }
     }
 
@@ -60,6 +60,7 @@ public class AnnotationServcie {
         SwitcherAnnotationResolver resolver = new SwitcherAnnotationResolver();
         SwitcherFactory
                 .createResultfulSwitcher()
+                .switchToMultiIoExecutor(true)
                 .transToRichnessSwitcher()
                 .transToResultfulSwitcher()
                 .switchTo("stupidExecutorService",
@@ -69,7 +70,8 @@ public class AnnotationServcie {
                     public void run() {
                         System.out.println("check,i am in:" + Thread.currentThread().getName());
                     }
-                }, false);
+                }, false)
+                .switchToComputeExecutor(true);
 
         System.out.println("currentExecutorService =>" +
                 SwitcherFactory.getCurResultfulSwitcherIfac().getCurrentExecutorService().getExecutorType() +

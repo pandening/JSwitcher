@@ -79,17 +79,18 @@ public class SampleSwitcher implements Switcher {
             return;
         }
         if (! ExecutorType.EMPTY_EXECUTOR_SERVICE.getName().equals(currentExecutorService.getExecutorType())) {
+            currentExecutorService = new SwitchExecutorServiceEntry(activityExecutorType, activityExecutorService);
             //switchExecutorServicesQueue.putFirst(currentExecutorService);
             LOGGER.info("switch executorService from [" + currentExecutorService.getExecutorService() +"] " +
                     "to [" + activityExecutorService + "]");
         } else {
             LOGGER.info("this is the first executorService on the BlockingDeque.[" + activityExecutorService + "]");
+            currentExecutorService = new SwitchExecutorServiceEntry(activityExecutorType, activityExecutorService);
         }
-        currentExecutorService = new SwitchExecutorServiceEntry(activityExecutorType, activityExecutorService);
         isMainThread = false;
     }
 
-    protected static ExecutorService createExecutorService(String executorType) throws InterruptedException {
+    protected synchronized static ExecutorService createExecutorService(String executorType) throws InterruptedException {
         ExecutorService executorService = SwitchExecutorService.createNewExecutorService(executorType);
         if (executorService != null && !switchExecutorServicesQueue.contains(executorService)) {
             switchExecutorServicesQueue.putFirst(new SwitchExecutorServiceEntry(executorType, executorService));
@@ -98,7 +99,7 @@ public class SampleSwitcher implements Switcher {
         return executorService;
     }
 
-    private static ExecutorService getOrCreateExecutorService(String executorType, Boolean isCreateMode)
+    private synchronized static ExecutorService getOrCreateExecutorService(String executorType, Boolean isCreateMode)
             throws InterruptedException {
         Preconditions.checkArgument(executorType != null && !executorType.isEmpty(),
                 "the executor type is null or empty");
@@ -141,7 +142,7 @@ public class SampleSwitcher implements Switcher {
      * @param isCreateMode
      * @return
      */
-    private static ExecutorService getBackExecutorService(String executorType, Boolean isCreateMode)
+    private synchronized static ExecutorService getBackExecutorService(String executorType, Boolean isCreateMode)
             throws InterruptedException {
         ExecutorService executorService;
         SwitchExecutorServiceEntry executorServiceEntry  = switchExecutorServicesQueue.takeLast();
@@ -187,7 +188,7 @@ public class SampleSwitcher implements Switcher {
     }
 
     @Override
-    public void clear() throws InterruptedException {
+    public synchronized void clear() throws InterruptedException {
         if (switchExecutorServicesQueue == null || switchExecutorServicesQueue.isEmpty()) {
             return;
         }
@@ -233,7 +234,7 @@ public class SampleSwitcher implements Switcher {
     }
 
     @Override
-    public Switcher assignExecutorName(String name) {
+    public synchronized Switcher assignExecutorName(String name) {
         Preconditions.checkArgument(name != null && !name.isEmpty(),
                 "name must not null and empty");
         Preconditions.checkArgument(currentExecutorService != null,
