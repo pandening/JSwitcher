@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,21 +26,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwitcherAnnotationResolver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SwitcherAnnotationResolver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+            <state relative-caret-position="717">
+              <caret line="78" column="28" lean-forward="true" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RunThenSwitchResolver.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RunThenSwitchResolver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+            <state relative-caret-position="-1435">
+              <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -149,8 +148,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/RichnessSwitcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationServcie.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
       </list>
     </option>
   </component>
@@ -971,12 +970,12 @@
       <updated>1503043980890</updated>
       <workItem from="1503043982318" duration="47703000" />
       <workItem from="1503231129011" duration="6317000" />
-      <workItem from="1503239650997" duration="46812000" />
+      <workItem from="1503239650997" duration="46865000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100832000" />
+    <option name="totallyTimeSpent" value="100885000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="815" extended-state="0" />
@@ -1487,14 +1486,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-996">
@@ -1505,8 +1496,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+        <state relative-caret-position="-1435">
+          <caret line="16" column="39" lean-forward="true" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="717">
+          <caret line="78" column="28" lean-forward="true" selection-start-line="78" selection-start-column="28" selection-end-line="78" selection-end-column="28" />
           <folding />
         </state>
       </provider>
