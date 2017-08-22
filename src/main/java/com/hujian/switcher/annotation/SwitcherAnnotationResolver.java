@@ -19,6 +19,8 @@ package com.hujian.switcher.annotation;
 import com.google.common.base.Strings;
 import com.hujian.switcher.ResultfulSwitcherIfac;
 import com.hujian.switcher.core.SwitchRunntimeException;
+import com.hujian.switcher.statistic.SampleSwitcherStatistic;
+import com.hujian.switcher.statistic.Statistic;
 import com.hujian.switcher.utils.SwitcherFactory;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
@@ -48,13 +50,14 @@ public class SwitcherAnnotationResolver {
     private static final String SINGLE_EXECUTOR_SERVICE = "single-executorService";
     private static final String NEW_EXECUTOR_SERVICE = "new-executorService";
 
+    private Statistic statistic = SampleSwitcherStatistic.getInstance();
+    private static final String DEFAULT_SESSION_ID = "Annotation-statistic";
+    private static String TAG = "";
+    private Map<Runnable, String> tagMap = new ConcurrentHashMap<>();
+
     private String _scanPath = "."; // the default scan package
 
     private Reflections reflections = null;
-
-    private String switchToExecutorServiceType = null;
-    private String switchToExecutorServiceName = null;
-    private String CreateType = null;
 
     private ConcurrentMap<Runnable, ExecutorService> runnableExecutorServiceConcurrentMap = null;
 
@@ -62,11 +65,11 @@ public class SwitcherAnnotationResolver {
 
     }
 
-    private SwitcherAnnotationResolver(String scanPath) {
+    public SwitcherAnnotationResolver(String scanPath) {
         _scanPath = scanPath;
     }
 
-    private SwitcherAnnotationResolver(String scanPath, Reflections reflections) {
+    public SwitcherAnnotationResolver(String scanPath, Reflections reflections) {
         this._scanPath = scanPath;
         this.reflections = reflections;
     }
@@ -106,9 +109,9 @@ public class SwitcherAnnotationResolver {
             //get the runnable
             Runnable runnable = (Runnable) constructor.newInstance();
 
-            switchToExecutorServiceType = switcher.switchToExecutorServiceType();
-            switchToExecutorServiceName = switcher.switchToExecutorServiceName();
-            CreateType = switcher.CreateType();
+            String switchToExecutorServiceType = switcher.switchToExecutorServiceType();
+            String switchToExecutorServiceName = switcher.switchToExecutorServiceName();
+            String createType = switcher.CreateType();
 
             ExecutorService executorService;
 
@@ -146,8 +149,8 @@ public class SwitcherAnnotationResolver {
             } else if (!Strings.isNullOrEmpty(switchToExecutorServiceName)) {
                 resultfulSwitcherIfac = (ResultfulSwitcherIfac) resultfulSwitcherIfac
                         .switchTo(switchToExecutorServiceName, true, true, NEW_EXECUTOR_SERVICE);
-            } else if (!Strings.isNullOrEmpty(CreateType)) {
-                switch (CreateType) {
+            } else if (!Strings.isNullOrEmpty(createType)) {
+                switch (createType) {
                     case IO_EXECUTOR_NAME:
                         resultfulSwitcherIfac = (ResultfulSwitcherIfac) resultfulSwitcherIfac.switchToNewIoExecutor();
                         break;
@@ -182,6 +185,7 @@ public class SwitcherAnnotationResolver {
             LOGGER.info("run the job:" + runnable + " at ExecutorService:" + executorService);
 
             runnableExecutorServiceConcurrentMap.put(runnable, executorService);
+            tagMap.put(runnable, cls.getName());
 
         }
 
@@ -210,7 +214,23 @@ public class SwitcherAnnotationResolver {
             ExecutorService executorService = executorServiceEntry.getValue();
 
             if (runnable != null && executorService != null && !executorService.isShutdown()) {
-                executorService.submit(runnable);
+                Exception exception = null;
+                long startTime = System.currentTimeMillis();
+                try {
+                    executorService.submit(runnable);
+                } catch (Exception e) {
+                    exception = e;
+                } finally {
+                    long costTime = System.currentTimeMillis() -startTime;
+                    TAG = tagMap.get(runnable);
+                    if (exception != null) {
+                        statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
+                        statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
+                    } else {
+                        statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
+                        statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
+                    }
+                }
             } else {
                 LOGGER.error("!(runnable != null && executorService != null && !executorService.isShutdown())");
             }

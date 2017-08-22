@@ -1,26 +1,31 @@
-2017-08-20 12:09:02  [ main:85 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:09:45  [ main:82 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:11:04  [ main:77 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:11:28  [ main:87 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:28:27  [ main:93 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:30:19  [ main:80 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:32:18  [ main:85 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:34:29  [ main:86 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e717c2[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:35:30  [ main:83 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e4705b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:36:02  [ main:76 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e4705b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 12:41:28  [ main:101 ] - [ ERROR ]  Fallback error:java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.CompletableFuture$AsyncSupply@2b05039f rejected from java.util.concurrent.ThreadPoolExecutor@61e4705b[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 1]
-2017-08-20 21:47:04  [ main:70 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:48:11  [ main:64 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:49:11  [ main:70 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:50:32  [ main:69 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:50:55  [ main:67 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:53:48  [ main:68 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:54:03  [ main:67 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:54:46  [ main:65 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:54:55  [ main:65 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:57:09  [ main:68 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:57:26  [ main:64 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 21:57:37  [ main:67 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 22:06:15  [ main:63 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 22:06:51  [ main:61 ] - [ ERROR ]  null activityExecutorType
-2017-08-20 22:07:30  [ main:68 ] - [ ERROR ]  null activityExecutorType
+2017-08-22 16:45:54  [ main:344 ] - [ ERROR ]  execute error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:45:54  [ main:345 ] - [ ERROR ]  Fallback error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:45:54  [ main:345 ] - [ ERROR ]  can not execute the job,runner is:com.hujian.switcher.example.StatisticDemo$StupidRunner@7e0b37bc
+2017-08-22 16:48:10  [ main:335 ] - [ ERROR ]  execute error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:48:10  [ main:335 ] - [ ERROR ]  Fallback error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:48:10  [ main:336 ] - [ ERROR ]  can not execute the job,runner is:com.hujian.switcher.example.StatisticDemo$StupidRunner@7e0b37bc
+2017-08-22 16:52:26  [ main:336 ] - [ ERROR ]  execute error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:52:26  [ main:336 ] - [ ERROR ]  Fallback error:java.util.concurrent.ExecutionException: java.lang.NullPointerException
+2017-08-22 16:52:26  [ main:337 ] - [ ERROR ]  can not execute the job,runner is:com.hujian.switcher.example.StatisticDemo$StupidRunner@7e0b37bc
+2017-08-22 17:03:15  [ SwitcherThread-I/O:895 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:03:57  [ SwitcherThread-I/O:898 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:05:09  [ SwitcherThread-I/O:896 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:06:41  [ SwitcherThread-I/O:894 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:06:41  [ SwitcherThread-I/O:895 ] - [ ERROR ]  fallback error.
+2017-08-22 17:09:21  [ SwitcherThread-I/O:893 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:10:45  [ SwitcherThread-I/O:896 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:10:56  [ SwitcherThread-I/O:893 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:11:20  [ SwitcherThread-I/O:893 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:13:17  [ SwitcherThread-I/O:896 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:15:02  [ SwitcherThread-I/O:892 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:15:59  [ SwitcherThread-I/O:916 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:16:52  [ SwitcherThread-I/O:902 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:17:12  [ SwitcherThread-I/O:894 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:18:35  [ SwitcherThread-I/O:602 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:26:31  [ SwitcherThread-I/O:1588 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:28:58  [ SwitcherThread-I/O:1585 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:29:58  [ SwitcherThread-I/O:1584 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:31:12  [ SwitcherThread-I/O:1597 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:31:36  [ SwitcherThread-I/O:1596 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:31:57  [ SwitcherThread-I/O:1596 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero
+2017-08-22 17:34:49  [ SwitcherThread-I/O:1595 ] - [ ERROR ]  Fallback error:java.lang.ArithmeticException: / by zero

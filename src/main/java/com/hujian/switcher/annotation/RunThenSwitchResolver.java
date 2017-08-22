@@ -19,6 +19,8 @@ package com.hujian.switcher.annotation;
 import com.google.common.base.Strings;
 import com.hujian.switcher.ResultfulSwitcherIfac;
 import com.hujian.switcher.core.SwitchRunntimeException;
+import com.hujian.switcher.statistic.SampleSwitcherStatistic;
+import com.hujian.switcher.statistic.Statistic;
 import com.hujian.switcher.utils.SwitcherFactory;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
@@ -53,11 +55,12 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
     private String _scanPath = "."; // the default scan package
     private static Boolean isRunThenSwitchMode = true;
 
-    private Reflections reflections = null;
+    private Statistic statistic = SampleSwitcherStatistic.getInstance();
+    private static final String DEFAULT_SESSION_ID = "Annotation-statistic";
+    private static String TAG = "";
+    private Map<Runnable, String> tagMap = new ConcurrentHashMap<>();
 
-    private String switchToExecutorServiceType = null;
-    private String switchToExecutorServiceName = null;
-    private String CreateType = null;
+    private Reflections reflections = null;
 
     private ConcurrentMap<Runnable, ExecutorService> runnableExecutorServiceConcurrentMap = null;
     private BlockingDeque<MoveStatusEntry> moveStatusEntryBlockingDeque = null;
@@ -118,21 +121,24 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
             //get the runnable
             Runnable runnable = (Runnable) constructor.newInstance();
 
+            String switchToExecutorServiceType = null;
+            String switchToExecutorServiceName = null;
+            String createType = null;
             if (isRunThenSwitchMode) {
                 RunThenSwitch switcher = field.getAnnotation(RunThenSwitch.class);
                 switchToExecutorServiceType = switcher.switchToExecutorServiceType();
                 switchToExecutorServiceName = switcher.switchToExecutorServiceName();
-                CreateType = switcher.CreateType();
+                createType = switcher.CreateType();
             } else {
                 SwitchThenRun switcher = field.getAnnotation(SwitchThenRun.class);
                 switchToExecutorServiceType = switcher.switchToExecutorServiceType();
                 switchToExecutorServiceName = switcher.switchToExecutorServiceName();
-                CreateType = switcher.CreateType();
+                createType = switcher.CreateType();
             }
 
             //n..2,1
             moveStatusEntryBlockingDeque.putFirst(new MoveStatusEntry(switchToExecutorServiceType,
-                    switchToExecutorServiceName, CreateType));
+                    switchToExecutorServiceName, createType));
 
             ExecutorService executorService;
 
@@ -151,6 +157,7 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
             LOGGER.info("run the job:" + runnable + " at ExecutorService:" + executorService);
             //run the job on the current  executorService
             runnableExecutorServiceConcurrentMap.put(runnable, executorService);
+            tagMap.put(runnable, cls.getName());
         }
 
         LOGGER.info("scan package:" + _scanPath + " done,find total " +
@@ -257,7 +264,24 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
             }
 
             if (runnable != null && executorService != null && !executorService.isShutdown()) {
-                executorService.submit(runnable);
+                long startTime = System.currentTimeMillis();
+                Exception exception = null;
+                try {
+                    executorService.submit(runnable);
+                } catch (Exception e) {
+                    exception = e;
+                } finally {
+                    long costTime = System.currentTimeMillis() -startTime;
+                    TAG = tagMap.get(runnable);
+                    if (exception != null) { // error
+                        statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
+                        statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
+                    } else { // success
+                        statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
+                        statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
+                    }
+                }
+
                 if (isRunThenSwitchMode) {
                     doSwitch(SwitcherFactory.getCurResultfulSwitcherIfac(), moveStatusEntry);
                 }
