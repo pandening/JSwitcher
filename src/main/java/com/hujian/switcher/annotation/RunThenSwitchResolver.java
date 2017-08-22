@@ -57,7 +57,6 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
 
     private Statistic statistic = SampleSwitcherStatistic.getInstance();
     private static final String DEFAULT_SESSION_ID = "Annotation-statistic";
-    private static String TAG = "";
     private Map<Runnable, String> tagMap = new ConcurrentHashMap<>();
 
     private Reflections reflections = null;
@@ -272,7 +271,7 @@ public class RunThenSwitchResolver extends SwitcherAnnotationResolver{
                     exception = e;
                 } finally {
                     long costTime = System.currentTimeMillis() -startTime;
-                    TAG = tagMap.get(runnable);
+                    String TAG = tagMap.get(runnable);
                     if (exception != null) { // error
                         statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
                         statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);

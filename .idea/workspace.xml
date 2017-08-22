@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/AbstractSwitcherRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/AbstractSwitcherRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/ResultfulSwitcher.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/ResultfulSwitcher.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/SampleSwitcher.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/SampleSwitcher.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/NoExecutorServiceException.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/NoExecutorServiceException.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/RunThenSwitchResolver$MoveStatusEntry.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/RunThenSwitchResolver$MoveStatusEntry.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/RunThenSwitchResolver.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/RunThenSwitchResolver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/SwitcherAnnotationResolver.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/annotation/SwitcherAnnotationResolver.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie$StupidRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationServcie.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo$StupidRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RunThenSwitchDemo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchThenRunDemo$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchThenRunDemo$StupidRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchThenRunDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchThenRunDemo.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationServcie.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationServcie.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/log4j.properties" afterPath="$PROJECT_DIR$/target/classes/log4j.properties" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -42,28 +20,28 @@
       <file leaf-file-name="AnnotationStatisticDemo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1067">
+            <state relative-caret-position="-996">
               <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwitcherAnnotationResolver.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SwitcherAnnotationResolver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="529">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="660">
+              <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RunThenSwitchResolver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RunThenSwitchResolver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="275" column="53" lean-forward="true" selection-start-line="275" selection-start-column="53" selection-end-line="275" selection-end-column="53" />
+            <state relative-caret-position="322">
+              <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -166,13 +144,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/statistic/SampleSwitcherStatistic.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/AbstractSwitcherRunner.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/StatisticDemo.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/SampleSwitcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/RichnessSwitcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationServcie.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java" />
       </list>
     </option>
   </component>
@@ -993,12 +971,12 @@
       <updated>1503043980890</updated>
       <workItem from="1503043982318" duration="47703000" />
       <workItem from="1503231129011" duration="6317000" />
-      <workItem from="1503239650997" duration="46440000" />
+      <workItem from="1503239650997" duration="46812000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100460000" />
+    <option name="totallyTimeSpent" value="100832000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="815" extended-state="0" />
@@ -1509,26 +1487,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="275" column="53" lean-forward="true" selection-start-line="275" selection-start-column="53" selection-end-line="275" selection-end-column="53" />
+        <state relative-caret-position="660">
+          <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1067">
+        <state relative-caret-position="-996">
           <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/SwitcherAnnotationResolver.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/annotation/RunThenSwitchResolver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="322">
+          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
           <folding />
         </state>
       </provider>
