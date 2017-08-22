@@ -89,6 +89,10 @@ public class SampleSwitcherStatistic implements Statistic {
         return SAMPLE_SWITCHER_STATISTIC;
     }
 
+    public ConcurrentMap<String, ConcurrentHashMap<String, SwitcherStatisticEntry>> getStatisticMap() {
+        return switcherStatisticEntryMap;
+    }
+
     @Override
     public Map<String, SwitcherStatisticEntry> getSwitchStatisticEntryBySessionId(String sessionId) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(sessionId), "sessionId must not be null");

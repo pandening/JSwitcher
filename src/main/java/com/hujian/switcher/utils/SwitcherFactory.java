@@ -23,15 +23,26 @@ import com.hujian.switcher.RichnessSwitcherIface;
 import com.hujian.switcher.SampleSwitcher;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.Switcher;
+import com.hujian.switcher.statistic.SampleSwitcherStatistic;
+import com.hujian.switcher.statistic.Statistic;
+import com.hujian.switcher.statistic.SwitcherStatisticEntry;
+import org.apache.log4j.Logger;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by hujian06 on 2017/8/19.
  */
 public final class SwitcherFactory {
+    private static final Logger LOGGER = Logger.getLogger(SwitcherFactory.class);
 
     private static Switcher switcher;
     private static RichnessSwitcherIface richnessSwitcherIface;
     private static ResultfulSwitcherIfac resultfulSwitcherIfac;
+
+    private static Statistic statistic = SampleSwitcherStatistic.getInstance();
 
     public static ResultfulSwitcherIfac getCurResultfulSwitcherIfac() {
         if (resultfulSwitcherIfac != null) {
@@ -42,6 +53,22 @@ public final class SwitcherFactory {
             return (ResultfulSwitcherIfac) switcher.getCurrentSwitcher();
         } else {
             return null;
+        }
+    }
+
+    public static Statistic getStatistic() {
+        return statistic;
+    }
+
+    public static void StatisticInfo() {
+        ConcurrentMap<String, ConcurrentHashMap<String, SwitcherStatisticEntry>> map =
+                ((SampleSwitcherStatistic)statistic).getStatisticMap();
+        if (!map.isEmpty()) {
+            for (Map.Entry<String, ConcurrentHashMap<String,SwitcherStatisticEntry>> entry : map.entrySet()) {
+                for (Map.Entry<String, SwitcherStatisticEntry> entryEntry : entry.getValue().entrySet()) {
+                    LOGGER.info("TAG:" +entryEntry.getKey() + "\n" + entryEntry.getValue().toString());
+                }
+            }
         }
     }
 

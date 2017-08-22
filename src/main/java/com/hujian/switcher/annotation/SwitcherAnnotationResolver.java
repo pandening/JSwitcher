@@ -52,7 +52,6 @@ public class SwitcherAnnotationResolver {
 
     private Statistic statistic = SampleSwitcherStatistic.getInstance();
     private static final String DEFAULT_SESSION_ID = "Annotation-statistic";
-    private static String TAG = "";
     private Map<Runnable, String> tagMap = new ConcurrentHashMap<>();
 
     private String _scanPath = "."; // the default scan package
@@ -78,11 +77,13 @@ public class SwitcherAnnotationResolver {
      * init the env
      */
     private void initEnv() {
-        reflections = new Reflections(
-                new ConfigurationBuilder()
-                        .setUrls(ClasspathHelper.forPackage(_scanPath))
-                        .addScanners(new FieldAnnotationsScanner())
-        );
+        if (reflections == null) {
+            reflections = new Reflections(
+                    new ConfigurationBuilder()
+                            .setUrls(ClasspathHelper.forPackage(_scanPath))
+                            .addScanners(new FieldAnnotationsScanner())
+            );
+        }
         runnableExecutorServiceConcurrentMap = new ConcurrentHashMap<>();
     }
 
@@ -222,7 +223,7 @@ public class SwitcherAnnotationResolver {
                     exception = e;
                 } finally {
                     long costTime = System.currentTimeMillis() -startTime;
-                    TAG = tagMap.get(runnable);
+                    String TAG = tagMap.get(runnable);
                     if (exception != null) {
                         statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
                         statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
