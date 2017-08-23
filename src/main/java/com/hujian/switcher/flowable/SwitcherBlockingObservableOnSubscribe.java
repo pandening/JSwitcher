@@ -17,17 +17,15 @@
 package com.hujian.switcher.flowable;
 
 /**
- * Created by hujian06 on 2017/8/22.
+ * Created by hujian06 on 2017/8/23.
  */
-public interface SwitcherObserver<T> {
+public interface SwitcherBlockingObservableOnSubscribe<T> {
 
-    void control(SampleSwitcherObservable.SwitcherObserverInformation information);
+    /**
+     * observer
+     * @param observer the observer
+     */
+    void subscribe(SwitcherBlockingObserverService<T> observer) throws InterruptedException, InstantiationException,
+            SwitcherClassTokenErrException, IllegalAccessException;
 
-    void start();
-
-    void emit(T data);
-
-    void errors(SwitcherFlowException e);
-
-    void complete();
 }

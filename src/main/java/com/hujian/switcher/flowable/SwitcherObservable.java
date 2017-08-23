@@ -34,20 +34,27 @@ public interface SwitcherObservable<T> extends ResultfulSwitcherIfac{
     SampleSwitcherObservable subscribe(SwitcherConsumer<T> consumer) throws InterruptedException;
 
     /**
+     * blocking queue observer
+     * @param blockingObserver the queue
+     * @return e
+     */
+    SampleSwitcherObservable subscribe(SwitcherBlockingObserverService<T> blockingObserver) throws InterruptedException;
+
+    /**
      * @param switcherObserver subscribe on this observable
      */
-    SampleSwitcherObservable subscribe(SwitcherObserver<T> switcherObserver) throws InterruptedException;
+    SampleSwitcherObservable subscribe(SwitcherObservableService<T> switcherObserver) throws InterruptedException;
 
     /**
      * @param switcherObserverList subscribe on this observable
      */
-    SampleSwitcherObservable subscribe(List<SwitcherObserver<T>> switcherObserverList) throws InterruptedException;
+    SampleSwitcherObservable subscribe(List<SwitcherObservableService<T>> switcherObserverList) throws InterruptedException;
 
     /**
      * @param switcherObserver  subscribe on this observable
      * @param timeUnit  time unit
      * @param time  delay time {unit}
      */
-    SampleSwitcherObservable delaySubscribe(SwitcherObserver<T> switcherObserver, TimeUnit timeUnit, long time) throws InterruptedException;
+    SampleSwitcherObservable delaySubscribe(SwitcherObservableService<T> switcherObserver, TimeUnit timeUnit, long time) throws InterruptedException;
 
 }

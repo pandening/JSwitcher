@@ -19,12 +19,25 @@ package com.hujian.switcher.flowable;
 /**
  * Created by hujian06 on 2017/8/23.
  */
-public interface SwitcherObservableOnSubscribe<T> {
+public interface SwitcherBuffer<T> {
 
     /**
-     * observer
-     * @param observer the observer
+     * put a data to the blockQueue, you need put data with the "class Token"
+     * @param data the data
+     * @param clsToken class token
+     * @throws InterruptedException e
+     * @throws IllegalAccessException e
+     * @throws InstantiationException e
+     * @throws SwitcherClassTokenErrException e
      */
-    void subscribe(SwitcherObservableService<T> observer) throws InterruptedException;
+    void put(T data, Class clsToken) throws InterruptedException,
+            IllegalAccessException, InstantiationException, SwitcherClassTokenErrException;
+
+    /**
+     * read a data from blocking queue
+     * @return the data or block until get data
+     * @throws InterruptedException e
+     */
+    T get() throws InterruptedException;
 
 }

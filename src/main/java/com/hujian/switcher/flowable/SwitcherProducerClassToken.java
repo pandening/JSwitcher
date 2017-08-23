@@ -17,17 +17,7 @@
 package com.hujian.switcher.flowable;
 
 /**
- * Created by hujian06 on 2017/8/22.
+ * Created by hujian06 on 2017/8/23.
  */
-public interface SwitcherObserver<T> {
-
-    void control(SampleSwitcherObservable.SwitcherObserverInformation information);
-
-    void start();
-
-    void emit(T data);
-
-    void errors(SwitcherFlowException e);
-
-    void complete();
+public class SwitcherProducerClassToken {
 }

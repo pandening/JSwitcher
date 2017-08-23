@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.hujian.switcher.flowable;
+package com.hujian.switcher.example;
 
+import com.hujian.switcher.flowable.SwitcherSampleObservableOnSubscribe;
 import com.hujian.switcher.utils.SwitcherFactory;
 
 /**
