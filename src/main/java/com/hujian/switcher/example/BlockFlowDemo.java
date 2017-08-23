@@ -17,9 +17,12 @@
 package com.hujian.switcher.example;
 
 import com.hujian.switcher.flowable.SampleSwitcherObservable;
+import com.hujian.switcher.flowable.SwitcherBlockingObservableOnSubscribe;
+import com.hujian.switcher.flowable.SwitcherBlockingObserverService;
+import com.hujian.switcher.flowable.SwitcherBuffer;
+import com.hujian.switcher.flowable.SwitcherClassTokenErrException;
+import com.hujian.switcher.flowable.SwitcherDisposable;
 import com.hujian.switcher.flowable.SwitcherFlowException;
-import com.hujian.switcher.flowable.SwitcherObservableOnSubscribe;
-import com.hujian.switcher.flowable.SwitcherObservableService;
 import com.hujian.switcher.utils.SwitcherFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -28,28 +31,31 @@ import java.util.concurrent.TimeUnit;
  * Created by hujian06 on 2017/8/23.
  */
 @SuppressWarnings(value = "unchecked")
-public class SampleFlowableDemo {
+public class BlockFlowDemo {
     public static void main(String ... args) throws InterruptedException {
         try {
             SwitcherFactory
                     .createSwitcherObservable()
-                    .switchToComputeExecutor(true)
+                    .switchToMultiComputeExecutor(true)
                     .transToRichnessSwitcher()
                     .transToResultfulSwitcher()
                     .transToSampleSwitcherObservable()
-                    .createSwitcherObservable(new SwitcherObservableOnSubscribe() {
+                    .createSwitcherBlockingObservable(new SwitcherBlockingObservableOnSubscribe() {
                         @Override
-                        public void subscribe(SwitcherObservableService observer) throws InterruptedException {
+                        public void subscribe(SwitcherBlockingObserverService observer) throws InterruptedException,
+                                InstantiationException, SwitcherClassTokenErrException, IllegalAccessException {
+                            observer.send("hujian");
+                            observer.send("hujian");
                             observer.send("hujian");
                             observer.send("hujian");
                             observer.send("hujian");
                             observer.send("hujian");
                         }
                     })
-                    .delaySubscribe(new SwitcherObservableService() {
+                    .subscribe(new SwitcherBlockingObserverService() {
                         @Override
                         protected void ctrl(SampleSwitcherObservable.SwitcherObserverInformation information) {
-                            information.getDisposable().request(2);
+                            information.getDisposable().request(4);
                         }
 
                         @Override
@@ -58,34 +64,13 @@ public class SampleFlowableDemo {
                         }
 
                         @Override
-                        protected void onEmit(Object data) throws InterruptedException {
-                            System.out.println("recv data from observable:" + data);
-                        }
+                        protected void onEmit(SwitcherBuffer buffer) throws InterruptedException {
 
-                        @Override
-                        protected void onError(SwitcherFlowException e) {
+                            String data = (String) buffer.get();
 
-                        }
-
-                        @Override
-                        protected void onComplete() {
-
-                        }
-                    }, TimeUnit.MICROSECONDS, 100);
-                    /*.subscribe(new SwitcherObservableService() {
-                        @Override
-                        protected void ctrl(SampleSwitcherObservable.SwitcherObserverInformation information) {
-                            information.getDisposable().request(2);
-                        }
-
-                        @Override
-                        protected void onStart() {
-
-                        }
-
-                        @Override
-                        protected void onEmit(Object data) throws InterruptedException {
                             System.out.println("recv data:" + data);
+                            //TimeUnit.SECONDS.sleep(1);
+
                         }
 
                         @Override
@@ -97,13 +82,13 @@ public class SampleFlowableDemo {
                         protected void onComplete() {
 
                         }
-                    });*/
+                    });
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(1);
             SwitcherFactory.shutdown();
         }
     }
-
 }

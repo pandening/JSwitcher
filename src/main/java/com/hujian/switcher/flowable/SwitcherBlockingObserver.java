@@ -19,7 +19,16 @@ package com.hujian.switcher.flowable;
 /**
  * Created by hujian06 on 2017/8/23.
  */
-public class SwitcherFlowableBuffer<T> {
+public interface SwitcherBlockingObserver<T> {
 
+    void control(SampleSwitcherObservable.SwitcherObserverInformation information);
+
+    void start();
+
+    void emit(T data) throws InterruptedException;
+
+    void errors(SwitcherFlowException e);
+
+    void complete();
 
 }

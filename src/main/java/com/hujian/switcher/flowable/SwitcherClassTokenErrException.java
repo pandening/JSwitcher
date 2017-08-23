@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
+
 package com.hujian.switcher.flowable;
 
+import com.hujian.switcher.core.SwitchRunntimeException;
+
 /**
- * Created by hujian06 on 2017/8/22.
+ * Created by hujian06 on 2017/8/23.
  */
-public interface SwitcherObserver<T> {
+public class SwitcherClassTokenErrException extends SwitchRunntimeException {
 
-    void control(SampleSwitcherObservable.SwitcherObserverInformation information);
+    public SwitcherClassTokenErrException() {
+    }
 
-    void start();
+    public SwitcherClassTokenErrException(String msg) {
+        super(msg);
+    }
 
-    void emit(T data);
+    public SwitcherClassTokenErrException(Throwable cause) {
+        super(cause);
+    }
 
-    void errors(SwitcherFlowException e);
-
-    void complete();
+    public SwitcherClassTokenErrException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

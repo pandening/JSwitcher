@@ -39,15 +39,17 @@ import java.util.concurrent.atomic.AtomicLong;
 public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements SwitcherObservable<T> {
     private static final Logger LOGGER = Logger.getLogger(SampleSwitcherObservable.class);
 
-    private List<SwitcherObserver<T>> subscribeOnList = null; //multi-subscribe observer
-    private Map<SwitcherObserver<T>, SwitcherObserverInformation> switcherObserverInformationMap = null;
+    private List<SwitcherObservableService<T>> subscribeOnList = null; //multi-subscribe observer
+    private Map<SwitcherObservableService<T>, SwitcherObserverInformation> switcherObserverInformationMap = null;
 
     private List<SwitcherConsumer<T>> switcherConsumerList = null;
 
-    private SwitcherFlowableBuffer<T> switcherFlowableBuffer; // the buffer
+    private List<SwitcherBlockingObserverService<T>> switcherBlockingObserverList = null;
+    private Map<SwitcherBlockingObserverService<T>, SwitcherObserverInformation> blockSwitcherObserverInformationMap = null;
 
     private SwitcherObservableOnSubscribe<T> switcherObservableOnSubscribe = null;
     private SwitcherSampleObservableOnSubscribe<T> switcherConsumerOnSubscribe = null;
+    private SwitcherBlockingObservableOnSubscribe<T> switcherBlockingObservableOnSubscribe = null;
 
     private Statistic statistic = SampleSwitcherStatistic.getInstance(); // the statistic
     private static final String DEFAULT_SESSION_ID = "flowable-switcher-statistic";
@@ -55,11 +57,14 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
 
     private final SwitcherLifeCycleRunner switcherLifeCycleRunner = new SwitcherLifeCycleRunner(); // the runner
     private final SwitcherSampleLifeCycleRunner sampleLifeCycleRunner = new SwitcherSampleLifeCycleRunner(); // the sample runner
+    private final SwitcherBlockingLifeCycleRunner blockingLifeCycleRunner = new SwitcherBlockingLifeCycleRunner();// the blocking runner
 
     public SampleSwitcherObservable() {
         subscribeOnList = new ArrayList<>();
         switcherObserverInformationMap = new ConcurrentHashMap<>();
         switcherConsumerList = new ArrayList<>();
+        switcherBlockingObserverList = new ArrayList<>();
+        blockSwitcherObserverInformationMap = new ConcurrentHashMap<>();
     }
 
     /**
@@ -82,10 +87,21 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         return this;
     }
 
+    /**
+     * create a blocking queue observable
+     * @param observableOnSubscribe subscribe
+     * @return  e
+     */
+    public SampleSwitcherObservable createSwitcherBlockingObservable(SwitcherBlockingObservableOnSubscribe<T> observableOnSubscribe) {
+        this.switcherBlockingObservableOnSubscribe = observableOnSubscribe;
+        return this;
+    }
+
     @Override
     public SampleSwitcherObservable subscribe(SwitcherConsumer<T> consumer) throws InterruptedException {
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe != null
-                && this.switcherObservableOnSubscribe == null, "check please!");
+                && this.switcherObservableOnSubscribe == null
+                && this.switcherBlockingObservableOnSubscribe == null, "check please!");
         this.switcherConsumerList.add(consumer);
 
         actualSubscribe();
@@ -93,32 +109,55 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     }
 
     @Override
-    public synchronized SampleSwitcherObservable subscribe(SwitcherObserver<T> switcherObserver)
-            throws InterruptedException {
+    public SampleSwitcherObservable subscribe(SwitcherBlockingObserverService<T> blockingObserver) throws InterruptedException {
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
-                && this.switcherObservableOnSubscribe != null, "check please!");
-        this.subscribeOnList.add(switcherObserver);
+                && this.switcherObservableOnSubscribe == null
+                && this.switcherBlockingObservableOnSubscribe != null, "check please!");
+        this.switcherBlockingObserverList.add(blockingObserver);
+
         SwitcherDisposable _disposable = createSwitcherDisposable();
-        this.switcherObserverInformationMap.put(switcherObserver,
-                new SwitcherObserverInformation(_disposable));
-        switcherObserver.control(_disposable);
+        SwitcherBuffer<T> _buffer = createBlockingBuffer();
+
+        SwitcherObserverInformation information = new SwitcherObserverInformation(_disposable, _buffer);
+
+        this.blockSwitcherObserverInformationMap.put(blockingObserver, information);
+
+        blockingObserver.control(information);
+
         actualSubscribe();
 
         return this;
     }
 
     @Override
-    public synchronized SampleSwitcherObservable subscribe(List<SwitcherObserver<T>> switcherObserverList)
+    public synchronized SampleSwitcherObservable subscribe(SwitcherObservableService<T> switcherObserver)
             throws InterruptedException {
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
-                && this.switcherObservableOnSubscribe != null, "check please!");
-        this.subscribeOnList.addAll(switcherObserverList);
-        for (SwitcherObserver<T> observable : switcherObserverList) {
-            SwitcherDisposable _disposable = createSwitcherDisposable();
-            this.switcherObserverInformationMap.put(observable,
-                    new SwitcherObserverInformation(_disposable));
+                && this.switcherObservableOnSubscribe != null
+                && this.switcherBlockingObservableOnSubscribe == null, "check please!");
+        this.subscribeOnList.add(switcherObserver);
+        SwitcherDisposable _disposable = createSwitcherDisposable();
+        SwitcherObserverInformation information = new SwitcherObserverInformation(_disposable);
+        this.switcherObserverInformationMap.put(switcherObserver, information);
+        switcherObserver.control(information);
+        actualSubscribe();
 
-            observable.control(_disposable);
+        return this;
+    }
+
+    @Override
+    public synchronized SampleSwitcherObservable subscribe(List<SwitcherObservableService<T>> switcherObserverList)
+            throws InterruptedException {
+        Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
+                && this.switcherObservableOnSubscribe != null
+                && this.switcherBlockingObservableOnSubscribe == null, "check please!");
+        this.subscribeOnList.addAll(switcherObserverList);
+        for (SwitcherObservableService<T> observable : switcherObserverList) {
+            SwitcherDisposable _disposable = createSwitcherDisposable();
+            SwitcherObserverInformation information = new SwitcherObserverInformation(_disposable);
+            this.switcherObserverInformationMap.put(observable, information);
+
+            observable.control(information);
         }
 
         actualSubscribe();
@@ -128,16 +167,42 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
 
     @Override
     public synchronized SampleSwitcherObservable
-    delaySubscribe(SwitcherObserver<T> switcherObserver, TimeUnit timeUnit, long time) throws InterruptedException {
+    delaySubscribe(SwitcherObservableService<T> switcherObserver, TimeUnit timeUnit, long time) throws InterruptedException {
         Preconditions.checkArgument(timeUnit != null, "timeUnit must !null");
         this.subscribeOnList.add(switcherObserver);
         SwitcherDisposable _disposable = createSwitcherDisposable();
-        this.switcherObserverInformationMap.put(switcherObserver,
-                new SwitcherObserverInformation(_disposable, true, timeUnit, time));
-        switcherObserver.control(_disposable);
+        SwitcherObserverInformation information =
+                new SwitcherObserverInformation(_disposable, true, timeUnit, time, null);
+        this.switcherObserverInformationMap.put(switcherObserver, information);
+        switcherObserver.control(information);
         actualSubscribe();
 
         return this;
+    }
+
+    private void doBlockingLifeCycle() throws InterruptedException, InstantiationException, SwitcherClassTokenErrException, IllegalAccessException {
+        if (this.switcherBlockingObserverList != null && !this.switcherBlockingObserverList.isEmpty()) {
+            for (SwitcherBlockingObserverService<T> observer : this.switcherBlockingObserverList) {
+                synchronized (SampleSwitcherObservable.class) {
+                    if (observer != null) {
+                        SwitcherObserverInformation information
+                                = this.blockSwitcherObserverInformationMap.get(observer);
+                        SwitcherDisposable disposable = information.getDisposable();
+                        if (!disposable.isDispose()) {
+                            observer.start();
+                            long req = disposable.req();
+                            long send = information.getSendCount().get();
+                            if (send < req && !information.getError() && !information.getComplete()) {
+                                this.switcherBlockingObservableOnSubscribe.subscribe(observer);
+                            }
+                            //complete
+                            disposable.dispose();
+                            observer.complete();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -155,9 +220,9 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         }
     }
 
-    private void doLifeCycle() {
+    private void doLifeCycle() throws InterruptedException {
         if (this.subscribeOnList != null && !this.subscribeOnList.isEmpty()) {
-            for (SwitcherObserver<T> observer : this.subscribeOnList) {
+            for (SwitcherObservableService<T> observer : this.subscribeOnList) {
                 synchronized (SampleSwitcherObservable.class) {
                     SwitcherObserverInformation information = this.switcherObserverInformationMap.get(observer);
                     if (observer == null) {
@@ -177,8 +242,7 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                     long req = disposable.req();
                     long send = information.getSendCount().get();
 
-                    while (send < req && !information.getError() && !information.getComplete()) {
-                        send = information.getSendCount().incrementAndGet();
+                    if (send < req && !information.getError() && !information.getComplete()) {
                         boolean isDelay = information.getDelay();
                         if (isDelay) {
                             TimeUnit unit = information.getTimeUnit();
@@ -202,7 +266,6 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                         }
                     }
                     information.setComplete(true);
-                    send = information.getSendCount().get();
                     if (-1 == req) {
                         this.switcherObservableOnSubscribe.subscribe(observer);
                         disposable.dispose();
@@ -232,13 +295,35 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
             switchToExecutor(executorService);
         }
 
+        //actual run the job here.
         if (switcherObservableOnSubscribe != null) {
             //run the job on the executorService
             executorService.submit(switcherLifeCycleRunner);
         } else if (switcherConsumerOnSubscribe != null) {
             executorService.submit(sampleLifeCycleRunner);
-        } else {
-            //TODO : more type.
+        } else if (switcherBlockingObservableOnSubscribe != null){
+            executorService.submit(blockingLifeCycleRunner);
+        }
+
+    }
+
+    /**
+     * run at the current executorService
+     */
+    private class SwitcherBlockingLifeCycleRunner implements Runnable {
+        @Override
+        public void run() {
+            Exception exception = null;
+            long startTime = System.currentTimeMillis();
+            try {
+                doBlockingLifeCycle();
+            } catch (Exception e) {
+                LOGGER.warn("exception while doLifeCycle:" + e);
+                exception = e;
+            } finally {
+                long costTime = System.currentTimeMillis() - startTime;
+                statisticHelper(exception,DEFAULT_SESSION_ID, TAG, "", costTime);
+            }
         }
     }
 
@@ -257,15 +342,7 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                 exception = e;
             } finally {
                 long costTime = System.currentTimeMillis() - startTime;
-                if (null == exception) {
-                    //success
-                    statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
-                    statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
-                } else {
-                    //error
-                    statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
-                    statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
-                }
+                statisticHelper(exception,DEFAULT_SESSION_ID, TAG, "", costTime);
             }
         }
     }
@@ -281,25 +358,16 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
             try {
                 doLifeCycle();
             } catch (Exception e) {
-                LOGGER.warn("exception while doLifeCycle:" + e);
+                LOGGER.warn("get exception while doLifeCycle:" + e);
                 exception = e;
             } finally {
                 long costTime = System.currentTimeMillis() - startTime;
-                if (null == exception) {
-                     //success
-                    statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
-                    statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
-                } else {
-                    exception.printStackTrace();
-                    //error
-                    statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
-                    statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
-                }
+                statisticHelper(exception,DEFAULT_SESSION_ID, TAG, "", costTime);
             }
         }
     }
 
-    private class SwitcherObserverInformation {
+    public static class SwitcherObserverInformation<T> {
         private SwitcherDisposable disposable = null;
         private Boolean isDelay = false;
         private TimeUnit timeUnit = null;
@@ -307,9 +375,10 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         private AtomicLong sendCount = null;
         private Boolean isComplete = false;
         private Boolean isError = false;
+        private SwitcherBuffer<T> buffer = null;
 
         public SwitcherObserverInformation(SwitcherDisposable disposable, boolean _isDelay,
-                                           TimeUnit unit, long _delayTime) {
+                                           TimeUnit unit, long _delayTime, SwitcherBuffer<T> buffer) {
             Preconditions.checkArgument(disposable != null,
                     "disposable is null");
             this.disposable = disposable;
@@ -321,11 +390,17 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
             }
 
             this.sendCount = new AtomicLong(0);
+            this.buffer = buffer;
         }
 
         public SwitcherObserverInformation(SwitcherDisposable disposable) {
-            this(disposable, false, null, 0);
+            this(disposable, false, null, 0, null);
         }
+
+        public SwitcherObserverInformation(SwitcherDisposable disposable, SwitcherBuffer<T> buffer) {
+            this(disposable, false, null, 0, buffer);
+        }
+
 
         public SwitcherDisposable getDisposable() {
             return disposable;
@@ -378,6 +453,22 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         public void setError(Boolean error) {
             isError = error;
         }
+
+        public SwitcherBuffer<T> getBuffer() {
+            return buffer;
+        }
+
+        public void setBuffer(SwitcherBuffer<T> buffer) {
+            this.buffer = buffer;
+        }
+    }
+
+    private SwitcherBuffer<T> createBlockingBuffer(int blockingQueueSize) {
+        return new BlockingSwitcherBuffer<>(blockingQueueSize);
+    }
+
+    private SwitcherBuffer<T> createBlockingBuffer() {
+        return new BlockingSwitcherBuffer<>();
     }
 
     private SwitcherDisposable createSwitcherDisposable() {
@@ -458,6 +549,18 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                     e.printStackTrace();
                 }
                 break;
+        }
+    }
+
+    private void statisticHelper(Exception e, String session, String tag, String params, long costTime) {
+        if (null == e) {
+            //success
+            statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
+            statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
+        } else {
+            //error
+            statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
+            statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", e);
         }
     }
 
