@@ -99,6 +99,9 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
 
     @Override
     public SampleSwitcherObservable subscribe(SwitcherConsumer<T> consumer) throws InterruptedException {
+        this.switcherBlockingObservableOnSubscribe = null;
+        this.switcherObservableOnSubscribe = null;
+
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe != null
                 && this.switcherObservableOnSubscribe == null
                 && this.switcherBlockingObservableOnSubscribe == null, "check please!");
@@ -109,12 +112,15 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     }
 
     @Override
-    public SampleSwitcherObservable subscribe(SwitcherBlockingObserverService<T> blockingObserver) throws InterruptedException {
+    public SampleSwitcherObservable subscribe(SwitcherBlockingObserverService<T> blockingObserver)
+            throws InterruptedException {
+        this.switcherConsumerOnSubscribe = null;
+        this.switcherObservableOnSubscribe = null;
+
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
                 && this.switcherObservableOnSubscribe == null
                 && this.switcherBlockingObservableOnSubscribe != null, "check please!");
         this.switcherBlockingObserverList.add(blockingObserver);
-
         SwitcherDisposable _disposable = createSwitcherDisposable();
         SwitcherBuffer<T> _buffer = createBlockingBuffer();
 
@@ -132,14 +138,19 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     @Override
     public synchronized SampleSwitcherObservable subscribe(SwitcherObservableService<T> switcherObserver)
             throws InterruptedException {
+        this.switcherConsumerOnSubscribe = null;
+        this.switcherBlockingObservableOnSubscribe = null;
+
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
                 && this.switcherObservableOnSubscribe != null
                 && this.switcherBlockingObservableOnSubscribe == null, "check please!");
+
         this.subscribeOnList.add(switcherObserver);
         SwitcherDisposable _disposable = createSwitcherDisposable();
         SwitcherObserverInformation information = new SwitcherObserverInformation(_disposable);
         this.switcherObserverInformationMap.put(switcherObserver, information);
         switcherObserver.control(information);
+
         actualSubscribe();
 
         return this;
@@ -148,6 +159,9 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     @Override
     public synchronized SampleSwitcherObservable subscribe(List<SwitcherObservableService<T>> switcherObserverList)
             throws InterruptedException {
+        this.switcherConsumerOnSubscribe = null;
+        this.switcherBlockingObservableOnSubscribe = null;
+
         Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
                 && this.switcherObservableOnSubscribe != null
                 && this.switcherBlockingObservableOnSubscribe == null, "check please!");
