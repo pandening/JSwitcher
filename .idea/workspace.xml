@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$2.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherBlockingLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherBlockingLifeCycleRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherLifeCycleRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherObserverInformation.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherObserverInformation.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherSampleLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherSampleLifeCycleRunner.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SwitcherObservableService.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SwitcherObservableService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java" />
-    </list>
+    <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -117,8 +106,8 @@
       <file leaf-file-name="FlowRichDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="701">
-              <caret line="72" column="25" lean-forward="true" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+            <state relative-caret-position="341">
+              <caret line="159" column="32" lean-forward="true" selection-start-line="159" selection-start-column="32" selection-end-line="159" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -1144,12 +1133,12 @@
       <workItem from="1503231129011" duration="6317000" />
       <workItem from="1503239650997" duration="49848000" />
       <workItem from="1503408862543" duration="30452000" />
-      <workItem from="1503484198173" duration="7025000" />
+      <workItem from="1503484198173" duration="7521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141345000" />
+    <option name="totallyTimeSpent" value="141841000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="815" extended-state="0" />
@@ -1652,8 +1641,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="701">
-          <caret line="72" column="25" lean-forward="true" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+        <state relative-caret-position="341">
+          <caret line="159" column="32" lean-forward="true" selection-start-line="159" selection-start-column="32" selection-end-line="159" selection-end-column="32" />
           <folding />
         </state>
       </provider>
