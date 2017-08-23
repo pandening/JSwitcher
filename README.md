@@ -14,7 +14,7 @@
        在设计上，JSwitcher希望能不停的扩展，吸收一些优秀的技术以及思想，使得JSwitcher的能力更加完善。所以JSwitcher设计了核心“core”，这些内容不
     太可能随着时间而改变，除了“core”的内容都可以是“插件式”的内容，可插拔，但是是有顺序的，现存的一些内容之间是互相继承的关系（或者未来会变得没有关   系？），总之未来对JSwitcher的扩展是不会停歇的。
     
- ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure-v1.png)   
+ ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure-v2.png)   
     
      上面展示的就是JSwitcher中核心类图，这样的继承方式是否值得继续下去还未知，但是现在依然希望向着这样的方式扩展下去。 
      JSwitcher 还支持线程类别适配，你可以为你的工作切换到合适类别的线程，比如I/O密集型、计算密集型，下面展示了你可以切换到的线程类别：
