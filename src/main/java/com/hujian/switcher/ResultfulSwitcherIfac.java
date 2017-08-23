@@ -16,6 +16,8 @@
 
 package com.hujian.switcher;
 
+import com.hujian.switcher.flowable.SampleSwitcherObservable;
+
 /**
  * Created by hujian06 on 2017/8/20.
  */
@@ -37,6 +39,9 @@ public interface ResultfulSwitcherIfac<T> extends RichnessSwitcherIface {
      */
     ResultfulSwitcherIfac asyncApply(SwitcherRunner<T> runner, SwitcherResultfulEntry resultfulEntry) throws InterruptedException;
 
-
+    /**
+     * @return object of SampleSwitcherObservable
+     */
+    SampleSwitcherObservable transToSampleSwitcherObservable();
 
 }

@@ -23,6 +23,8 @@ import com.hujian.switcher.RichnessSwitcherIface;
 import com.hujian.switcher.SampleSwitcher;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.Switcher;
+import com.hujian.switcher.flowable.SampleSwitcherObservable;
+import com.hujian.switcher.flowable.SwitcherObservable;
 import com.hujian.switcher.statistic.SampleSwitcherStatistic;
 import com.hujian.switcher.statistic.Statistic;
 import com.hujian.switcher.statistic.SwitcherStatisticEntry;
@@ -41,8 +43,23 @@ public final class SwitcherFactory {
     private static Switcher switcher;
     private static RichnessSwitcherIface richnessSwitcherIface;
     private static ResultfulSwitcherIfac resultfulSwitcherIfac;
+    private static SwitcherObservable switcherObservable;
 
     private static Statistic statistic = SampleSwitcherStatistic.getInstance();
+
+    public static SwitcherObservable getSwitcherObservable() {
+        if (switcherObservable != null) {
+            return switcherObservable;
+        } else if (resultfulSwitcherIfac != null) {
+            return (SwitcherObservable) resultfulSwitcherIfac.getCurrentSwitcher();
+        } else if (richnessSwitcherIface != null) {
+            return (SwitcherObservable) richnessSwitcherIface.getCurrentSwitcher();
+        } else if (switcher != null) {
+            return (SwitcherObservable) switcher.getCurrentSwitcher();
+        } else {
+            return null;
+        }
+    }
 
     public static ResultfulSwitcherIfac getCurResultfulSwitcherIfac() {
         if (resultfulSwitcherIfac != null) {
@@ -70,6 +87,17 @@ public final class SwitcherFactory {
                 }
             }
         }
+    }
+
+    public static SwitcherObservable createSwitcherObservable() {
+        if (switcherObservable == null) {
+            synchronized (SwitcherFactory.class) {
+                if (switcherObservable == null) {
+                    switcherObservable = new SampleSwitcherObservable();
+                }
+            }
+        }
+        return switcherObservable;
     }
 
     public static Switcher createShareSwitcher() {
@@ -123,10 +151,17 @@ public final class SwitcherFactory {
         }
     }
 
+    public static void shutdownSwitcherObservable() throws InterruptedException {
+        if (null != switcherObservable) {
+            switcherObservable.clear();
+        }
+    }
+
     public static void shutdown() throws InterruptedException {
         shutdownSwitcher();;
         shutdownRichnessSwitcher();
         shutdownResultfulSwitcher();
+        shutdownSwitcherObservable();
 
         //do not forget the default-executorService
         SwitchExecutorService.defaultRunExecutorService.shutdownNow();
