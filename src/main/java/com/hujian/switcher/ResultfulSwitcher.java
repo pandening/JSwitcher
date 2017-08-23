@@ -20,6 +20,7 @@ import com.google.common.base.Preconditions;
 import com.hujian.switcher.core.ExecutorType;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.SwitchRunntimeException;
+import com.hujian.switcher.flowable.SampleSwitcherObservable;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -125,6 +126,11 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
         resultfulEntry.setCompletableFutureData(result);
 
         return this;
+    }
+
+    @Override
+    public SampleSwitcherObservable transToSampleSwitcherObservable() {
+        return (SampleSwitcherObservable) this;
     }
 
 }
