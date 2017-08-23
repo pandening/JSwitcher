@@ -14,10 +14,9 @@
        在设计上，JSwitcher希望能不停的扩展，吸收一些优秀的技术以及思想，使得JSwitcher的能力更加完善。所以JSwitcher设计了核心“core”，这些内容不
     太可能随着时间而改变，除了“core”的内容都可以是“插件式”的内容，可插拔，但是是有顺序的，现存的一些内容之间是互相继承的关系（或者未来会变得没有关   系？），总之未来对JSwitcher的扩展是不会停歇的。
     
- ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure.png)   
+ ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/class-structure-v1.png)   
     
-     上面展示的就是JSwitcher中核心类图，ResufulSwitcher目前来说是集大成者，所以你可以使用它来完成你需要做的事情。
-     
+     上面展示的就是JSwitcher中核心类图，这样的继承方式是否值得继续下去还未知，但是现在依然希望向着这样的方式扩展下去。 
      JSwitcher 还支持线程类别适配，你可以为你的工作切换到合适类别的线程，比如I/O密集型、计算密集型，下面展示了你可以切换到的线程类别：
      
 ```java
@@ -158,6 +157,132 @@
 
 ```
 
+也或者：
+
+```java
+           SwitcherFactory
+                    .createSwitcherObservable()
+                    .switchToMultiComputeExecutor(true)
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .createSwitcherObservable(new SwitcherSampleObservableOnSubscribe() {
+                        @Override
+                        public void subscribe(SwitcherConsumer consumer) {
+                            consumer.accept("i am hujian");
+                            consumer.accept("i am hujian v1");
+                            consumer.accept("i am hujian v2");
+                        }
+                    })
+                    .switchToIoExecutor(true)
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .subscribe(new SwitcherConsumer() {
+                        @Override
+                        public void accept(Object data) {
+                            System.out.println("recv data:" + data);
+                        }
+                    })
+                    .switchToNewExecutor()
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .apply(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("current thread:" + Thread.currentThread().getName());
+                        }
+                    }, true)
+                    .switchToNewIoExecutor()
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .createSwitcherObservable(new SwitcherObservableOnSubscribe() {
+                        @Override
+                        public void subscribe(SwitcherObservableService observer) throws InterruptedException {
+                            for (int i = 0; i < 10; i ++) {
+                                observer.send("hhh " + i);
+                            }
+                         }
+                    })
+                    .switchToIoExecutor(true)
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .subscribe(new SwitcherObservableService() {
+                        @Override
+                        protected void ctrl(SampleSwitcherObservable.SwitcherObserverInformation information) {
+                            information.getDisposable().request(2);
+                        }
+
+                        @Override
+                        protected void onStart() {
+
+                        }
+
+                        @Override
+                        protected void onEmit(Object data) throws InterruptedException {
+                            System.out.println("get data:" + data);
+                        }
+
+                        @Override
+                        protected void onError(SwitcherFlowException e) {
+
+                        }
+
+                        @Override
+                        protected void onComplete() {
+
+                        }
+                    })
+                    .switchToMultiIoExecutor(true)
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .createSwitcherBlockingObservable(new SwitcherBlockingObservableOnSubscribe() {
+                        @Override
+                        public void subscribe(SwitcherBlockingObserverService observer) throws InterruptedException,         
+                        InstantiationException, SwitcherClassTokenErrException, IllegalAccessException {
+                            for (int i = 0;i < 10; i ++) {
+                                observer.send("hahaha " + i);
+                            }
+                        }
+                    })
+                    .switchToMultiIoExecutor(false)
+                    .transToRichnessSwitcher()
+                    .transToResultfulSwitcher()
+                    .transToSampleSwitcherObservable()
+                    .subscribe(new SwitcherBlockingObserverService() {
+                        @Override
+                        protected void ctrl(SampleSwitcherObservable.SwitcherObserverInformation information) {
+                            information.getDisposable().request(4);
+                        }
+
+                        @Override
+                        protected void onStart() {
+
+                        }
+
+                        @Override
+                        protected void onEmit(SwitcherBuffer buffer) throws InterruptedException {
+                            System.out.println("ppp ->" + buffer.get());
+                        }
+
+                        @Override
+                        protected void onError(SwitcherFlowException e) {
+
+                        }
+
+                        @Override
+                        protected void onComplete() {
+
+                        }
+                    });
+
+```
+
+
      哈哈哈，就问你怕不怕？！！！
      当然，在结束任务的时候，需要显示的shutdown，通过SwitcherFactory.shutdown可以完成。 
      
@@ -174,6 +299,11 @@
 【1】增加简单的统计功能，对某些功能代码进行运行时统计，可以简单观察调用成功次数，调用时间，失败次数，失败时间等信息
 【2】完善代码，增加demo样例，修复几个bug，此处说明：不推荐使用注解来切换线程，还是使用SwitcherFactory来做switch
     比较可控，使用注解可能出现和预期不符的结果，未来的版本中可能会将注解部分代码下掉，或者做一些恰当的优化。
+#2017-08-23#    
+【1】增加subscribe功能，现在，你可以在切换线程之后再线程里面进行SwitcherObservable和SwitcherObserver的部署，然后在切换好
+    线程之后将它们通过subscribe关联起来。目前提供了较为简单的subscribe功能，未来将不断更新加入更为丰富的内容。
+【2】修复了一些已知的bug，添加了更多的demo代码。目前还存在某些不可预知的bug，未来将排查修正
+【3】1.0.1版本，基本功能（switch）没有变化，添加了一些新的特性，包括statistic、subscribe等。
 ```
 
 和我联系？
