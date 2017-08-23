@@ -18,6 +18,7 @@ package com.hujian.switcher.example;
 
 import com.hujian.switcher.flowable.SwitcherDisposable;
 import com.hujian.switcher.flowable.SwitcherFlowException;
+import com.hujian.switcher.flowable.SwitcherObservableOnSubscribe;
 import com.hujian.switcher.flowable.SwitcherObserver;
 import com.hujian.switcher.utils.SwitcherFactory;
 
@@ -37,8 +38,8 @@ public class SampleFlowableDemo {
                     .transToRichnessSwitcher()
                     .transToResultfulSwitcher()
                     .transToSampleSwitcherObservable()
-                    .createSwitcherObservable(observer ->
-                            observer.emit("hujian")).delaySubscribe(new SwitcherObserver() {
+                    .createSwitcherObservable((SwitcherObservableOnSubscribe) observer -> observer.emit("hujian"))
+                    .delaySubscribe(new SwitcherObserver() {
                         @Override
                         public void control(SwitcherDisposable disposable) {
                             //disposable.request(10); //default is -1
