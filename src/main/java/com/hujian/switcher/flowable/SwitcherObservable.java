@@ -27,6 +27,13 @@ import java.util.concurrent.TimeUnit;
 public interface SwitcherObservable<T> extends ResultfulSwitcherIfac{
 
     /**
+     * sample consumer
+     * @param consumer the sample consumer
+     * @return the context
+     */
+    SampleSwitcherObservable subscribe(SwitcherConsumer<T> consumer) throws InterruptedException;
+
+    /**
      * @param switcherObserver subscribe on this observable
      */
     SampleSwitcherObservable subscribe(SwitcherObserver<T> switcherObserver) throws InterruptedException;

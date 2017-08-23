@@ -42,19 +42,24 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     private List<SwitcherObserver<T>> subscribeOnList = null; //multi-subscribe observer
     private Map<SwitcherObserver<T>, SwitcherObserverInformation> switcherObserverInformationMap = null;
 
+    private List<SwitcherConsumer<T>> switcherConsumerList = null;
+
     private SwitcherFlowableBuffer<T> switcherFlowableBuffer; // the buffer
 
     private SwitcherObservableOnSubscribe<T> switcherObservableOnSubscribe = null;
+    private SwitcherSampleObservableOnSubscribe<T> switcherConsumerOnSubscribe = null;
 
     private Statistic statistic = SampleSwitcherStatistic.getInstance(); // the statistic
     private static final String DEFAULT_SESSION_ID = "flowable-switcher-statistic";
     private final String TAG = this.getClass().getName();
 
     private final SwitcherLifeCycleRunner switcherLifeCycleRunner = new SwitcherLifeCycleRunner(); // the runner
+    private final SwitcherSampleLifeCycleRunner sampleLifeCycleRunner = new SwitcherSampleLifeCycleRunner(); // the sample runner
 
     public SampleSwitcherObservable() {
         subscribeOnList = new ArrayList<>();
         switcherObserverInformationMap = new ConcurrentHashMap<>();
+        switcherConsumerList = new ArrayList<>();
     }
 
     /**
@@ -67,36 +72,31 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         return this;
     }
 
-    private SwitcherDisposable createSwitcherDisposable() {
-        return new SwitcherDisposable() {
-            private Boolean _isDispose = false;
-            private Long _req = -1L;
+    /**
+     * create a sample switcher Observable
+     * @param onSubscribe the subscriber
+     * @return
+     */
+    public SampleSwitcherObservable createSwitcherObservable(SwitcherSampleObservableOnSubscribe<T> onSubscribe) {
+        this.switcherConsumerOnSubscribe = onSubscribe;
+        return this;
+    }
 
-            @Override
-            public void dispose() {
-                _isDispose = true;
-            }
+    @Override
+    public SampleSwitcherObservable subscribe(SwitcherConsumer<T> consumer) throws InterruptedException {
+        Preconditions.checkArgument(this.switcherConsumerOnSubscribe != null
+                && this.switcherObservableOnSubscribe == null, "check please!");
+        this.switcherConsumerList.add(consumer);
 
-            @Override
-            public Boolean isDispose() {
-                return _isDispose;
-            }
-
-            @Override
-            public void request(long req) {
-                this._req  = req;
-            }
-
-            @Override
-            public long req() {
-                return _req;
-            }
-        };
+        actualSubscribe();
+        return this;
     }
 
     @Override
     public synchronized SampleSwitcherObservable subscribe(SwitcherObserver<T> switcherObserver)
             throws InterruptedException {
+        Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
+                && this.switcherObservableOnSubscribe != null, "check please!");
         this.subscribeOnList.add(switcherObserver);
         SwitcherDisposable _disposable = createSwitcherDisposable();
         this.switcherObserverInformationMap.put(switcherObserver,
@@ -110,6 +110,8 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
     @Override
     public synchronized SampleSwitcherObservable subscribe(List<SwitcherObserver<T>> switcherObserverList)
             throws InterruptedException {
+        Preconditions.checkArgument(this.switcherConsumerOnSubscribe == null
+                && this.switcherObservableOnSubscribe != null, "check please!");
         this.subscribeOnList.addAll(switcherObserverList);
         for (SwitcherObserver<T> observable : switcherObserverList) {
             SwitcherDisposable _disposable = createSwitcherDisposable();
@@ -136,6 +138,21 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         actualSubscribe();
 
         return this;
+    }
+
+    /**
+     * run the sample life cycle
+     */
+    private void doSampleLifeCycle() {
+        if (this.switcherConsumerList != null && !this.switcherConsumerList.isEmpty()) {
+            for (SwitcherConsumer consumer : this.switcherConsumerList) {
+                synchronized (SampleSwitcherObservable.class) {
+                    if (consumer != null) {
+                        this.switcherConsumerOnSubscribe.subscribe(consumer);
+                    }
+                }
+            }
+        }
     }
 
     private void doLifeCycle() {
@@ -166,64 +183,11 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                         if (isDelay) {
                             TimeUnit unit = information.getTimeUnit();
                             long time = information.getDelayTime();
-                            ExecutorService currentExecutorService
-                                    = getCurrentExecutorService().getExecutorService();
-                            switch (unit) {
-                                case NANOSECONDS:
-                                    try {
-                                        TimeUnit.NANOSECONDS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case MICROSECONDS:
-                                    try {
-                                        TimeUnit.MICROSECONDS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case MILLISECONDS:
-                                    try {
-                                        TimeUnit.MILLISECONDS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case SECONDS:
-                                    try {
-                                        TimeUnit.SECONDS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case MINUTES:
-                                    try {
-                                        TimeUnit.MINUTES.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case HOURS:
-                                    try {
-                                        TimeUnit.HOURS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                case DAYS:
-                                    try {
-                                        TimeUnit.DAYS.sleep(time);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                            }
+                            sleepHelper(unit, time); // delay
                             Exception exception = null;
                             try {
-                                switchToExecutor(currentExecutorService);
                                 switcherObservableOnSubscribe.subscribe(observer);
-                            } catch (InterruptedException e) {
+                            } catch (Exception e) {
                                 LOGGER.error("oops,switchToExecutor Error");
                                 exception = e;
                                 e.printStackTrace();
@@ -248,6 +212,10 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
         }
     }
 
+    /**
+     * according to the subscribe producer,do the right thing .
+     * @throws InterruptedException e
+     */
     private void actualSubscribe() throws InterruptedException {
         SwitchExecutorServiceEntry executorServiceEntry = getCurrentExecutorService();
         if (executorServiceEntry == null ||
@@ -264,8 +232,42 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
             switchToExecutor(executorService);
         }
 
-        //run the job on the executorService
-        executorService.submit(switcherLifeCycleRunner);
+        if (switcherObservableOnSubscribe != null) {
+            //run the job on the executorService
+            executorService.submit(switcherLifeCycleRunner);
+        } else if (switcherConsumerOnSubscribe != null) {
+            executorService.submit(sampleLifeCycleRunner);
+        } else {
+            //TODO : more type.
+        }
+    }
+
+    /**
+     * run at the current executorService
+     */
+    private class SwitcherSampleLifeCycleRunner implements Runnable {
+        @Override
+        public void run() {
+            Exception exception = null;
+            long startTime = System.currentTimeMillis();
+            try {
+                doSampleLifeCycle();
+            } catch (Exception e) {
+                LOGGER.warn("exception while doLifeCycle:" + e);
+                exception = e;
+            } finally {
+                long costTime = System.currentTimeMillis() - startTime;
+                if (null == exception) {
+                    //success
+                    statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
+                    statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
+                } else {
+                    //error
+                    statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
+                    statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
+                }
+            }
+        }
     }
 
     /**
@@ -288,9 +290,10 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                     statistic.incSucCount(DEFAULT_SESSION_ID, TAG, "");
                     statistic.setSucTime(DEFAULT_SESSION_ID, TAG,"",costTime);
                 } else {
+                    exception.printStackTrace();
                     //error
-                    statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
                     statistic.incErrCount(DEFAULT_SESSION_ID, TAG, "", exception);
+                    statistic.setErrTime(DEFAULT_SESSION_ID, TAG, "", costTime);
                 }
             }
         }
@@ -374,6 +377,87 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
 
         public void setError(Boolean error) {
             isError = error;
+        }
+    }
+
+    private SwitcherDisposable createSwitcherDisposable() {
+        return new SwitcherDisposable() {
+            private Boolean _isDispose = false;
+            private Long _req = -1L;
+
+            @Override
+            public void dispose() {
+                _isDispose = true;
+            }
+
+            @Override
+            public Boolean isDispose() {
+                return _isDispose;
+            }
+
+            @Override
+            public void request(long req) {
+                this._req  = req;
+            }
+
+            @Override
+            public long req() {
+                return _req;
+            }
+        };
+    }
+
+    private void sleepHelper(TimeUnit unit, long time) {
+        switch (unit) {
+            case NANOSECONDS:
+                try {
+                    TimeUnit.NANOSECONDS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MICROSECONDS:
+                try {
+                    TimeUnit.MICROSECONDS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MILLISECONDS:
+                try {
+                    TimeUnit.MILLISECONDS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case SECONDS:
+                try {
+                    TimeUnit.SECONDS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case MINUTES:
+                try {
+                    TimeUnit.MINUTES.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case HOURS:
+                try {
+                    TimeUnit.HOURS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case DAYS:
+                try {
+                    TimeUnit.DAYS.sleep(time);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 
