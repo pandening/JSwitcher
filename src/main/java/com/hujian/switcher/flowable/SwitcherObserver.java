@@ -29,8 +29,6 @@ public interface SwitcherObserver<T> {
 
     void emit(T data);
 
-    void emit(List<T> dataList);
-
     void errors(SwitcherFlowException e);
 
     void complete();

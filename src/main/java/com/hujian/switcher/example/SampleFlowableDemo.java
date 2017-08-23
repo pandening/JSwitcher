@@ -56,11 +56,6 @@ public class SampleFlowableDemo {
                         }
 
                         @Override
-                        public void emit(List dataList) {
-
-                        }
-
-                        @Override
                         public void errors(SwitcherFlowException e) {
 
                         }
