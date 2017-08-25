@@ -128,7 +128,6 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
         return this;
     }
 
-    @Override
     public SampleSwitcherObservable transToSampleSwitcherObservable() {
         return (SampleSwitcherObservable) this;
     }
