@@ -20,6 +20,11 @@ package com.hujian.switcher.reactivex;
  * Created by hujian06 on 2017/8/24.
  */
 
+import com.hujian.switcher.reactivex.aux.Functions;
+import com.hujian.switcher.reactivex.aux.ObjectHelper;
+import com.hujian.switcher.reactivex.functions.Action;
+import com.hujian.switcher.reactivex.functions.Consumer;
+
 /**
  * The Observable class is the non-backpressured, optionally multi-valued base reactive class that
  * offers factory methods, intermediate operators and the ability to consume synchronous
@@ -28,6 +33,94 @@ package com.hujian.switcher.reactivex;
  *            the type of the items emitted by the Observable
  */
 public abstract class Observable<T> implements ObservableSource<T> {
+
+    /**
+     * try to give the next consumer, no  onError, no OnComplete.
+     * Subscribes to an ObservableSource and provides a callback to handle the items it emits.
+     * @param onNextConsumer onNext consumer
+     * @return the dispose
+     */
+    public final Disposable subscribe(Consumer<? super T> onNextConsumer) {
+        return subscribe(onNextConsumer, Functions.ON_ERROR_MISSING, Functions.EMPTY_ACTION, Functions.emptyConsumer());
+    }
+
+    /**
+     * Subscribes to an ObservableSource and provides callbacks to handle the items it emits
+     *
+     * @param onNext
+     *             the {@code Consumer<T>} you have designed to accept emissions from the ObservableSource
+     * @param onError
+     *             the {@code Consumer<Throwable>} you have designed to accept any error notification from the
+     *             ObservableSource
+     * @return a {@link Disposable} reference with which the caller can stop receiving items before
+     *         the ObservableSource has finished sending them
+     * @throws NullPointerException
+     *             if {@code onNext} is null, or
+     *             if {@code onError} is null
+     */
+    public final Disposable subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError) {
+        return subscribe(onNext, onError, Functions.EMPTY_ACTION, Functions.emptyConsumer());
+    }
+
+    /**
+     * Subscribes to an ObservableSource and provides callbacks to handle the items it emits
+     *
+     * @param onNext
+     *             the {@code Consumer<T>} you have designed to accept emissions from the ObservableSource
+     * @param onError
+     *             the {@code Consumer<Throwable>} you have designed to accept any error notification from the
+     *             ObservableSource
+     * @param onComplete
+     *             the {@code Action} you have designed to accept a completion notification from the
+     *             ObservableSource
+     * @return a {@link Disposable} reference with which the caller can stop receiving items before
+     *         the ObservableSource has finished sending them
+     * @throws NullPointerException
+     *             if {@code onNext} is null, or
+     *             if {@code onError} is null, or
+     *             if {@code onComplete} is null
+     */
+    public final Disposable subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError,
+                                      Action onComplete) {
+        return subscribe(onNext, onError, onComplete, Functions.emptyConsumer());
+    }
+
+    /**
+     * Subscribes to an ObservableSource and provides callbacks to handle the items it emits
+     *
+     * @param onNext
+     *             the {@code Consumer<T>} you have designed to accept emissions from the ObservableSource
+     * @param onError
+     *             the {@code Consumer<Throwable>} you have designed to accept any error notification from the
+     *             ObservableSource
+     * @param onComplete
+     *             the {@code Action} you have designed to accept a completion notification from the
+     *             ObservableSource
+     * @param onSubscribe
+     *             the {@code Consumer} that receives the upstream's Disposable
+     * @return a {@link Disposable} reference with which the caller can stop receiving items before
+     *         the ObservableSource has finished sending them
+     * @throws NullPointerException
+     *             if {@code onNext} is null, or
+     *             if {@code onError} is null, or
+     *             if {@code onComplete} is null
+     */
+    public final Disposable subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError,
+                                      Action onComplete, Consumer<? super Disposable> onSubscribe) {
+        ObjectHelper.requireNonNull(onNext, "onNext is null");
+        ObjectHelper.requireNonNull(onError, "onError is null");
+        ObjectHelper.requireNonNull(onComplete, "onComplete is null");
+        ObjectHelper.requireNonNull(onSubscribe, "onSubscribe is null");
+
+        //convert to a magic observer object.
+        MagicObserver<T> ls = new MagicObserver<T>(onNext, onError, onComplete, onSubscribe);
+
+        //subscribe.
+        subscribe(ls);
+
+        return ls;
+    }
+
 
     @Override
     public void subscribe(Observer<? super T> observer) {

@@ -19,6 +19,9 @@ package com.hujian.switcher.reactivex;
 /**
  * Created by hujian06 on 2017/8/24.
  */
+
+import com.hujian.switcher.reactivex.functions.Cancellable;
+
 /**
  * The onNext, onError and onComplete methods should be called
  * in a sequential manner, just like the Observer's methods.
