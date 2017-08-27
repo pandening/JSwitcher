@@ -16,6 +16,11 @@
 
 package com.hujian.switcher.reactivex;
 
+import com.hujian.switcher.reactivex.aux.DisposableHelper;
+import com.hujian.switcher.reactivex.aux.SimpleQueue;
+import com.hujian.switcher.reactivex.aux.SpscLinkedArrayQueue;
+import com.hujian.switcher.reactivex.functions.Cancellable;
+
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;

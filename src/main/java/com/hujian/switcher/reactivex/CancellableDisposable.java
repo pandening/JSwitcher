@@ -20,6 +20,8 @@ package com.hujian.switcher.reactivex;
  * Created by hujian06 on 2017/8/25.
  */
 
+import com.hujian.switcher.reactivex.functions.Cancellable;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
