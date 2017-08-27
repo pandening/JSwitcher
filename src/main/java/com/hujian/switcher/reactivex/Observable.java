@@ -22,6 +22,7 @@ package com.hujian.switcher.reactivex;
 
 import com.hujian.switcher.reactivex.aux.Functions;
 import com.hujian.switcher.reactivex.aux.ObjectHelper;
+import com.hujian.switcher.reactivex.aux.ObservableEmpty;
 import com.hujian.switcher.reactivex.functions.Action;
 import com.hujian.switcher.reactivex.functions.Consumer;
 
@@ -154,4 +155,58 @@ public abstract class Observable<T> implements ObservableSource<T> {
     public static <T> Observable<T> create(ObservableOnSubscribe<T> source) {
          return new ObservableCreate<T>(source);
     }
+
+    /**
+     * Returns an Observable that emits a single item and then completes.
+     *
+     * To convert any object into an ObservableSource that emits that object, pass that object into the {@code just}
+     * method.
+     *
+     * @param item
+     *            the item to emit
+     * @param <T>
+     *            the type of that item
+     * @return an Observable that emits {@code value} as a single item and then completes
+     * */
+    public static <T> Observable<T> just(T item) {
+        ObjectHelper.requireNonNull(item, "The item is null");
+        return new ForJustObservable<T>(item);
+    }
+
+    /**
+     * Converts an Array into an ObservableSource that emits the items in the Array.
+     *
+     * @param items
+     *            the array of elements
+     * @param <T>
+     *            the type of items in the Array and the type of items to be emitted by the resulting ObservableSource
+     * @return an Observable that emits each item in the source Array
+     */
+    @SuppressWarnings(value = "unchecked")
+    public static <T> Observable<T> fromArray(T... items) {
+        ObjectHelper.requireNonNull(items, "items is null");
+        if (items.length == 0) {
+            return (Observable<T>) ObservableEmpty.INSTANCE;
+        } else if (items.length == 1) {
+            return just(items[0]);
+        }
+
+        return new ForFromArrayObservable<T>(items);
+    }
+
+    /**
+     * Converts an {@link Iterable} sequence into an ObservableSource that emits the items in the sequence.
+     *
+     * @param source
+     *            the source {@link Iterable} sequence
+     * @param <T>
+     *            the type of items in the {@link Iterable} sequence and the type of items to be emitted by the
+     *            resulting ObservableSource
+     * @return an Observable that emits each item in the source {@link Iterable} sequence
+     */
+    public static <T> Observable<T> fromIterable(Iterable<? extends T> source) {
+        ObjectHelper.requireNonNull(source, "source is null");
+        return new ForFromIterableObservable<T>(source);
+    }
+
 }
