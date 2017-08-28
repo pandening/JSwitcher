@@ -26,6 +26,7 @@ import com.hujian.switcher.reactive.aux.ObservableEmpty;
 import com.hujian.switcher.reactive.functions.Action;
 import com.hujian.switcher.reactive.functions.Consumer;
 import com.hujian.switcher.reactive.functions.Function;
+import com.hujian.switcher.reactive.functions.Predicate;
 import com.hujian.switcher.reactive.functions.ScalarCallable;
 
 import java.util.concurrent.Future;
@@ -145,7 +146,7 @@ public abstract class Observable<T> implements ObservableSource<T> {
     /**
      * Operator implementations (both source and intermediate) should implement this method that
      * performs the necessary business logic.
-     * <p>There is no need to call any of the plugin hooks on the current Observable instance or
+     * There is no need to call any of the plugin hooks on the current Observable instance or
      * the Subscriber.
      * @param observer the incoming Observer, never null
      */
@@ -344,6 +345,20 @@ public abstract class Observable<T> implements ObservableSource<T> {
             return  new ScalarXMapObservable<>(v,mapper);
         }
         return new ObservableFlatMap<T, R>(this, mapper, delayErrors, maxConcurrency, bufferSize);
+    }
+
+    /**
+     * Filters items emitted by an ObservableSource by only emitting those that satisfy a specified predicate.
+     * @param predicate
+     *            a function that evaluates each item emitted by the source ObservableSource, returning {@code true}
+     *            if it passes the filter
+     * @return an Observable that emits only those items emitted by the source ObservableSource that the filter
+     *         evaluates as {@code true}
+     */
+    public final Observable<T> filter(Predicate<? super T> predicate) {
+        ObjectHelper.requireNonNull(predicate, "predicate is null");
+
+        return new ObservableFilter<T>(this, predicate);
     }
 
 }
