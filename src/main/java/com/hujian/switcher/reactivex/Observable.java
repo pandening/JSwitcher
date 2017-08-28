@@ -28,6 +28,9 @@ import com.hujian.switcher.reactivex.functions.Consumer;
 import com.hujian.switcher.reactivex.functions.Function;
 import com.hujian.switcher.reactivex.functions.ScalarCallable;
 
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 /**
  * The Observable class is the non-backpressured, optionally multi-valued base reactive class that
  * offers factory methods, intermediate operators and the ability to consume synchronous
@@ -209,6 +212,24 @@ public abstract class Observable<T> implements ObservableSource<T> {
     public static <T> Observable<T> fromIterable(Iterable<? extends T> source) {
         ObjectHelper.requireNonNull(source, "source is null");
         return new ForFromIterableObservable<T>(source);
+    }
+
+    /**
+     * Converts a {@link Future} into an ObservableSource, with a timeout on the Future.
+     *
+     * @param future
+     *            the source {@link Future}
+     * @param timeout
+     *            the maximum time to wait before calling {@code get}
+     * @param unit
+     *            the {@link TimeUnit} of the {@code timeout} argument
+     * @param <T>
+     *            the type of object that the {@link Future} returns, and also the type of item to be emitted by
+     *            the resulting ObservableSource
+     * @return an Observable that emits the item from the source {@link Future}
+     */
+    public static <T> Observable<T> fromFuture(Future<? extends T> future, long timeout, TimeUnit unit) {
+        return new ForFromFutureObservable<T>(future, timeout, unit);
     }
 
     /**
