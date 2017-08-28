@@ -25,6 +25,11 @@ import com.hujian.switcher.reactivex.aux.ObjectHelper;
 import com.hujian.switcher.reactivex.aux.ObservableEmpty;
 import com.hujian.switcher.reactivex.functions.Action;
 import com.hujian.switcher.reactivex.functions.Consumer;
+import com.hujian.switcher.reactivex.functions.Function;
+import com.hujian.switcher.reactivex.functions.ScalarCallable;
+
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The Observable class is the non-backpressured, optionally multi-valued base reactive class that
@@ -207,6 +212,138 @@ public abstract class Observable<T> implements ObservableSource<T> {
     public static <T> Observable<T> fromIterable(Iterable<? extends T> source) {
         ObjectHelper.requireNonNull(source, "source is null");
         return new ForFromIterableObservable<T>(source);
+    }
+
+    /**
+     * Converts a {@link Future} into an ObservableSource, with a timeout on the Future.
+     *
+     * @param future
+     *            the source {@link Future}
+     * @param timeout
+     *            the maximum time to wait before calling {@code get}
+     * @param unit
+     *            the {@link TimeUnit} of the {@code timeout} argument
+     * @param <T>
+     *            the type of object that the {@link Future} returns, and also the type of item to be emitted by
+     *            the resulting ObservableSource
+     * @return an Observable that emits the item from the source {@link Future}
+     */
+    public static <T> Observable<T> fromFuture(Future<? extends T> future, long timeout, TimeUnit unit) {
+        return new ForFromFutureObservable<T>(future, timeout, unit);
+    }
+
+    /**
+     * Returns an Observable that applies a specified function to each item emitted by the source ObservableSource and
+     * emits the results of these function applications.
+     *
+     * @param <R> the output type
+     * @param mapper
+     *            a function to apply to each item emitted by the ObservableSource
+     * @return an Observable that emits the items from the source ObservableSource, transformed by the specified
+     *         function
+     */
+    public final <R> Observable<R> map(Function<? super T, ? extends R> mapper) {
+        ObjectHelper.requireNonNull(mapper, "mapper is null");
+
+        return new ObservableMap<T, R>(this, mapper);
+    }
+
+    /**
+     * Returns an Observable that emits items based on applying a function that you supply to each item emitted
+     * by the source ObservableSource, where that function returns an ObservableSource, and then merging those resulting
+     * ObservableSources and emitting the results of this merger.
+     *
+     * @param <R> the value type of the inner ObservableSources and the output type
+     * @param mapper
+     *            a function that, when applied to an item emitted by the source ObservableSource, returns an
+     *            ObservableSource
+     * @return an Observable that emits the result of applying the transformation function to each item emitted
+     *         by the source ObservableSource and merging the results of the ObservableSources obtained from this
+     *         transformation
+     */
+    public final <R> Observable<R> flatMap(Function<? super T, ? extends ObservableSource<? extends R>> mapper) {
+        return flatMap(mapper, false);
+    }
+
+    /**
+     * Returns an Observable that emits items based on applying a function that you supply to each item emitted
+     * by the source ObservableSource, where that function returns an ObservableSource, and then merging those resulting
+     * ObservableSources and emitting the results of this merger.
+     *
+     * @param <R> the value type of the inner ObservableSources and the output type
+     * @param mapper
+     *            a function that, when applied to an item emitted by the source ObservableSource, returns an
+     *            ObservableSource
+     * @param delayErrors
+     *            if true, exceptions from the current Observable and all inner ObservableSources are delayed until all of them terminate
+     *            if false, the first one signalling an exception will terminate the whole sequence immediately
+     * @return an Observable that emits the result of applying the transformation function to each item emitted
+     *         by the source ObservableSource and merging the results of the ObservableSources obtained from this
+     *         transformation
+     */
+    public final <R> Observable<R> flatMap(Function<? super T, ? extends ObservableSource<? extends R>> mapper, boolean delayErrors) {
+        return flatMap(mapper, delayErrors, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Returns an Observable that emits items based on applying a function that you supply to each item emitted
+     * by the source ObservableSource, where that function returns an ObservableSource, and then merging those resulting
+     * ObservableSources and emitting the results of this merger, while limiting the maximum number of concurrent
+     * subscriptions to these ObservableSources.
+     *
+     * @param <R> the value type of the inner ObservableSources and the output type
+     * @param mapper
+     *            a function that, when applied to an item emitted by the source ObservableSource, returns an
+     *            ObservableSource
+     * @param maxConcurrency
+     *         the maximum number of ObservableSources that may be subscribed to concurrently
+     * @param delayErrors
+     *            if true, exceptions from the current Observable and all inner ObservableSources are delayed until all of them terminate
+     *            if false, the first one signalling an exception will terminate the whole sequence immediately
+     * @return an Observable that emits the result of applying the transformation function to each item emitted
+     *         by the source ObservableSource and merging the results of the ObservableSources obtained from this
+     *         transformation
+     */
+    public final <R> Observable<R> flatMap(Function<? super T, ? extends ObservableSource<? extends R>> mapper, boolean delayErrors, int maxConcurrency) {
+        return flatMap(mapper, delayErrors, maxConcurrency, 1024);
+    }
+
+    /**
+     * Returns an Observable that emits items based on applying a function that you supply to each item emitted
+     * by the source ObservableSource, where that function returns an ObservableSource, and then merging those resulting
+     * ObservableSources and emitting the results of this merger, while limiting the maximum number of concurrent
+     * subscriptions to these ObservableSources.
+     *
+     * @param <R> the value type of the inner ObservableSources and the output type
+     * @param mapper
+     *            a function that, when applied to an item emitted by the source ObservableSource, returns an
+     *            ObservableSource
+     * @param maxConcurrency
+     *         the maximum number of ObservableSources that may be subscribed to concurrently
+     * @param delayErrors
+     *            if true, exceptions from the current Observable and all inner ObservableSources are delayed until all of them terminate
+     *            if false, the first one signalling an exception will terminate the whole sequence immediately
+     * @param bufferSize
+     *            the number of elements to prefetch from each inner ObservableSource
+     * @return an Observable that emits the result of applying the transformation function to each item emitted
+     *         by the source ObservableSource and merging the results of the ObservableSources obtained from this
+     *         transformation
+     */
+    @SuppressWarnings(value = "unchecked")
+    public final <R> Observable<R> flatMap(Function<? super T, ? extends ObservableSource<? extends R>> mapper,
+                                           boolean delayErrors, int maxConcurrency, int bufferSize) {
+        ObjectHelper.requireNonNull(mapper, "mapper is null");
+        ObjectHelper.verifyPositive(maxConcurrency, "maxConcurrency");
+        ObjectHelper.verifyPositive(bufferSize, "bufferSize");
+        if (this instanceof ScalarCallable) {
+            @SuppressWarnings("unchecked")
+            T v = ((ScalarCallable<T>)this).call();
+            if (v == null) {
+                return (Observable<R>) ObservableEmpty.INSTANCE;
+            }
+            return  new ScalarXMapObservable<>(v,mapper);
+        }
+        return new ObservableFlatMap<T, R>(this, mapper, delayErrors, maxConcurrency, bufferSize);
     }
 
 }

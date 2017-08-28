@@ -24,6 +24,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by hujian06 on 2017/8/27.
+ *
+ * this class will be converted to ObservableCreate<T>, then the observable will
+ * operate the object and the observer will be called at the same time of "subscribe"
+ * on the source observable
  */
 public final class MagicObserver<T> extends AtomicReference<Disposable> implements Observer<T>, Disposable {
     final Consumer<? super T> onNext; // onNext consumer
