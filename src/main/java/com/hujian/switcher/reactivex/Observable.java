@@ -25,6 +25,7 @@ import com.hujian.switcher.reactivex.aux.ObjectHelper;
 import com.hujian.switcher.reactivex.aux.ObservableEmpty;
 import com.hujian.switcher.reactivex.functions.Action;
 import com.hujian.switcher.reactivex.functions.Consumer;
+import com.hujian.switcher.reactivex.functions.Function;
 
 /**
  * The Observable class is the non-backpressured, optionally multi-valued base reactive class that
@@ -207,6 +208,22 @@ public abstract class Observable<T> implements ObservableSource<T> {
     public static <T> Observable<T> fromIterable(Iterable<? extends T> source) {
         ObjectHelper.requireNonNull(source, "source is null");
         return new ForFromIterableObservable<T>(source);
+    }
+
+    /**
+     * Returns an Observable that applies a specified function to each item emitted by the source ObservableSource and
+     * emits the results of these function applications.
+     *
+     * @param <R> the output type
+     * @param mapper
+     *            a function to apply to each item emitted by the ObservableSource
+     * @return an Observable that emits the items from the source ObservableSource, transformed by the specified
+     *         function
+     */
+    public final <R> Observable<R> map(Function<? super T, ? extends R> mapper) {
+        ObjectHelper.requireNonNull(mapper, "mapper is null");
+
+        return new ObservableMap<T, R>(this, mapper);
     }
 
 }

@@ -31,17 +31,34 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public final class ObservableCreate<T> extends Observable<T> {
 
-    final ObservableOnSubscribe<T> source;
+    final ObservableOnSubscribe<T> source; // this is the source observable
 
+    /**
+     * the constructor,try to get the source observable
+     * @param source
+     */
     public ObservableCreate(ObservableOnSubscribe<T> source) {
         this.source = source;
     }
 
+    /**
+     * the actual worker,do the subscribe job here
+     * @param observer the incoming Observer, never null
+     */
     @Override
     protected void subscribeActual(Observer<? super T> observer) {
+        //the parent is the observer,the observable will operate it at the 'create'
+        //function,then the observable will let the observer's onNext/onError/onComplete
+        //work,then the observer will subscribe the source observable,so,the observer will
+        //receive the emit information from 'subscribe observable'
+        //so,actually,the var "parent" is the connection-er between "Observer" and "Observable"
         CreateEmitter<T> parent = new CreateEmitter<T>(observer);
+        //touch the 'onSubscribe' for observer,the observer that subscribe on this source observable
+        //will receive the information firstly.
         observer.onSubscribe(parent);
         try {
+            //assign to the source observable with the observer
+            //then, the 'parent' will be operated by source observable on 'create' stage
             source.subscribe(parent);
         } catch (Throwable ex) {
             ex.printStackTrace();
@@ -49,6 +66,15 @@ public final class ObservableCreate<T> extends Observable<T> {
         }
     }
 
+    /**
+     * try to convert observer to emitter for observable.the observable will
+     * call these callback functions on the 'create' stage.
+     *
+     * the observer will be called after subscribe on the source observable
+     *
+     * @param <T>
+     *           the type
+     */
     static final class CreateEmitter<T> extends AtomicReference<Disposable>
             implements ObservableEmitter<T>, Disposable {
 
