@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/schedulers/schedulers.iml" filepath="$PROJECT_DIR$/schedulers/schedulers.iml" />
       <module fileurl="file://$PROJECT_DIR$/switcher.iml" filepath="$PROJECT_DIR$/switcher.iml" />
     </modules>
   </component>
