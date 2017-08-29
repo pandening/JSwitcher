@@ -28,6 +28,7 @@ import com.hujian.switcher.reactive.functions.Consumer;
 import com.hujian.switcher.reactive.functions.Function;
 import com.hujian.switcher.reactive.functions.Predicate;
 import com.hujian.switcher.reactive.functions.ScalarCallable;
+import com.hujian.switcher.schedulers.core.Scheduler;
 
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,8 @@ import java.util.concurrent.TimeUnit;
  *            the type of the items emitted by the Observable
  */
 public abstract class Observable<T> implements ObservableSource<T> {
+
+    private static final int BUFFER_SIZE = 128; // the buffer size
 
     /**
      * try to give the next consumer, no  onError, no OnComplete.
@@ -359,6 +362,67 @@ public abstract class Observable<T> implements ObservableSource<T> {
         ObjectHelper.requireNonNull(predicate, "predicate is null");
 
         return new ObservableFilter<T>(this, predicate);
+    }
+
+    /**
+     * Asynchronously subscribes Observers to this ObservableSource on the specified {@link Scheduler}.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to perform subscription actions on
+     * @return the source ObservableSource modified so that its subscriptions happen on the
+     *         specified {@link Scheduler}
+     */
+    public final Observable<T> subscribeOn(Scheduler scheduler) {
+        ObjectHelper.requireNonNull(scheduler, "scheduler is null");
+        return new ObservableSubscribeOn<T>(this, scheduler);
+    }
+
+    /**
+     * Modifies an ObservableSource to perform its emissions and notifications on a specified {@link Scheduler},
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Observer}s on
+     * @return the source ObservableSource modified so that its {@link Observer}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Observable<T> observeOn(Scheduler scheduler) {
+        return observeOn(scheduler, false, BUFFER_SIZE);
+    }
+
+    /**
+     * Modifies an ObservableSource to perform its emissions and notifications on a specified {@link Scheduler},
+     * asynchronously with an unbounded buffer with BUFFER_SIZE "island size" and optionally delays onError notifications.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Observer}s on
+     * @param delayError
+     *            indicates if the onError notification may not cut ahead of onNext notification on the other side of the
+     *            scheduling boundary. If true a sequence ending in onError will be replayed in the same order as was received
+     *            from upstream
+     * @return the source ObservableSource modified so that its {@link Observer}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Observable<T> observeOn(Scheduler scheduler, boolean delayError) {
+        return observeOn(scheduler, delayError, BUFFER_SIZE);
+    }
+
+    /**
+     * Modifies an ObservableSource to perform its emissions and notifications on a specified {@link Scheduler},
+     * asynchronously with an unbounded buffer of configurable "island size" and optionally delays onError notifications.
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Observer}s on
+     * @param delayError
+     *            indicates if the onError notification may not cut ahead of onNext notification on the other side of the
+     *            scheduling boundary. If true a sequence ending in onError will be replayed in the same order as was received
+     *            from upstream
+     * @param bufferSize the size of the buffer.
+     * @return the source ObservableSource modified so that its {@link Observer}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Observable<T> observeOn(Scheduler scheduler, boolean delayError, int bufferSize) {
+        ObjectHelper.requireNonNull(scheduler, "scheduler is null");
+        ObjectHelper.verifyPositive(bufferSize, "bufferSize");
+        return new ObservableObserveOn<T>(this, scheduler, delayError, bufferSize);
     }
 
 }

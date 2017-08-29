@@ -22,11 +22,14 @@ import com.hujian.switcher.reactive.aux.ObjectHelper;
 import com.hujian.switcher.reactive.functions.Action;
 import com.hujian.switcher.reactive.functions.Consumer;
 import com.hujian.switcher.reactive.functions.Function;
+import com.hujian.switcher.schedulers.core.Scheduler;
 
 /**
  * Created by hujian06 on 2017/8/28.
  */
 public abstract class Flowable<T> implements Publisher<T> {
+
+    private static final int BUFFER_SIZE = 128; // the buffer size
 
     /**
      * Subscribes to a Publisher and provides a callback to handle the items it emits.
@@ -152,6 +155,88 @@ public abstract class Flowable<T> implements Publisher<T> {
      */
     protected abstract void subscribeActual(Subscriber<? super T> s);
 
+    /**
+     * Asynchronously subscribes Subscribers to this Publisher on the specified {@link Scheduler}.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to perform subscription actions on
+     * @return the source Publisher modified so that its subscriptions happen on the
+     *         specified {@link Scheduler}
+     */
+    public final Flowable<T> subscribeOn(Scheduler scheduler) {
+        ObjectHelper.requireNonNull(scheduler, "scheduler is null");
+        return subscribeOn(scheduler, !(this instanceof FlowableCreate));
+    }
+
+    /**
+     * Asynchronously subscribes Subscribers to this Publisher on the specified {@link Scheduler}
+     * optionally reroutes requests from other threads to the same {@link Scheduler} thread.
+     *
+     * If there is a {@link #create(FlowableOnSubscribe, BackpressureStrategy)} type source up in the
+     * chain, it is recommended to have {@code requestOn} false to avoid same-pool deadlock
+     * because requests may pile up behind an eager/blocking emitter.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to perform subscription actions on
+     * @param requestOn if true, requests are rerouted to the given Scheduler as well (strong pipelining)
+     *                  if false, requests coming from any thread are simply forwarded to
+     *                  the upstream on the same thread (weak pipelining)
+     * @return the source Publisher modified so that its subscriptions happen on the
+     *         specified {@link Scheduler}
+     */
+    public final Flowable<T> subscribeOn(Scheduler scheduler, boolean requestOn) {
+        ObjectHelper.requireNonNull(scheduler, "scheduler is null");
+        return new FlowableSubscribeOn<T>(this, scheduler, requestOn);
+    }
+
+    /**
+     * Modifies a Publisher to perform its emissions and notifications on a specified {@link Scheduler},
+     * asynchronously with a bounded buffer of BUFFER_SIZE slots.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Subscriber}s on
+     * @return the source Publisher modified so that its {@link Subscriber}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Flowable<T> observeOn(Scheduler scheduler) {
+        return observeOn(scheduler, false, BUFFER_SIZE);
+    }
+
+    /**
+     * Modifies a Publisher to perform its emissions and notifications on a specified {@link Scheduler},
+     * asynchronously with a bounded buffer and optionally delays onError notifications.
+     *
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Subscriber}s on
+     * @param delayError
+     *            indicates if the onError notification may not cut ahead of onNext notification on the other side of the
+     *            scheduling boundary. If true a sequence ending in onError will be replayed in the same order as was received
+     *            from upstream
+     * @return the source Publisher modified so that its {@link Subscriber}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Flowable<T> observeOn(Scheduler scheduler, boolean delayError) {
+        return observeOn(scheduler, delayError, BUFFER_SIZE);
+    }
+
+    /**
+     * Modifies a Publisher to perform its emissions and notifications on a specified {@link Scheduler},
+     * asynchronously with a bounded buffer of configurable size and optionally delays onError notifications.
+     * @param scheduler
+     *            the {@link Scheduler} to notify {@link Subscriber}s on
+     * @param delayError
+     *            indicates if the onError notification may not cut ahead of onNext notification on the other side of the
+     *            scheduling boundary. If true a sequence ending in onError will be replayed in the same order as was received
+     *            from upstream
+     * @param bufferSize the size of the buffer.
+     * @return the source Publisher modified so that its {@link Subscriber}s are notified on the specified
+     *         {@link Scheduler}
+     */
+    public final Flowable<T> observeOn(Scheduler scheduler, boolean delayError, int bufferSize) {
+        ObjectHelper.requireNonNull(scheduler, "scheduler is null");
+        ObjectHelper.verifyPositive(bufferSize, "bufferSize");
+        return new FlowableObserveOn<T>(this, scheduler, delayError, bufferSize);
+    }
 
     /**
      * @param <T> the element type
