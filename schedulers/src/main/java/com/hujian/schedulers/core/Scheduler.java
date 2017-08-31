@@ -18,14 +18,19 @@ package com.hujian.schedulers.core;
 
 /**
  * Created by hujian06 on 2017/8/29.
+ * scheduler .
  */
 
 import com.hujian.schedulers.ScheduleHooks;
+import com.hujian.schedulers.ScheduleRunner;
+import com.hujian.schedulers.SwitcherResultFuture;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 import com.hujian.switcher.reactive.flowable.SequentialDisposable;
 import com.hujian.switcher.reactive.flowable.aux.ExceptionHelper;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -101,8 +106,72 @@ public abstract class Scheduler {
      *
      * @return the Disposable instance that let's one cancel this particular task.
      */
-    public Disposable scheduleDirect(Runnable run) {
-        return scheduleDirect(run, 0L, TimeUnit.NANOSECONDS);
+    public Disposable scheduleDirect(Runnable run) throws ExecutionException, InterruptedException {
+        return scheduleDirect(run, 0L, TimeUnit.NANOSECONDS, null);
+    }
+
+    /**
+     * Schedules the given task on this scheduler non-delayed execution.
+     *
+     * <p>
+     * This method is safe to be called from multiple threads but there are no
+     * ordering guarantees between tasks.
+     *
+     * @param run the task to execute
+     *
+     * @return the Disposable instance that let's one cancel this particular task.
+     */
+    public Disposable scheduleDirect(Runnable run, SwitcherResultFuture<?> future)
+            throws ExecutionException, InterruptedException {
+        return scheduleDirect(run, 0L, TimeUnit.NANOSECONDS, future);
+    }
+
+    /**
+     * Schedules the given task on this scheduler non-delayed execution.
+     *
+     * <p>
+     * This method is safe to be called from multiple threads but there are no
+     * ordering guarantees between tasks.
+     *
+     * @param run the task to execute
+     *
+     * @return the Disposable instance that let's one cancel this particular task.
+     */
+    public Disposable scheduleDirect(ScheduleRunner<?> run, SwitcherResultFuture<?> future, Boolean isAsyncMode)
+            throws ExecutionException, InterruptedException {
+        final Worker w = createWorker();
+
+        ResultDisposeTask task = new ResultDisposeTask(run, w, isAsyncMode, future);
+
+        w.schedule(task);
+
+        return task;
+    }
+
+
+    /**
+     * Schedules the execution of the given task with the given delay amount.
+     *
+     * <p>
+     * This method is safe to be called from multiple threads but there are no
+     * ordering guarantees between tasks.
+     *
+     * @param run the task to schedule
+     * @param delay the delay amount, non-positive values indicate non-delayed scheduling
+     * @param unit the unit of measure of the delay amount
+     * @return the Disposable that let's one cancel this particular delayed task.
+     */
+    public Disposable scheduleDirect(Runnable run, long delay, TimeUnit unit)
+            throws ExecutionException, InterruptedException {
+        final Worker w = createWorker();
+
+        final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+
+        DisposeTask task = new DisposeTask(decoratedRun, w);
+
+        w.schedule(task, delay, unit);
+
+        return task;
     }
 
     /**
@@ -117,14 +186,21 @@ public abstract class Scheduler {
      * @param unit the unit of measure of the delay amount
      * @return the Disposable that let's one cancel this particular delayed task.
      */
-    public Disposable scheduleDirect(Runnable run, long delay, TimeUnit unit) {
+    public Disposable scheduleDirect(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future)
+            throws ExecutionException, InterruptedException {
         final Worker w = createWorker();
 
         final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
 
         DisposeTask task = new DisposeTask(decoratedRun, w);
 
-        w.schedule(task, delay, unit);
+        //so, you should let the {@code future} nonNull if you want to get result
+        //from the future.
+        if (future != null) {
+            w.schedule(task, delay, unit, future);
+        } else {
+            w.schedule(task, delay, unit);
+        }
 
         return task;
     }
@@ -146,7 +222,8 @@ public abstract class Scheduler {
      * @param unit the unit of measure of the delay amount
      * @return the Disposable that let's one cancel this particular delayed task.
      */
-    public Disposable schedulePeriodicallyDirect(Runnable run, long initialDelay, long period, TimeUnit unit) {
+    public Disposable schedulePeriodicallyDirect(Runnable run, long initialDelay, long period, TimeUnit unit)
+            throws ExecutionException, InterruptedException {
         final Worker w = createWorker();
 
         final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
@@ -176,7 +253,7 @@ public abstract class Scheduler {
          *            Runnable to schedule
          * @return a Disposable to be able to unsubscribe the action (cancel it if not executed)
          */
-        public Disposable schedule(Runnable run) {
+        public Disposable schedule(Runnable run) throws ExecutionException, InterruptedException {
             return schedule(run, 0L, TimeUnit.NANOSECONDS);
         }
 
@@ -195,7 +272,26 @@ public abstract class Scheduler {
          *            the time unit of {@code delayTime}
          * @return a Disposable to be able to unsubscribe the action (cancel it if not executed)
          */
-        public abstract Disposable schedule(Runnable run, long delay, TimeUnit unit);
+        public abstract Disposable schedule(Runnable run, long delay, TimeUnit unit) throws ExecutionException, InterruptedException;
+
+        /**
+         * Schedules an Runnable for execution at some point in the future.
+         * <p>
+         * Note to implementors: non-positive {@code delayTime} should be regarded as non-delayed schedule, i.e.,
+         * as if the {@link #schedule(Runnable)} was called.
+         *
+         * @param run
+         *            the Runnable to schedule
+         * @param delay
+         *            time to wait before executing the action; non-positive values indicate an non-delayed
+         *            schedule
+         * @param unit
+         *            the time unit of {@code delayTime}
+         * @return a Disposable to be able to unsubscribe the action (cancel it if not executed)
+         */
+        public abstract Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future)
+                throws ExecutionException, InterruptedException;
+
 
         /**
          * Schedules a cancelable action to be executed periodically. This default implementation schedules
@@ -217,7 +313,8 @@ public abstract class Scheduler {
          *            the time unit of {@code period}
          * @return a Disposable to be able to unsubscribe the action (cancel it if not executed)
          */
-        public Disposable schedulePeriodically(Runnable run, final long initialDelay, final long period, final TimeUnit unit) {
+        public Disposable schedulePeriodically(Runnable run, final long initialDelay, final long period, final TimeUnit unit)
+                throws ExecutionException, InterruptedException {
             final SequentialDisposable first = new SequentialDisposable();
 
             final SequentialDisposable sd = new SequentialDisposable(first);
@@ -275,6 +372,7 @@ public abstract class Scheduler {
 
                 if (!sd.isDisposed()) {
 
+
                     long nextTick;
 
                     long nowNanoseconds = now(TimeUnit.NANOSECONDS);
@@ -293,7 +391,11 @@ public abstract class Scheduler {
                     lastNowNanoseconds = nowNanoseconds;
 
                     long delay = nextTick - nowNanoseconds;
-                    sd.replace(schedule(this, delay, TimeUnit.NANOSECONDS));
+                    try {
+                        sd.replace(schedule(this, delay, TimeUnit.NANOSECONDS));
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -334,6 +436,76 @@ public abstract class Scheduler {
         }
     }
 
+    @SuppressWarnings(value = "unchecked")
+    static final class ResultDisposeTask<T> implements Runnable, Disposable {
+        final ScheduleRunner scheduleRunner;
+        final SwitcherResultFuture resultFuture;
+        Boolean isAsyncMode;
+        final Worker w;
+
+        Thread runner;
+
+        /**
+         * nonNull executor.
+         * @param executor
+         */
+        public void setExecutor(Executor executor) {
+            this.scheduleRunner.setExecutor(executor);
+        }
+
+        /**
+         * the constructor. offer total params .
+         * @param scheduleRunner the runner
+         * @param w the worker
+         * @param isAsyncMode mode
+         * @param resultFuture future
+         */
+        ResultDisposeTask(ScheduleRunner scheduleRunner, Worker w,
+                          Boolean isAsyncMode, SwitcherResultFuture resultFuture) {
+            this.scheduleRunner = scheduleRunner;
+            this.w = w;
+            this.isAsyncMode = isAsyncMode;
+            this.resultFuture = resultFuture;
+        }
+
+        @Override
+        public void run() {
+            runner = Thread.currentThread();
+            Exception exception = null;
+            try {
+                if (isAsyncMode) {
+                    resultFuture.setFuture(scheduleRunner.queue());
+                } else {
+                    resultFuture.setData(scheduleRunner.execute());
+                }
+
+            } catch (Exception e) {
+                exception = e;
+            } finally {
+                //todo : do some statistics work here
+                if (exception != null) {
+                    dispose();
+                    runner = null;
+                    exception.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void dispose() {
+            if (runner == Thread.currentThread() && w instanceof NewThreadWorker) {
+                ((NewThreadWorker)w).shutdown();
+            } else {
+                w.dispose();
+            }
+        }
+
+        @Override
+        public boolean isDisposed() {
+            return w.isDisposed();
+        }
+    }
+
     static final class DisposeTask implements Runnable, Disposable {
         final Runnable decoratedRun;
         final Worker w;
@@ -348,11 +520,18 @@ public abstract class Scheduler {
         @Override
         public void run() {
             runner = Thread.currentThread();
+            Exception exception = null;
             try {
                 decoratedRun.run();
+            } catch (Exception e) {
+                exception = e;
             } finally {
-                dispose();
-                runner = null;
+                //todo : do some statistics work here
+                if (exception != null) {
+                    exception.printStackTrace();
+                    dispose();
+                    runner = null;
+                }
             }
         }
 

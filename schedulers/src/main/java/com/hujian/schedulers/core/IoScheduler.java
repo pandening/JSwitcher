@@ -20,11 +20,13 @@ package com.hujian.schedulers.core;
  * Created by hujian06 on 2017/8/29.
  */
 
+import com.hujian.schedulers.SwitcherResultFuture;
 import com.hujian.schedulers.dispose.CompositeDisposable;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -237,6 +239,16 @@ public final class IoScheduler extends Scheduler {
             }
 
             return threadWorker.scheduleActual(action, delayTime, unit, tasks);
+        }
+
+        @Override
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future) throws ExecutionException, InterruptedException {
+            if (tasks.isDisposed()) {
+                // don't schedule, we are unsubscribed
+                return EmptyDisposable.INSTANCE;
+            }
+
+            return threadWorker.scheduleActual(run, delay, unit, tasks, future);
         }
     }
 

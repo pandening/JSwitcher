@@ -20,11 +20,13 @@ package com.hujian.schedulers.core;
  * Created by hujian06 on 2017/8/29.
  */
 
+import com.hujian.schedulers.SwitcherResultFuture;
 import com.hujian.schedulers.dispose.CompositeDisposable;
 import com.hujian.schedulers.dispose.ListCompositeDisposable;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -213,6 +215,17 @@ public final class ComputationScheduler extends Scheduler {
 
             return poolWorker.scheduleActual(action, delayTime, unit, timed);
         }
+
+        @Override
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future)
+                throws ExecutionException, InterruptedException {
+            if (disposed) {
+                return EmptyDisposable.INSTANCE;
+            }
+
+            return poolWorker.scheduleActual(run, delay, unit, timed, future);
+        }
+
     }
 
     static final class PoolWorker extends NewThreadWorker {
