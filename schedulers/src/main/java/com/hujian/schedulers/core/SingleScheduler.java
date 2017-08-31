@@ -21,11 +21,13 @@ package com.hujian.schedulers.core;
  */
 
 import com.hujian.schedulers.ScheduleHooks;
+import com.hujian.schedulers.SwitcherResultFuture;
 import com.hujian.schedulers.dispose.CompositeDisposable;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
@@ -200,6 +202,48 @@ public final class SingleScheduler extends Scheduler {
                 } else {
                     f = executor.schedule((Callable<Object>)sr, delay, unit);
                 }
+
+                ///////////////////////////////////////////////////////
+                //   here you should get the future now.             //
+                //   the recommend way is give the future to caller  //
+                //////////////////////////////////////////////////////
+                try {
+                    f.get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                sr.setFuture(f);
+            } catch (RejectedExecutionException ex) {
+                dispose();
+                ScheduleHooks.onError(ex);
+                return EmptyDisposable.INSTANCE;
+            }
+
+            return sr;
+        }
+
+        @Override
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future)
+                throws ExecutionException, InterruptedException {
+            if (disposed) {
+                return EmptyDisposable.INSTANCE;
+            }
+
+            Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+
+            ScheduledRunnable sr = new ScheduledRunnable(decoratedRun, tasks);
+            tasks.add(sr);
+            Future<?> f = null;
+            try {
+                if (delay <= 0L) {
+                    f = executor.submit((Callable<Object>)sr);
+                } else {
+                    f = executor.schedule((Callable<Object>)sr, delay, unit);
+                }
+
+                //set the future here
+                future.setFuture(f);
 
                 sr.setFuture(f);
             } catch (RejectedExecutionException ex) {

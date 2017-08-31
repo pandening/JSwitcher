@@ -19,6 +19,7 @@ package com.hujian.switcher.reactive;
 import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.schedulers.core.Scheduler;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -32,11 +33,21 @@ public final class ObservableSubscribeOn<T> extends AbstractObservableWithUpstre
         this.scheduler = scheduler;
     }
 
+    /**
+     * 1. cast {@code s} to an {@code SubscribeOnObserver} object
+     * 2. start to touch {@code Observer#onSubscribe(#Dispose#)}
+     * 3. wrap the runner from observer.
+     * 4. let the observable work on the {@code scheduler}, so, the observable
+     *    will do the actual work such as onNext,onError,onComplete , ect.
+     * @param s the observer
+     */
     @Override
     public void subscribeActual(final Observer<? super T> s) {
         final SubscribeOnObserver<T> parent = new SubscribeOnObserver<T>(s);
 
         s.onSubscribe(parent);
+
+        scheduler.scheduleDirect(new SubscribeTask(parent));
 
         parent.setDisposable(scheduler.scheduleDirect(new SubscribeTask(parent)));
     }

@@ -138,9 +138,7 @@ public class NewThreadWorker extends Scheduler.Worker implements Disposable {
      */
     public ScheduledRunnable scheduleActual(final Runnable run, long delayTime, TimeUnit unit, DisposableContainer parent) {
         Runnable decoratedRun = ScheduleHooks.onSchedule(run);
-
         ScheduledRunnable sr = new ScheduledRunnable(decoratedRun, parent);
-
         if (parent != null) {
             if (!parent.add(sr)) {
                 return sr;

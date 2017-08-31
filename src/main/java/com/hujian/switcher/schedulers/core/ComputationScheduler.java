@@ -201,7 +201,6 @@ public final class ComputationScheduler extends Scheduler {
             if (disposed) {
                 return EmptyDisposable.INSTANCE;
             }
-
             return poolWorker.scheduleActual(action, 0, TimeUnit.MILLISECONDS, serial);
         }
        
@@ -210,7 +209,6 @@ public final class ComputationScheduler extends Scheduler {
             if (disposed) {
                 return EmptyDisposable.INSTANCE;
             }
-
             return poolWorker.scheduleActual(action, delayTime, unit, timed);
         }
     }
