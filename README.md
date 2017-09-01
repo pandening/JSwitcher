@@ -1,4 +1,4 @@
-what is JSwitch?
+What is JSwitch?
 ====================
 ```
      JSwitcher is a Convenient tool to switch schedule base on RxJava, and Jswitcher also implement a sample 
@@ -8,10 +8,10 @@ what is JSwitch?
  There are some especial schedules for you, like I/O Bound Schedule, Compute Bound Schedule, And Single 
  Schedule, etc, if you want to create a extra schedule by yourself, it's ok for JSwitcher, and it's 
  very easy to do this .And the most important thing is the jswitch support 'chain operator', that means
- you can switch to a schedule, then fit on this schedule some works, then you can do switch operator continue
- from current position, or you can just fit another work on current schedule, and jswitcher has terminal 
- operator like 'waitAndShutdown', after do the operator, you can not do 'chain operator' anymore. and the
- jswitcher will wait some time and shutdown all of schedule. 
+ you can switch to a schedule, then fit on this schedule some works, then you can do switch operator 
+ continue from current position, or you can just fit another work on current schedule, and jswitcher has 
+ terminal operator like 'waitAndShutdown', after do the operator, you can not do 'chain operator' anymore. 
+ and the jswitcher will wait some time and shutdown all of schedule. 
 
 ```
 
@@ -21,7 +21,7 @@ the following legend show the main class of Jswitcher:
 ![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/switcher.20170901.png)
 
 
-how JSwitcher works?
+How Jswitcher works?
 =====================
 
 ```
@@ -36,7 +36,7 @@ how JSwitcher works?
   4. you can reference to the legend above to understand how jswitcher works.
 ```
 
-how to program with JSwitcher?
+How to program with Jswitcher?
 =============================
    the following is the a sample demo to program with Jswitcher, you can find the complete 
 demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
@@ -62,14 +62,14 @@ demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
                 .waitAndShutdown(1000); //wait and shutdown !
 ```
 
-why choose JSwitcher?
+Why choose Jswitcher?
 =====================
 
 ```
    Convenient, Powerful, Sample, Amaze ~
 ```
 
-update note
+Update Note
 ====================
 ```
 [1] 2017-08-21
