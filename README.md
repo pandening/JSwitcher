@@ -38,11 +38,11 @@ how JSwitcher works?
 
 how to program with JSwitcher?
 =============================
+   the following is the a sample demo to program with Jswitcher, you can find the complete 
+demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
 
 ``` 
-      the following is the a sample demo to program with Jswitcher, you can find the complete 
-   demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
-   
+  
    SwitcherFitter.switcherFitter()
                 .switchToIoSchedule() //switch to i/o bound schedule
                 .switchToSingleSchedule() //switch to single schedule
