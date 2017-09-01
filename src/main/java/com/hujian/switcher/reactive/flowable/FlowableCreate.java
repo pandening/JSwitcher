@@ -24,6 +24,7 @@ import com.hujian.switcher.reactive.flowable.aux.AtomicThrowable;
 import com.hujian.switcher.reactive.flowable.aux.BackpressureHelper;
 import com.hujian.switcher.reactive.flowable.aux.SubscriptionHelper;
 import com.hujian.switcher.reactive.functions.Cancellable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -128,7 +129,7 @@ public final class FlowableCreate<T> extends Flowable<T> {
         @Override
         public void onError(Throwable t) {
             if (!tryOnError(t)) {
-                t.printStackTrace();
+                ScheduleHooks.onError(t);
             }
         }
 
@@ -263,7 +264,7 @@ public final class FlowableCreate<T> extends Flowable<T> {
         @Override
         public final void onError(Throwable e) {
             if (!tryOnError(e)) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         }
 

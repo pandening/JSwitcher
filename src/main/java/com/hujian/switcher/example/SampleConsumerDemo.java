@@ -39,7 +39,7 @@ public class SampleConsumerDemo {
                     })
                     .subscribe(data -> System.out.println("recv:" + data));
         } catch (Exception e) {
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         } finally {
             SwitcherFactory.shutdown();
         }

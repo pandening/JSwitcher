@@ -22,6 +22,7 @@ package com.hujian.switcher.reactive.flowable;
 
 import com.hujian.switcher.reactive.Observer;
 import com.hujian.switcher.reactive.flowable.aux.AtomicThrowable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -75,7 +76,7 @@ public final class HalfSerializer {
                 subscriber.onError(error.terminate());
             }
         } else {
-            ex.printStackTrace();
+            ScheduleHooks.onError(ex);
         }
     }
 
@@ -137,7 +138,7 @@ public final class HalfSerializer {
                 observer.onError(error.terminate());
             }
         } else {
-            ex.printStackTrace();
+            ScheduleHooks.onError(ex);
         }
     }
 

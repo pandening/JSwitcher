@@ -272,12 +272,10 @@ public final class ScheduleHooks {
                 f.accept(error);
                 return;
             } catch (Throwable e) {
-                e.printStackTrace();
                 uncaught(e);
             }
         }
 
-        error.printStackTrace();
         uncaught(error);
     }
 

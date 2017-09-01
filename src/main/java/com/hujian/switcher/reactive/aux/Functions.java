@@ -36,6 +36,7 @@ import com.hujian.switcher.reactive.functions.Function8;
 import com.hujian.switcher.reactive.functions.Function9;
 import com.hujian.switcher.reactive.functions.LongConsumer;
 import com.hujian.switcher.reactive.functions.Predicate;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -646,14 +647,14 @@ public final class Functions {
     static final class ErrorConsumer implements Consumer<Throwable> {
         @Override
         public void accept(Throwable error) {
-            error.printStackTrace();
+            ScheduleHooks.onError(error);
         }
     }
 
     static final class OnErrorMissingConsumer implements Consumer<Throwable> {
         @Override
         public void accept(Throwable error) {
-            error.printStackTrace();
+            ScheduleHooks.onError(error);
         }
     }
 

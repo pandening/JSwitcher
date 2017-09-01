@@ -394,7 +394,7 @@ public abstract class Scheduler {
                     try {
                         sd.replace(schedule(this, delay, TimeUnit.NANOSECONDS));
                     } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
+                        ScheduleHooks.onError(e);
                     }
                 }
             }
@@ -486,7 +486,7 @@ public abstract class Scheduler {
                 if (exception != null) {
                     dispose();
                     runner = null;
-                    exception.printStackTrace();
+                    ScheduleHooks.onError(exception);
                 }
             }
         }
@@ -528,7 +528,7 @@ public abstract class Scheduler {
             } finally {
                 //todo : do some statistics work here
                 if (exception != null) {
-                    exception.printStackTrace();
+                    ScheduleHooks.onError(exception);
                     dispose();
                     runner = null;
                 }

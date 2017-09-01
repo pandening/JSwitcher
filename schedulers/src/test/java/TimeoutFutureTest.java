@@ -64,7 +64,7 @@ public class TimeoutFutureTest {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
             return "timeout-run:" + Thread.currentThread().getName();
         }

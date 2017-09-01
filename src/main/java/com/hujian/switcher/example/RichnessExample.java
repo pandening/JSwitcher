@@ -60,7 +60,7 @@ public class RichnessExample {
 
             System.out.println("sync Result:" + syncData + "\nasync Result:" + asyncData);
         } catch (Exception e) {
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
             SwitcherFactory.shutdown();
         }
 

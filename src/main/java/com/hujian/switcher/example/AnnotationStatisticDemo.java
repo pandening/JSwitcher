@@ -58,7 +58,7 @@ public class AnnotationStatisticDemo {
 
             resolver.execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         } finally {
             Map<String, SwitcherStatisticEntry> map = statistic.getSwitchStatisticEntryBySessionId(SESSION_ID);
             for (Map.Entry<String, SwitcherStatisticEntry> entryEntry : map.entrySet()) {
@@ -93,7 +93,7 @@ public class AnnotationStatisticDemo {
                     int errorCode = 1 / 0;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             } finally {
                 System.out.println("i am stupid Runner at :" + Thread.currentThread().getName()
                         + " sleep:" + sleep);

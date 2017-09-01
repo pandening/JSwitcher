@@ -51,7 +51,7 @@ public class SwitchToMainExample {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
             }
             System.out.println("i am in:" + Thread.currentThread().getName());

@@ -20,6 +20,7 @@ import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.aux.SimpleQueue;
 import com.hujian.switcher.reactive.aux.SpscLinkedArrayQueue;
 import com.hujian.switcher.reactive.functions.Cancellable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.List;
 import java.util.Vector;
@@ -61,7 +62,7 @@ public final class ObservableCreate<T> extends Observable<T> {
             //then, the 'parent' will be operated by source observable on 'create' stage
             source.subscribe(parent);
         } catch (Throwable ex) {
-            ex.printStackTrace();
+            ScheduleHooks.onError(ex);
             parent.onError(ex);
         }
     }

@@ -21,6 +21,7 @@ import com.hujian.switcher.core.ExecutorType;
 import com.hujian.switcher.core.SwitchExecutorService;
 import com.hujian.switcher.core.SwitchRunntimeException;
 import com.hujian.switcher.flowable.SampleSwitcherObservable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -47,7 +48,7 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
                 runner.setExecutorService(curExecutorService);
                 switchExecutorService(getCurrentExecutorService().getExecutorType(), curExecutorService);
             } catch (SwitchRunntimeException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         } catch (RejectedExecutionException e) {
             LOGGER.warn("E1:oops,the current executorService error:" + e);
@@ -65,7 +66,7 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
                     runner.setExecutorService(curExecutorService);
                     switchExecutorService(ExecutorType.NEW_EXECUTOR_SERVICE.getName(), curExecutorService);
                 } catch (SwitchRunntimeException e1) {
-                    e1.printStackTrace();
+                    ScheduleHooks.onError(e1);
                 }
             }
         }
@@ -84,7 +85,7 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
             result = (T) runner.execute();
         } catch (Exception e) {
             LOGGER.error("can not execute the job,runner is:" + runner);
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         }
 
         if (null == resultfulEntry) {
@@ -113,7 +114,7 @@ public class ResultfulSwitcher<T> extends RichnessSwitcher implements ResultfulS
             result = runner.queue();
         } catch (Exception e) {
             LOGGER.error("can not execute the job,runner is:" + runner);
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         }
 
         if (null == resultfulEntry) {
