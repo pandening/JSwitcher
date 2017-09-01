@@ -294,7 +294,7 @@ public final class ExecutorScheduler extends Scheduler {
                     try {
                         f.get();
                     } catch (InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+                        ScheduleHooks.onError(e);
                     }
 
                     sr.setFuture(f);

@@ -19,6 +19,7 @@ package com.hujian.switcher.reactive;
 import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.functions.Action;
 import com.hujian.switcher.reactive.functions.Consumer;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -82,7 +83,7 @@ public final class MagicObserver<T> extends AtomicReference<Disposable> implemen
             try {
                 onError.accept(t);
             } catch (Throwable e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         }
     }
@@ -94,7 +95,7 @@ public final class MagicObserver<T> extends AtomicReference<Disposable> implemen
             try {
                 onComplete.run();
             } catch (Throwable e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         }
     }

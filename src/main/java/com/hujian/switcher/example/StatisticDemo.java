@@ -97,7 +97,7 @@ public class StatisticDemo {
                     int errorCode = 1 / 0;
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
             return "stupid sleep:" + sleep + " at thread:" + Thread.currentThread().getName();
         }

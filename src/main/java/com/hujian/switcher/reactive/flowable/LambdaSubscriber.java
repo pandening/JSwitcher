@@ -20,6 +20,7 @@ import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.flowable.aux.SubscriptionHelper;
 import com.hujian.switcher.reactive.functions.Action;
 import com.hujian.switcher.reactive.functions.Consumer;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -73,10 +74,10 @@ public final class LambdaSubscriber<T> extends AtomicReference<Subscription> imp
             try {
                 onError.accept(t);
             } catch (Throwable e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         } else {
-            t.printStackTrace();
+            ScheduleHooks.onError(t);
         }
     }
 
@@ -87,7 +88,7 @@ public final class LambdaSubscriber<T> extends AtomicReference<Subscription> imp
             try {
                 onComplete.run();
             } catch (Throwable e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
         }
     }

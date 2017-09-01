@@ -77,9 +77,9 @@ public class HighLevelDemo {
             try {
                 return producerData.getResultfulData().toUpperCase() + " ->" + Thread.currentThread().getName();
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
             return "error";
         }

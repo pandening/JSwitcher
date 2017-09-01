@@ -121,7 +121,7 @@ public class SwitcherResultFuture<T> extends AtomicBoolean{
         try {
             data = (T) future.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         }
         return data;
     }

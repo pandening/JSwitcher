@@ -28,6 +28,7 @@ import com.hujian.switcher.reactive.functions.Consumer;
 import com.hujian.switcher.reactive.functions.Function;
 import com.hujian.switcher.reactive.functions.Predicate;
 import com.hujian.switcher.reactive.functions.ScalarCallable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.schedulers.core.Scheduler;
 
 import java.util.concurrent.Future;
@@ -141,7 +142,7 @@ public abstract class Observable<T> implements ObservableSource<T> {
             exception = e;
         } finally {
             if (exception != null) {
-                exception.printStackTrace();
+                ScheduleHooks.onError(exception);
             }
         }
     }

@@ -268,7 +268,7 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                             } catch (Exception e) {
                                 LOGGER.error("oops,switchToExecutor Error");
                                 exception = e;
-                                e.printStackTrace();
+                                ScheduleHooks.onError(e);
                             } finally {
                                 if (exception != null) {
                                     observer.errors(new SwitcherFlowException(exception.getCause()));
@@ -518,49 +518,49 @@ public class SampleSwitcherObservable<T> extends ResultfulSwitcher implements Sw
                 try {
                     TimeUnit.NANOSECONDS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case MICROSECONDS:
                 try {
                     TimeUnit.MICROSECONDS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case MILLISECONDS:
                 try {
                     TimeUnit.MILLISECONDS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case SECONDS:
                 try {
                     TimeUnit.SECONDS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case MINUTES:
                 try {
                     TimeUnit.MINUTES.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case HOURS:
                 try {
                     TimeUnit.HOURS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
             case DAYS:
                 try {
                     TimeUnit.DAYS.sleep(time);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    ScheduleHooks.onError(e);
                 }
                 break;
         }

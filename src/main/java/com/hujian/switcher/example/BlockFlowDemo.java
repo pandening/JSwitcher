@@ -85,7 +85,7 @@ public class BlockFlowDemo {
                     });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            ScheduleHooks.onError(e);
         } finally {
             TimeUnit.SECONDS.sleep(1);
             SwitcherFactory.shutdown();

@@ -187,7 +187,7 @@ public class NewThreadWorker extends Scheduler.Worker implements Disposable {
                 f.get();
                 executor.shutdown();
             } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                ScheduleHooks.onError(e);
             }
 
             sr.setFuture(f);

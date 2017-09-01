@@ -21,6 +21,7 @@ package com.hujian.switcher.reactive;
  */
 
 import com.hujian.switcher.reactive.functions.Cancellable;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -48,7 +49,7 @@ public final class CancellableDisposable extends AtomicReference<Cancellable>
                 try {
                     c.cancel();
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    ScheduleHooks.onError(ex);
                 }
             }
         }
