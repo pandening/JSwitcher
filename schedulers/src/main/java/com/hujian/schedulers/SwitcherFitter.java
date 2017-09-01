@@ -20,9 +20,12 @@ import com.google.common.base.Preconditions;
 import com.hujian.schedulers.core.Scheduler;
 import com.hujian.schedulers.core.Schedulers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -95,6 +98,61 @@ public final class SwitcherFitter<T> implements SwitchOffer<T> {
         }
 
         return currentScheduleReference.get();
+    }
+
+    @Override
+    public SwitcherFitter awaitFuturesCompletedOrTimeout(int timeoutMillis, List<SwitcherResultFuture<?>> completableFutures,
+                                                         List<SwitcherResultFuture<?>> timeoutFutures, int stillWaitTime)
+            throws ExecutionException, InterruptedException, RequireScheduleFailureException {
+        int size = completableFutures.size();
+
+        //trans list to array.
+        CompletableFuture<?>[] futuresArray = new CompletableFuture[size];
+
+        for (int i = 0;i < size; i ++) {
+            futuresArray[i] = (CompletableFuture<?>) completableFutures.get(i).getFuture();
+        }
+        try {
+            CompletableFuture.allOf(futuresArray).get(timeoutMillis, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            CompletableFuture<?> future;
+            //detected which future timeout.
+            for (int i = 0;i < size; i ++) {
+                future = futuresArray[i];
+                try {
+                    future.get(0, TimeUnit.NANOSECONDS);
+                } catch (TimeoutException te) {
+                    if (timeoutFutures == null) {
+                        throw new NullPointerException("the timeoutFutures is empty.");
+                    }
+
+                    //you can get the timeout future in this list.
+                    //check null or empty before you do anything according to this list.
+                    timeoutFutures.add(completableFutures.get(i));
+
+                    //if you want to wait the future, just continue
+                    //but if you want to fail fast,just do cancel on
+                    //this future like:
+                    //completableFutures.get(i).getFuture().cancel(true);
+                    if (stillWaitTime <= 0) {
+                        if (!future.isCancelled()) {
+                            completableFutures.get(i).getFuture().cancel(true);
+                        }
+                    } else {
+                        int finalI = i;
+                        switchToNewSchedule().fit(() -> {
+                            try {
+                                completableFutures.get(finalI).getFuture().get(stillWaitTime, TimeUnit.MILLISECONDS);
+                            } catch (InterruptedException | ExecutionException | TimeoutException e1) {
+                                //do some statistic work here
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        return this;
     }
 
     @Override

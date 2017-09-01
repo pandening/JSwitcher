@@ -40,6 +40,7 @@ public class Test {
                 .switchToIoSchedule()
                 .switchToSingleSchedule()
                 .switchTo(Schedulers.from(Executors.newFixedThreadPool(1)))
+                .switchToSingleSchedule()
                 .fit(new AbstractScheduleRunner() {
                     @Override
                     protected Object realRun() {

@@ -18,6 +18,7 @@ package com.hujian.schedulers;
 
 import com.hujian.schedulers.core.Scheduler;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +29,36 @@ import java.util.concurrent.TimeUnit;
  * the function of 'switcher'
  */
 public interface SwitchOffer<T> {
+
+    /**
+     * waiting the future to complete or timeout, you should offer a timeout value for waiting
+     * and the future that you want to wait.
+     * this method can detect which future timeout
+     *
+     *      THIS METHOD WILL RUN AT MAIN THREAD, BUT THE STILL WAIT WAIT JOB WILL
+     *      RUN AT AN NEW SCHEDULE {@link com.hujian.schedulers.core.Schedulers#NEW_THREAD#}
+     *      YOU CAN ALSO CHANGE THE SCHEDULE BY {@link ScheduleHooks} !!LATER!!
+     *
+     * @param timeoutMillis
+     *                              the timeout millis
+     * @param completableFutures
+     *                              the future
+     * @param timeoutFutures
+     *                             the timeout future here.
+     * @param stillWaitTimeMills
+     *                            if you want to still wait the future, let the value > 0 , or
+     *                            the method will auto-cancel the future, and the future will return
+     *                            "null" , so you should check the return value before you do anything
+     *                            according to the return value!!
+     * @return the context
+     * @throws ExecutionException
+     *         runningTime Exception
+     * @throws InterruptedException
+     *         interrupted Exception
+     */
+    SwitcherFitter awaitFuturesCompletedOrTimeout(int timeoutMillis, List<SwitcherResultFuture<?>> completableFutures,
+                                                  List<SwitcherResultFuture<?>> timeoutFutures, int stillWaitTimeMills)
+            throws ExecutionException, InterruptedException, RequireScheduleFailureException;
 
     /**
      * switch to a schedule from param {@code scheduler}. you can get a custom schedule by

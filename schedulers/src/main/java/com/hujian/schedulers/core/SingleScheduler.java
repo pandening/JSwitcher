@@ -195,6 +195,17 @@ public final class SingleScheduler extends Scheduler {
             ScheduledRunnable sr = new ScheduledRunnable(decoratedRun, tasks);
             tasks.add(sr);
 
+            //set the executor here
+            if (run instanceof Scheduler.ResultDisposeTask) {
+                ((Scheduler.ResultDisposeTask) run).scheduleRunner
+                        .setExecutor(executor);
+
+                //run the runner at the schedule.
+                run.run();
+
+                return sr;
+            }
+
             try {
                 Future<?> f;
                 if (delay <= 0L) {
