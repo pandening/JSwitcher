@@ -18,6 +18,7 @@ package com.hujian.switcher.example;
 
 import com.hujian.switcher.AbstractSwitcherRunner;
 import com.hujian.switcher.SwitcherResultfulEntry;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.utils.SwitcherFactory;
 
 import java.util.concurrent.ExecutionException;

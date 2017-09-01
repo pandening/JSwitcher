@@ -60,6 +60,22 @@ public interface SwitchOffer<T> {
                                                   List<SwitcherResultFuture<?>> timeoutFutures, int stillWaitTimeMills)
             throws ExecutionException, InterruptedException, RequireScheduleFailureException;
 
+
+    /**
+     * the end of operator.
+     * the method should be called once in a 'jvm'
+     * the method will wait the future some time {@code timeMillsToWait}, then
+     * shutdown all of the schedule, so, you can not do any work after call
+     * this method.
+     *                              !!!NOTICE!!!
+     *     THIS METHOD WILL RETURN IMMEDIATELY IF THE {@link SwitcherFitter#totalFutures} IS
+     *     NULL OR EMPTY,SO THIS METHOD IS NOT A METHOD WITH 'SLEEP' FUNCTION.THIS METHOD
+     *     JUST FOR WAITING THE FUTURE(S) BEFORE END OF THE "SWITCH CHAIN"
+     *
+     * @param timeMillsToWait the time to wait.
+     */
+    void waitAndShutdown(int timeMillsToWait) throws InterruptedException, ExecutionException, RequireScheduleFailureException;
+
     /**
      * switch to a schedule from param {@code scheduler}. you can get a custom schedule by
      * {@link com.hujian.schedulers.core.Schedulers#from(Executor)}

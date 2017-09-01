@@ -2,14 +2,117 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54e41424-f4bb-4393-807d-6530b2317116" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/ScheduleHooks.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/ScheduleHooks.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherResultFuture.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherResultFuture.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/ExecutorScheduler.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/ExecutorScheduler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/NewThreadWorker.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/NewThreadWorker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/Scheduler.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/Scheduler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/SingleScheduler.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/SingleScheduler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$MissingBackpressureException.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$MissingBackpressureException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$OnErrorNotImplementedException.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$OnErrorNotImplementedException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$UndeliverableException.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks$UndeliverableException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/ScheduleHooks.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitchOffer.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitchOffer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitcherFitter.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitcherFitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitcherResultFuture.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/SwitcherResultFuture.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/ExecutorScheduler$ExecutorWorker.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/ExecutorScheduler$ExecutorWorker.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/NewThreadWorker.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/NewThreadWorker.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$DisposeTask.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$DisposeTask.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$ResultDisposeTask.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$ResultDisposeTask.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$Worker$PeriodicTask.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/Scheduler$Worker$PeriodicTask.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/SingleScheduler$ScheduledWorker.class" afterPath="$PROJECT_DIR$/schedulers/target/classes/com/hujian/schedulers/core/SingleScheduler$ScheduledWorker.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest$NormalRunner.class" afterPath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest$NormalRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest$TimeoutRunner.class" afterPath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest$TimeoutRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest.class" afterPath="$PROJECT_DIR$/schedulers/target/test-classes/TimeoutFutureTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/ResultfulSwitcher.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/ResultfulSwitcher.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationStatisticDemo$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationStatisticDemo$StupidRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationStatisticDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/AnnotationStatisticDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo$2.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/BlockFlowDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$2.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$3.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$4.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$5.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$6.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$7.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/FlowRichDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo$Consumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo$Consumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo$Producer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo$Producer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/HighLevelDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample$StupidRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample$StupidWorker.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample$StupidWorker.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/RichnessExample.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleConsumerDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleConsumerDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo$2.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SampleFlowableDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/StatisticDemo$StupidRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/StatisticDemo$StupidRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/StatisticDemo.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/StatisticDemo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchToMainExample$StupidJob.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchToMainExample$StupidJob.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchToMainExample.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/example/SwitchToMainExample.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$2.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherBlockingLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherBlockingLifeCycleRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherLifeCycleRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherObserverInformation.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherObserverInformation.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherSampleLifeCycleRunner.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable$SwitcherSampleLifeCycleRunner.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/flowable/SampleSwitcherObservable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/CancellableDisposable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/CancellableDisposable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/MagicObserver.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/MagicObserver.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/Observable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/Observable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate$CreateEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate$CreateEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate$SerializedEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate$SerializedEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/ObservableCreate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ActionConsumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ActionConsumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array2Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array2Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array3Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array3Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array4Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array4Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array5Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array5Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array6Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array6Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array7Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array7Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array8Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array8Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array9Func.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Array9Func.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ArrayListCapacityCallable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ArrayListCapacityCallable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$BooleanSupplierPredicateReverse.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$BooleanSupplierPredicateReverse.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$CastToClass.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$CastToClass.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ClassFilter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ClassFilter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyAction.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyAction.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyConsumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyConsumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyLongConsumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyLongConsumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyRunnable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EmptyRunnable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EqualsPredicate.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$EqualsPredicate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ErrorConsumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ErrorConsumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$FalsePredicate.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$FalsePredicate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$FutureAction.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$FutureAction.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$HashSetCallable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$HashSetCallable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Identity.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$Identity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$JustValue.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$JustValue.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ListSorter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ListSorter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NaturalComparator.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NaturalComparator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NaturalObjectComparator.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NaturalObjectComparator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NullCallable.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$NullCallable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$OnErrorMissingConsumer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$OnErrorMissingConsumer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMapKeySelector.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMapKeySelector.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMapKeyValueSelector.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMapKeyValueSelector.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMultimapKeyValueSelector.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$ToMultimapKeyValueSelector.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$TruePredicate.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions$TruePredicate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/aux/Functions.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$1.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$BaseEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$BaseEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$BufferAsyncEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$BufferAsyncEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$DropAsyncEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$DropAsyncEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$ErrorAsyncEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$ErrorAsyncEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$LatestAsyncEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$LatestAsyncEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$MissingEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$MissingEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$NoOverflowBaseAsyncEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$NoOverflowBaseAsyncEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$SerializedEmitter.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate$SerializedEmitter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/FlowableCreate.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/HalfSerializer.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/HalfSerializer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/LambdaSubscriber.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/reactive/flowable/LambdaSubscriber.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$MissingBackpressureException.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$MissingBackpressureException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$OnErrorNotImplementedException.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$OnErrorNotImplementedException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$UndeliverableException.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks$UndeliverableException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks.class" afterPath="$PROJECT_DIR$/target/classes/com/hujian/switcher/schedulers/ScheduleHooks.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java" afterPath="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java" afterPath="$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/BlockFlowDemo.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/BlockFlowDemo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java" />
@@ -20,15 +123,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/StatisticDemo.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/StatisticDemo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchToMainExample.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchToMainExample.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/CancellableDisposable.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/CancellableDisposable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/MagicObserver.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/MagicObserver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/Observable.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/Observable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/ObservableCreate.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/ObservableCreate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/aux/Functions.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/aux/Functions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/FlowableCreate.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/FlowableCreate.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/HalfSerializer.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/HalfSerializer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/LambdaSubscriber.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/LambdaSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/ScheduleHooks.java" afterPath="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/ScheduleHooks.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/schedulers/target/" />
@@ -45,11 +139,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SwitcherResultFuture.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherResultFuture.java">
+      <file leaf-file-name="TimeoutFutureTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="127" column="0" lean-forward="true" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
+            <state relative-caret-position="83">
+              <caret line="78" column="44" lean-forward="true" selection-start-line="78" selection-start-column="44" selection-end-line="78" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -58,18 +152,18 @@
       <file leaf-file-name="SwitchOffer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="30" column="17" lean-forward="false" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="-145">
+              <caret line="64" column="27" lean-forward="true" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwitcherFitter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SwitcherFitter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="126" column="21" lean-forward="true" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
+            <state relative-caret-position="284">
+              <caret line="189" column="34" lean-forward="true" selection-start-line="189" selection-start-column="34" selection-end-line="189" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -144,16 +238,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/Flowable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/ExecutorScheduler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/dispose/CompositeDisposable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/InstantPeriodicTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/IoScheduler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/ScheduledDirectPeriodicTask.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/SchedulerPoolFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/Schedulers.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/SingleScheduler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/TrampolineScheduler.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/ObservableObserveOn.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/AbstractObservableWithUpstream.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/flowable/BasicIntQueueSubscription.java" />
@@ -181,9 +265,6 @@
         <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/demo.java" />
         <option value="$PROJECT_DIR$/schedulers/src/test/java/Test.java" />
         <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/SingleScheduler.java" />
-        <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java" />
-        <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java" />
-        <option value="$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java" />
         <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherResultFuture.java" />
         <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/Scheduler.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/ResultfulSwitcher.java" />
@@ -195,6 +276,19 @@
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/MagicObserver.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/Observable.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/ObservableCreate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/HighLevelDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SampleConsumerDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/RichnessExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/StatisticDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchToMainExample.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SampleFlowableDemo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/BlockFlowDemo.java" />
+        <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java" />
+        <option value="$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java" />
+        <option value="$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java" />
       </list>
     </option>
   </component>
@@ -1183,7 +1277,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92149000" />
+    <option name="totallyTimeSpent" value="95704000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="0" />
@@ -1211,7 +1305,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37309292" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20386267" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14377682" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3259362" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1261,7 +1355,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java</url>
-          <line>138</line>
+          <line>139</line>
           <properties class="com.hujian.switcher.flowable.SampleSwitcherObservable" method="subscribe">
             <option name="EMULATED" value="true" />
           </properties>
@@ -1276,7 +1370,7 @@
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="82" />
+      <option name="time" value="83" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1285,132 +1379,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/SchedulerPoolFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14">
-          <caret line="69" column="32" lean-forward="true" selection-start-line="69" selection-start-column="32" selection-end-line="69" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/core/SwitchRunntimeException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="14" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/NewThreadWorker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6">
-          <caret line="110" column="34" lean-forward="true" selection-start-line="110" selection-start-column="34" selection-end-line="110" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/ObservableSubscribeOn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="104" column="8" lean-forward="false" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/ComputationScheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="133" column="32" lean-forward="true" selection-start-line="133" selection-start-column="32" selection-end-line="133" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/NewThreadScheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="24" column="3" lean-forward="true" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/Disposable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="21" column="17" lean-forward="false" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/com.hujian.schedulers.core.Scheduler">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>com.hujian.schedulers.core.Scheduler</OriginalElement>
-          <nodes>
-            <node x="" y="">com.hujian.schedulers.core.Scheduler.DisposeTask</node>
-            <node x="" y="">com.hujian.schedulers.core.Scheduler.PeriodicDirectTask</node>
-            <node x="" y="">com.hujian.schedulers.core.Scheduler.Worker</node>
-            <node x="" y="">com.hujian.schedulers.core.Scheduler</node>
-            <node x="" y="">com.hujian.schedulers.core.Scheduler.Worker.PeriodicTask</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="452.0" y="255.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Fields</Category>
-            <Category>Inner Classes</Category>
-            <Category>Constructors</Category>
-            <Category>Properties</Category>
-            <Category>Methods</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/Schedulers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-777">
-          <caret line="140" column="5" lean-forward="true" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/dispose/CompositeDisposable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/DisposeOnCancel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/ScheduledDirectTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="30" column="11" lean-forward="false" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/reactive/functions/Action.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="21" column="17" lean-forward="false" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/IoScheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="238" column="53" lean-forward="false" selection-start-line="238" selection-start-column="47" selection-end-line="238" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/demo.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/schedulers/core/Scheduler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="936">
@@ -1533,14 +1501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
           <caret line="215" column="36" lean-forward="true" selection-start-line="215" selection-start-column="36" selection-end-line="215" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="68" column="69" lean-forward="true" selection-start-line="68" selection-start-column="69" selection-end-line="68" selection-end-column="69" />
           <folding />
         </state>
       </provider>
@@ -1673,18 +1633,186 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java">
+    <entry file="uml://JAVA/com.hujian.schedulers.core.Schedulers">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>com.hujian.schedulers.core.Schedulers</OriginalElement>
+          <nodes>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.NewThreadTask</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.IoHolder</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.NewThreadHolder</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.ComputationHolder</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.ComputationTask</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.SingleTask</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.SingleHolder</node>
+            <node x="" y="">com.hujian.schedulers.core.Schedulers.IOTask</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="416.5" y="277.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/com.hujian.schedulers.SwitcherFitter">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>com.hujian.schedulers.SwitcherFitter</OriginalElement>
+          <nodes>
+            <node x="" y="">java.lang.SuppressWarnings</node>
+            <node x="" y="">com.hujian.schedulers.SwitcherFitter</node>
+            <node x="" y="">com.hujian.schedulers.SwitchOffer</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="623.5495495495495" y="408.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/HighLevelDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="30" column="17" lean-forward="false" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state relative-caret-position="187">
+          <caret line="80" column="25" lean-forward="false" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/FlowRichDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="160" column="19" lean-forward="false" selection-start-line="160" selection-start-column="19" selection-end-line="160" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/flowable/SampleSwitcherObservable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="271" column="40" lean-forward="false" selection-start-line="271" selection-start-column="40" selection-end-line="271" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/AnnotationStatisticDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="61" column="21" lean-forward="false" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SampleConsumerDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="42" column="20" lean-forward="false" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/RichnessExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="63" column="20" lean-forward="false" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SwitchToMainExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="54" column="29" lean-forward="false" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/SampleFlowableDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="102" column="19" lean-forward="false" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/BlockFlowDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="88" column="21" lean-forward="false" selection-start-line="88" selection-start-column="21" selection-end-line="88" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/AbstractCollection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="260" column="24" lean-forward="false" selection-start-line="260" selection-start-column="24" selection-end-line="260" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/src.zip!/java/util/List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="237" column="21" lean-forward="true" selection-start-line="237" selection-start-column="21" selection-end-line="237" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hujian/switcher/example/StatisticDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="100" column="41" lean-forward="true" selection-start-line="100" selection-start-column="41" selection-end-line="100" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitcherFitter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="126" column="21" lean-forward="true" selection-start-line="126" selection-start-column="21" selection-end-line="126" selection-end-column="21" />
+        <state relative-caret-position="284">
+          <caret line="189" column="34" lean-forward="true" selection-start-line="189" selection-start-column="34" selection-end-line="189" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/core/Schedulers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1001">
+          <caret line="122" column="43" lean-forward="false" selection-start-line="122" selection-start-column="43" selection-end-line="122" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schedulers/src/main/java/com/hujian/schedulers/SwitchOffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-145">
+          <caret line="64" column="27" lean-forward="true" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schedulers/src/test/java/TimeoutFutureTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="78" column="44" lean-forward="true" selection-start-line="78" selection-start-column="44" selection-end-line="78" selection-end-column="44" />
           <folding />
         </state>
       </provider>
