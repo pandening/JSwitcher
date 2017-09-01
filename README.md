@@ -1,8 +1,19 @@
-# JSwitcher
-
 what is JSwitch?
 ====================
+```
+     JSwitcher is a Convenient tool to switch schedule base on RxJava, it's easy to switch to 
+ Another schedule from current schedule. you just need to care about your bussiness, using 'switchTo'
+ Operator to switch to the longing schedlue when you want to do the work on the suitable schedule.
+ There are some especial schedules for you, like I/O Bound Schedule, Compute Bound Schedule, And Single 
+ Schedule, etc, if you want to create a extra schedule by yourself, it's ok for JSwitcher, and it's 
+ very easy to do this .And the most important thing is the jswitch support 'chain operator', that means
+ you can switch to a schedule, then fit on this schedule some works, then you can do switch operator continue
+ from current position, or you can just fit another work on current schedule, and jswitcher has terminal 
+ operator like 'waitAndShutdown', after do the operator, you can not do 'chain operator' anymore. and the
+ jswitcher will wait some time and shutdown all of schedule. 
+  
 
+```
 
 
 how JSwitcher works?
