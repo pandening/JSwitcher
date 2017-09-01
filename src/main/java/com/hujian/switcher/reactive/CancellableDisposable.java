@@ -21,7 +21,7 @@ package com.hujian.switcher.reactive;
  */
 
 import com.hujian.switcher.reactive.functions.Cancellable;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicReference;
 

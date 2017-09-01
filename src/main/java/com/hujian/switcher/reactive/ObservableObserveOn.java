@@ -19,9 +19,11 @@ package com.hujian.switcher.reactive;
 import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.aux.SimpleQueue;
 import com.hujian.switcher.reactive.aux.SpscLinkedArrayQueue;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 import com.hujian.switcher.schedulers.core.Scheduler;
 import com.hujian.switcher.schedulers.core.TrampolineScheduler;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by hujian06 on 2017/8/29.
@@ -159,7 +161,11 @@ public final class ObservableObserveOn<T> extends AbstractObservableWithUpstream
 
         void schedule() {
             if (getAndIncrement() == 0) {
-                worker.schedule(this);
+                try {
+                    worker.schedule(this);
+                } catch (ExecutionException | InterruptedException e) {
+                    ScheduleHooks.onError(e);
+                }
             }
         }
 

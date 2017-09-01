@@ -22,7 +22,7 @@ package com.hujian.switcher.schedulers.core;
 
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.Functions;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

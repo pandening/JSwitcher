@@ -20,7 +20,7 @@ import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.aux.SimpleQueue;
 import com.hujian.switcher.reactive.aux.SpscLinkedArrayQueue;
 import com.hujian.switcher.reactive.functions.Cancellable;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.List;
 import java.util.Vector;

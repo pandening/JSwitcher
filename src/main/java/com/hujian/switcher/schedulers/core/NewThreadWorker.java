@@ -20,12 +20,14 @@ package com.hujian.switcher.schedulers.core;
  * Created by hujian06 on 2017/8/29.
  */
 
-import com.hujian.switcher.schedulers.ScheduleHooks;
-import com.hujian.switcher.schedulers.dispose.DisposableContainer;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
+import com.hujian.switcher.ScheduleHooks;
+import com.hujian.switcher.SwitcherResultFuture;
+import com.hujian.switcher.schedulers.dispose.DisposableContainer;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -37,6 +39,7 @@ import java.util.concurrent.TimeUnit;
  * worker but doesn't perform task-tracking operations.
  *
  */
+@SuppressWarnings(value = "unchecked")
 public class NewThreadWorker extends Scheduler.Worker implements Disposable {
     private final ScheduledExecutorService executor;
 
@@ -59,6 +62,15 @@ public class NewThreadWorker extends Scheduler.Worker implements Disposable {
         return scheduleActual(action, delayTime, unit, null);
     }
 
+    @Override
+    public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future)
+            throws ExecutionException, InterruptedException {
+        if (disposed) {
+            return EmptyDisposable.INSTANCE;
+        }
+        return scheduleActual(run, delay, unit, null, future);
+    }
+
     /**
      * Schedules the given runnable on the underlying executor directly and
      * returns its future wrapped into a Disposable.
@@ -70,7 +82,7 @@ public class NewThreadWorker extends Scheduler.Worker implements Disposable {
     public Disposable scheduleDirect(final Runnable run, long delayTime, TimeUnit unit) {
         ScheduledDirectTask task = new ScheduledDirectTask(ScheduleHooks.onSchedule(run));
         try {
-            Future<?> f;
+            Future<?> f= null;
             if (delayTime <= 0L) {
                 f = executor.submit(task);
             } else {
@@ -138,20 +150,93 @@ public class NewThreadWorker extends Scheduler.Worker implements Disposable {
      */
     public ScheduledRunnable scheduleActual(final Runnable run, long delayTime, TimeUnit unit, DisposableContainer parent) {
         Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+
         ScheduledRunnable sr = new ScheduledRunnable(decoratedRun, parent);
+
         if (parent != null) {
             if (!parent.add(sr)) {
                 return sr;
             }
         }
 
-        Future<?> f;
+        Future<?> f = null;
+
+        //set the executor here
+        if (run instanceof Scheduler.ResultDisposeTask) {
+            ((Scheduler.ResultDisposeTask) run).scheduleRunner
+                    .setExecutor(executor);
+
+            //run the runner at the schedule.
+            run.run();
+
+            return sr;
+        }
+
         try {
             if (delayTime <= 0) {
                 f = executor.submit((Callable<Object>)sr);
             } else {
                 f = executor.schedule((Callable<Object>)sr, delayTime, unit);
             }
+
+            ///////////////////////////////////////////////////////
+            //   here you should get the future now.             //
+            //   the recommend way is give the future to caller  //
+            //////////////////////////////////////////////////////
+            try {
+                f.get();
+                executor.shutdown();
+            } catch (InterruptedException | ExecutionException e) {
+                ScheduleHooks.onError(e);
+            }
+
+            sr.setFuture(f);
+        } catch (RejectedExecutionException ex) {
+            if (parent != null) {
+                parent.remove(sr);
+            }
+            ScheduleHooks.onError(ex);
+        }
+
+        return sr;
+
+    }
+
+    /**
+     * Wraps the given runnable into a ScheduledRunnable and schedules it
+     * on the underlying ScheduledExecutorService.
+     * <p>If the schedule has been rejected, the ScheduledRunnable.wasScheduled will return
+     * false.
+     * @param run the runnable instance
+     * @param delayTime the time to delay the execution
+     * @param unit the time unit
+     * @param parent the optional tracker parent to add the created ScheduledRunnable instance to before it gets scheduled
+     * @return the ScheduledRunnable instance
+     */
+    public ScheduledRunnable scheduleActual(final Runnable run, long delayTime, TimeUnit unit,
+                                            DisposableContainer parent, SwitcherResultFuture<?> future)
+            throws ExecutionException, InterruptedException {
+
+        Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+
+        ScheduledRunnable sr = new ScheduledRunnable(decoratedRun, parent);
+
+        if (parent != null) {
+            if (!parent.add(sr)) {
+                return sr;
+            }
+        }
+
+        Future<?> f = null;
+        try {
+            if (delayTime <= 0) {
+                f = executor.submit((Callable<Object>)sr);
+            } else {
+                f = executor.schedule((Callable<Object>)sr, delayTime, unit);
+            }
+            //set the future here
+            future.setFuture(f);
+
             sr.setFuture(f);
         } catch (RejectedExecutionException ex) {
             if (parent != null) {

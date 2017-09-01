@@ -19,7 +19,6 @@ package com.hujian.switcher.statistic;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.AtomicDouble;
-import org.apache.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +32,6 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by hujian06 on 2017/8/22.
  */
 public class SampleSwitcherStatistic implements Statistic {
-    private static final Logger LOGGER = Logger.getLogger(SampleSwitcherStatistic.class);
 
     private static SampleSwitcherStatistic SAMPLE_SWITCHER_STATISTIC = new SampleSwitcherStatistic();
 

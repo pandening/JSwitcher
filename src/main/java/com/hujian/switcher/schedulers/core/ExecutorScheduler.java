@@ -20,11 +20,13 @@ import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 import com.hujian.switcher.reactive.flowable.SequentialDisposable;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
+import com.hujian.switcher.SwitcherResultFuture;
 import com.hujian.switcher.schedulers.dispose.CompositeDisposable;
 import com.hujian.switcher.schedulers.ds.MpscLinkedQueue;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -65,11 +67,45 @@ public final class ExecutorScheduler extends Scheduler {
                 ScheduledDirectTask task = new ScheduledDirectTask(decoratedRun);
                 Future<?> f = ((ExecutorService)executor).submit(task);
                 task.setFuture(f);
+                //i don't know where to shutdown the executor
+                //i think this place is a right place to do shutdown work for the executor
+                ((ExecutorService) executor).shutdown();
+
                 return task;
             }
 
             ExecutorWorker.BooleanRunnable br = new ExecutorWorker.BooleanRunnable(decoratedRun);
             executor.execute(br);
+
+            return br;
+        } catch (RejectedExecutionException ex) {
+            ScheduleHooks.onError(ex);
+            return EmptyDisposable.INSTANCE;
+        }
+    }
+
+    @Override
+    public Disposable scheduleDirect(Runnable run, SwitcherResultFuture<?> future) {
+        Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+        try {
+            if (executor instanceof ExecutorService) {
+                ScheduledDirectTask task = new ScheduledDirectTask(decoratedRun);
+                Future<?> f = ((ExecutorService)executor).submit(task);
+                task.setFuture(f);
+
+                //set the future here
+                future.setFuture(f);
+
+                //i don't know where to shutdown the executor
+                //i think this place is a right place to do shutdown work for the executor
+                ((ExecutorService) executor).shutdown();
+
+                return task;
+            }
+
+            ExecutorWorker.BooleanRunnable br = new ExecutorWorker.BooleanRunnable(decoratedRun);
+            executor.execute(br);
+
             return br;
         } catch (RejectedExecutionException ex) {
             ScheduleHooks.onError(ex);
@@ -78,7 +114,8 @@ public final class ExecutorScheduler extends Scheduler {
     }
     
     @Override
-    public Disposable scheduleDirect(Runnable run, final long delay, final TimeUnit unit) {
+    public Disposable scheduleDirect(Runnable run, final long delay, final TimeUnit unit)
+            throws ExecutionException, InterruptedException {
         final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
         if (executor instanceof ScheduledExecutorService) {
             try {
@@ -102,7 +139,55 @@ public final class ExecutorScheduler extends Scheduler {
     }
 
     @Override
-    public Disposable schedulePeriodicallyDirect(Runnable run, long initialDelay, long period, TimeUnit unit) {
+    public Disposable scheduleDirect(Runnable run, final long delay, final TimeUnit unit, SwitcherResultFuture<?> future)
+            throws ExecutionException, InterruptedException {
+        final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+        if (executor instanceof ScheduledExecutorService) {
+            try {
+                ScheduledDirectTask task = new ScheduledDirectTask(decoratedRun);
+                Future<?> f = ((ScheduledExecutorService)executor).schedule(task, delay, unit);
+                task.setFuture(f);
+
+                //set future here
+                future.setFuture(f);
+
+                return task;
+            } catch (RejectedExecutionException ex) {
+                ScheduleHooks.onError(ex);
+                return EmptyDisposable.INSTANCE;
+            }
+        }
+
+        if (executor instanceof ExecutorService) {
+            try {
+                ScheduledDirectTask task = new ScheduledDirectTask(decoratedRun);
+                Future<?> f = ((ExecutorService)executor).submit(task);
+                task.setFuture(f);
+
+                //set future here
+                future.setFuture(f);
+
+                //it's time to shutdown ?
+                ((ExecutorService) executor).shutdown();
+
+                return task;
+            } catch (RejectedExecutionException ex) {
+                ScheduleHooks.onError(ex);
+                return EmptyDisposable.INSTANCE;
+            }
+        }
+
+        final DelayedRunnable dr = new DelayedRunnable(decoratedRun);
+
+        Disposable delayed = HELPER.scheduleDirect(new DelayedDispose(dr), delay, unit);
+
+        dr.timed.replace(delayed);
+
+        return dr;
+    }
+
+    @Override
+    public Disposable schedulePeriodicallyDirect(Runnable run, long initialDelay, long period, TimeUnit unit) throws ExecutionException, InterruptedException {
         if (executor instanceof ScheduledExecutorService) {
             Runnable decoratedRun = ScheduleHooks.onSchedule(run);
             try {
@@ -117,6 +202,7 @@ public final class ExecutorScheduler extends Scheduler {
         }
         return super.schedulePeriodicallyDirect(run, initialDelay, period, unit);
     }
+
     /* public: test support. */
     public static final class ExecutorWorker extends Scheduler.Worker implements Runnable {
         final Executor executor;
@@ -143,6 +229,22 @@ public final class ExecutorScheduler extends Scheduler {
             Runnable decoratedRun = ScheduleHooks.onSchedule(run);
             BooleanRunnable br = new BooleanRunnable(decoratedRun);
 
+            //set the executor here
+            if (run instanceof Scheduler.ResultDisposeTask) {
+                ((Scheduler.ResultDisposeTask) run).scheduleRunner
+                        .setExecutor(executor);
+
+                //run the runner at the schedule.
+                run.run();
+
+                //it's time to shutdown the executor
+                if (executor instanceof ExecutorService) {
+                    ((ExecutorService) executor).shutdown();
+                }
+
+                return br;
+            }
+
             queue.offer(br);
 
             if (wip.getAndIncrement() == 0) {
@@ -153,6 +255,11 @@ public final class ExecutorScheduler extends Scheduler {
                     queue.clear();
                     ScheduleHooks.onError(ex);
                     return EmptyDisposable.INSTANCE;
+                } finally {
+                    //it's time to shutdown the executor
+                    if (executor instanceof ExecutorService) {
+                        ((ExecutorService) executor).shutdown();
+                    }
                 }
             }
 
@@ -160,14 +267,13 @@ public final class ExecutorScheduler extends Scheduler {
         }
 
         @Override
-        public Disposable schedule(Runnable run, long delay, TimeUnit unit) {
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit) throws ExecutionException, InterruptedException {
             if (delay <= 0) {
                 return schedule(run);
             }
             if (disposed) {
                 return EmptyDisposable.INSTANCE;
             }
-
 
             SequentialDisposable first = new SequentialDisposable();
 
@@ -181,6 +287,17 @@ public final class ExecutorScheduler extends Scheduler {
             if (executor instanceof ScheduledExecutorService) {
                 try {
                     Future<?> f = ((ScheduledExecutorService)executor).schedule((Callable<Object>)sr, delay, unit);
+
+                    ///////////////////////////////////////////////////////
+                    //   here you should get the future now.             //
+                    //   the recommend way is give the future to caller  //
+                    //////////////////////////////////////////////////////
+                    try {
+                        f.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        ScheduleHooks.onError(e);
+                    }
+
                     sr.setFuture(f);
                 } catch (RejectedExecutionException ex) {
                     disposed = true;
@@ -190,6 +307,53 @@ public final class ExecutorScheduler extends Scheduler {
             } else {
                 final Disposable d = HELPER.scheduleDirect(sr, delay, unit);
                 sr.setFuture(new DisposeOnCancel(d));
+            }
+
+            first.replace(sr);
+
+            return mar;
+        }
+
+        @Override
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future) throws ExecutionException, InterruptedException {
+            if (delay < 0) { // oh, fuck !!!
+                return schedule(run);
+            }
+            if (disposed) {
+                return EmptyDisposable.INSTANCE;
+            }
+
+            SequentialDisposable first = new SequentialDisposable();
+
+            final SequentialDisposable mar = new SequentialDisposable(first);
+
+            final Runnable decoratedRun = ScheduleHooks.onSchedule(run);
+
+            ScheduledRunnable sr = new ScheduledRunnable(new SequentialDispose(mar, decoratedRun), tasks);
+            tasks.add(sr);
+
+            if (executor instanceof ScheduledExecutorService) {
+                Future<?> f = null;
+                try {
+                    f = ((ScheduledExecutorService)executor).schedule((Callable<Object>)sr, delay, unit);
+
+                    //set the future final.
+                    future.setFuture(f);
+
+                    sr.setFuture(f);
+                } catch (RejectedExecutionException ex) {
+                    disposed = true;
+                    ScheduleHooks.onError(ex);
+                    return EmptyDisposable.INSTANCE;
+                }
+            } else {
+                final Disposable d = HELPER.scheduleDirect(sr, delay, unit);
+
+                Future srF = new DisposeOnCancel(d);
+                sr.setFuture(srF);
+
+                //set the future for caller
+                future.setFuture(srF);
             }
 
             first.replace(sr);

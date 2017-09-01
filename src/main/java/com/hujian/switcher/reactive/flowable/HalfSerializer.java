@@ -22,7 +22,7 @@ package com.hujian.switcher.reactive.flowable;
 
 import com.hujian.switcher.reactive.Observer;
 import com.hujian.switcher.reactive.flowable.aux.AtomicThrowable;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

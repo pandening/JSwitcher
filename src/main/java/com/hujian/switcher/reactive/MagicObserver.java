@@ -19,7 +19,7 @@ package com.hujian.switcher.reactive;
 import com.hujian.switcher.reactive.aux.DisposableHelper;
 import com.hujian.switcher.reactive.functions.Action;
 import com.hujian.switcher.reactive.functions.Consumer;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicReference;
 

@@ -24,7 +24,7 @@ import com.hujian.switcher.reactive.flowable.aux.AtomicThrowable;
 import com.hujian.switcher.reactive.flowable.aux.BackpressureHelper;
 import com.hujian.switcher.reactive.flowable.aux.SubscriptionHelper;
 import com.hujian.switcher.reactive.functions.Cancellable;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;

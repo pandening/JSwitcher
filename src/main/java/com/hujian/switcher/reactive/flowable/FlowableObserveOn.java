@@ -20,9 +20,10 @@ import com.hujian.switcher.reactive.aux.SimpleQueue;
 import com.hujian.switcher.reactive.aux.SpscArrayQueue;
 import com.hujian.switcher.reactive.flowable.aux.BackpressureHelper;
 import com.hujian.switcher.reactive.flowable.aux.SubscriptionHelper;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 import com.hujian.switcher.schedulers.core.Scheduler;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -159,7 +160,11 @@ public final class FlowableObserveOn<T> extends AbstractFlowableWithUpstream<T, 
             if (getAndIncrement() != 0) {
                 return;
             }
-            worker.schedule(this);
+            try {
+                worker.schedule(this);
+            } catch (ExecutionException | InterruptedException e) {
+                ScheduleHooks.onError(e);
+            }
         }
 
         @Override

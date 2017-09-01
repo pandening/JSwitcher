@@ -20,12 +20,14 @@ package com.hujian.switcher.schedulers.core;
  * Created by hujian06 on 2017/8/29.
  */
 
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
+import com.hujian.switcher.SwitcherResultFuture;
 import com.hujian.switcher.schedulers.dispose.Disposables;
 import com.hujian.switcher.reactive.Disposable;
 import com.hujian.switcher.reactive.aux.EmptyDisposable;
 import com.hujian.switcher.reactive.aux.ObjectHelper;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -88,6 +90,11 @@ public final class TrampolineScheduler extends Scheduler {
             long execTime = now(TimeUnit.MILLISECONDS) + unit.toMillis(delayTime);
 
             return enqueue(new SleepingRunnable(action, this, execTime), execTime);
+        }
+
+        @Override
+        public Disposable schedule(Runnable run, long delay, TimeUnit unit, SwitcherResultFuture<?> future) throws ExecutionException, InterruptedException {
+            throw  new UnsupportedOperationException("UnsupportedOperationException");
         }
 
         Disposable enqueue(Runnable action, long execTime) {

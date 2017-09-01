@@ -17,9 +17,10 @@
 package com.hujian.switcher.reactive;
 
 import com.hujian.switcher.reactive.aux.DisposableHelper;
+import com.hujian.switcher.ScheduleHooks;
 import com.hujian.switcher.schedulers.core.Scheduler;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -47,9 +48,17 @@ public final class ObservableSubscribeOn<T> extends AbstractObservableWithUpstre
 
         s.onSubscribe(parent);
 
-        scheduler.scheduleDirect(new SubscribeTask(parent));
+        try {
+            scheduler.scheduleDirect(new SubscribeTask(parent));
+        } catch (ExecutionException | InterruptedException e) {
+            ScheduleHooks.onError(e);
+        }
 
-        parent.setDisposable(scheduler.scheduleDirect(new SubscribeTask(parent)));
+        try {
+            parent.setDisposable(scheduler.scheduleDirect(new SubscribeTask(parent)));
+        } catch (ExecutionException | InterruptedException e) {
+            ScheduleHooks.onError(e);
+        }
     }
 
     static final class SubscribeOnObserver<T> extends AtomicReference<Disposable> implements Observer<T>, Disposable {

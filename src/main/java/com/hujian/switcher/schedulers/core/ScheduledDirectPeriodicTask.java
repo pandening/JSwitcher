@@ -20,7 +20,7 @@ package com.hujian.switcher.schedulers.core;
  * Created by hujian06 on 2017/8/29.
  */
 
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 /**
  * A Callable to be submitted to an ExecutorService that runs a Runnable

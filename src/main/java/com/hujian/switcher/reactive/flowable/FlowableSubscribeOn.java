@@ -18,8 +18,10 @@ package com.hujian.switcher.reactive.flowable;
 
 import com.hujian.switcher.reactive.flowable.aux.BackpressureHelper;
 import com.hujian.switcher.reactive.flowable.aux.SubscriptionHelper;
+import com.hujian.switcher.ScheduleHooks;
 import com.hujian.switcher.schedulers.core.Scheduler;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -50,7 +52,11 @@ public final class FlowableSubscribeOn<T> extends AbstractFlowableWithUpstream<T
         final SubscribeOnSubscriber<T> sos = new SubscribeOnSubscriber<T>(s, w, source, nonScheduledRequests);
         s.onSubscribe(sos);
 
-        w.schedule(sos);
+        try {
+            w.schedule(sos);
+        } catch (ExecutionException | InterruptedException e) {
+            ScheduleHooks.onError(e);
+        }
     }
 
     static final class SubscribeOnSubscriber<T> extends AtomicReference<Thread>
@@ -135,7 +141,11 @@ public final class FlowableSubscribeOn<T> extends AbstractFlowableWithUpstream<T
             if (nonScheduledRequests || Thread.currentThread() == get()) {
                 s.request(n);
             } else {
-                worker.schedule(new Request(s, n));
+                try {
+                    worker.schedule(new Request(s, n));
+                } catch (ExecutionException | InterruptedException e) {
+                    ScheduleHooks.onError(e);
+                }
             }
         }
 

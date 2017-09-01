@@ -36,7 +36,7 @@ import com.hujian.switcher.reactive.functions.Function8;
 import com.hujian.switcher.reactive.functions.Function9;
 import com.hujian.switcher.reactive.functions.LongConsumer;
 import com.hujian.switcher.reactive.functions.Predicate;
-import com.hujian.switcher.schedulers.ScheduleHooks;
+import com.hujian.switcher.ScheduleHooks;
 
 import java.util.ArrayList;
 import java.util.Collection;
