@@ -71,7 +71,28 @@ why choose JSwitcher?
 
 update note
 ====================
+```
+[1] 2017-08-21
+      * set up the project, base on RxJava.
+[2] 2017-08-22
+      * sample version of 'Switcher' is available. 
+[3] 2017-08-23
+      * Observer/Observer/Subscribe is available.(Sample Version)
+      * fix some bugs
+      * adjust file architecture
+[4] 2017-08-27
+      * add reactive package, copy RxJava's skeleton to Jswitcher
+      * fix some bugs
+[5] 2017-08-29
+      * Observable/Obsrrver/subscribe -> schedule support now
+      * fix some bugs
+      * more demo code
+[6] 2017-09-01
+      * adjust file architecture, remove some unuseful codes
+      * fix some bugs
+      * let release branch as the default branch
 
+```
 
 Developer
 ===================
