@@ -19,6 +19,7 @@ package com.hujian.switcher.example;
 import com.hujian.switcher.SwitcherResultfulEntry;
 import com.hujian.switcher.annotation.Switcher;
 import com.hujian.switcher.annotation.SwitcherAnnotationResolver;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.statistic.SampleSwitcherStatistic;
 import com.hujian.switcher.statistic.Statistic;
 import com.hujian.switcher.statistic.SwitcherStatisticEntry;

@@ -17,6 +17,7 @@
 package com.hujian.switcher.example;
 
 import com.hujian.switcher.flowable.SwitcherSampleObservableOnSubscribe;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.utils.SwitcherFactory;
 
 /**

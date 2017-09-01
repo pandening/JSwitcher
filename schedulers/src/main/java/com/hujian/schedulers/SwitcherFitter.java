@@ -17,15 +17,19 @@
 package com.hujian.schedulers;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.hujian.schedulers.core.Scheduler;
 import com.hujian.schedulers.core.Schedulers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -37,12 +41,32 @@ import java.util.concurrent.atomic.AtomicReference;
  * "new" operator, and you can not extend this class too.
  */
 @SuppressWarnings(value = "unchecked")
-public final class SwitcherFitter<T> implements SwitchOffer<T> {
+public final class SwitcherFitter<T> extends AtomicBoolean implements SwitchOffer<T> {
 
     /**
      * this is the only instance of this class.
      */
     private static final SwitcherFitter SWITCHER_FITTER = new SwitcherFitter();
+
+    /**
+     * the empty list for judging how to handle in
+     * {@link SwitcherFitter#awaitFuturesCompletedOrTimeout(int, List, List, int)}
+     */
+    private static final List<SwitcherResultFuture<?>> EMPTY_SWITCHER_RESULT_FUTURE_LIST =
+            Lists.newArrayList();
+
+    /**
+     * once you call method
+     * {@link SwitcherFitter#fit(ScheduleRunner, SwitcherResultFuture, Boolean)}
+     * the method will add an entry like {@code Scheduler, SwitcherResultFuture<?>}
+     * to the map, you can not get the map in any time. this map just for method
+     * {@link SwitcherFitter#waitAndShutdown(int)}
+     * once you call {@link SwitcherFitter#waitAndShutdown(int)}
+     * the method will do wait work, then shutdown the "schedule cluster"
+     * so, once you call the method {@link SwitcherFitter#waitAndShutdown(int)}
+     * you can not do anything on "schedule cluster"
+     */
+    private Map<Scheduler, SwitcherResultFuture<?>> totalFutures = new ConcurrentHashMap<>();
 
     /**
      * SWITCHER_FITTER == null ?
@@ -109,7 +133,7 @@ public final class SwitcherFitter<T> implements SwitchOffer<T> {
         //trans list to array.
         CompletableFuture<?>[] futuresArray = new CompletableFuture[size];
 
-        for (int i = 0;i < size; i ++) {
+        for (int i = 0; i < size; i ++) {
             futuresArray[i] = (CompletableFuture<?>) completableFutures.get(i).getFuture();
         }
         try {
@@ -126,33 +150,53 @@ public final class SwitcherFitter<T> implements SwitchOffer<T> {
                         throw new NullPointerException("the timeoutFutures is empty.");
                     }
 
-                    //you can get the timeout future in this list.
-                    //check null or empty before you do anything according to this list.
-                    timeoutFutures.add(completableFutures.get(i));
-
-                    //if you want to wait the future, just continue
-                    //but if you want to fail fast,just do cancel on
-                    //this future like:
-                    //completableFutures.get(i).getFuture().cancel(true);
-                    if (stillWaitTime <= 0) {
-                        if (!future.isCancelled()) {
-                            completableFutures.get(i).getFuture().cancel(true);
-                        }
+                    if (timeoutFutures == EMPTY_SWITCHER_RESULT_FUTURE_LIST) {
+                        //do some statistics job here
                     } else {
-                        int finalI = i;
-                        switchToNewSchedule().fit(() -> {
-                            try {
-                                completableFutures.get(finalI).getFuture().get(stillWaitTime, TimeUnit.MILLISECONDS);
-                            } catch (InterruptedException | ExecutionException | TimeoutException e1) {
-                                //do some statistic work here
+                        //you can get the timeout future in this list.
+                        //check null or empty before you do anything according to this list.
+                        timeoutFutures.add(completableFutures.get(i));
+
+                        //if you want to wait the future, just continue
+                        //but if you want to fail fast,just do cancel on
+                        //this future like:
+                        //completableFutures.get(i).getFuture().cancel(true);
+                        if (stillWaitTime <= 0) {
+                            if (!future.isCancelled()) {
+                                completableFutures.get(i).getFuture().cancel(true);
                             }
-                        });
+                        } else {
+                            int finalI = i;
+                            switchToNewSchedule().fit(() -> {
+                                try {
+                                    completableFutures.get(finalI).getFuture().get(stillWaitTime, TimeUnit.MILLISECONDS);
+                                } catch (InterruptedException | ExecutionException | TimeoutException e1) {
+                                    //do some statistic work here
+                                }
+                            });
+                        }
                     }
                 }
             }
         }
 
         return this;
+    }
+
+    @Override
+    public void waitAndShutdown(int timeMillsToWait)
+            throws InterruptedException, ExecutionException, RequireScheduleFailureException {
+        if (totalFutures == null || totalFutures.isEmpty()) {
+            Schedulers.shutdown();
+        }
+
+        SwitcherResultFuture<?>[] futuresArray = new SwitcherResultFuture[totalFutures.size()];
+        totalFutures.values().toArray(futuresArray);
+        List<SwitcherResultFuture<?>> futureList = Lists.newArrayList(futuresArray);
+
+        awaitFuturesCompletedOrTimeout(timeMillsToWait, futureList, EMPTY_SWITCHER_RESULT_FUTURE_LIST,0);
+
+        Schedulers.shutdown();
     }
 
     @Override
@@ -241,6 +285,9 @@ public final class SwitcherFitter<T> implements SwitchOffer<T> {
         Preconditions.checkArgument(runner != null, "Npe");
         Scheduler scheduler = requireScheduleEnv();
         future = Optional.ofNullable(future).orElse(new SwitcherResultFuture<T>());
+
+        //store the future
+        totalFutures.put(currentScheduleReference.get(), future);
 
         scheduler.scheduleDirect(runner, future, isAsyncMode);
 

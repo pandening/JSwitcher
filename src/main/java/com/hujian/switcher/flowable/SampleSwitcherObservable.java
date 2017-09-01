@@ -20,6 +20,7 @@ import com.google.common.base.Preconditions;
 import com.hujian.switcher.ResultfulSwitcher;
 import com.hujian.switcher.SwitchExecutorServiceEntry;
 import com.hujian.switcher.core.ExecutorType;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.statistic.SampleSwitcherStatistic;
 import com.hujian.switcher.statistic.Statistic;
 import org.apache.log4j.Logger;

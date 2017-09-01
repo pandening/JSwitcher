@@ -17,6 +17,7 @@
 import com.google.common.collect.Lists;
 import com.hujian.schedulers.AbstractScheduleRunner;
 import com.hujian.schedulers.RequireScheduleFailureException;
+import com.hujian.schedulers.ScheduleHooks;
 import com.hujian.schedulers.SwitcherFitter;
 import com.hujian.schedulers.SwitcherResultFuture;
 
@@ -77,24 +78,26 @@ public class TimeoutFutureTest {
 
     public static void main(String ... args)
             throws InterruptedException, ExecutionException, RequireScheduleFailureException {
-
         completableFutures = Lists.newArrayList(future1, future2, future3, future4);
-
         timeoutFutures = Lists.newArrayList();
-
         SwitcherFitter.switcherFitter()
-                .switchToIoSchedule()
-                .switchToSingleSchedule()
-                .fit(normalRunner, future1, true)
-                .switchToComputeSchedule()
-                .fit(normalRunner, future2, true)
-                .fit(timeoutRunner, future3, true)
-                .switchToSingleSchedule()
-                .switchToSingleSchedule()
-                .fit(timeoutRunner, future4, true)
-                .awaitFuturesCompletedOrTimeout(100, completableFutures, timeoutFutures, 10)
-                .switchToComputeSchedule()
-                .fit(() -> {System.out.println("i am a tester->" + Thread.currentThread().getName());});
+                .switchToIoSchedule() //switch to i/o bound schedule
+                .switchToSingleSchedule() //switch to single schedule
+                .fit(normalRunner, future1, true) //do the normal runner at current schedule
+                .switchToComputeSchedule() // switch to cpu bound schedule
+                .fit(normalRunner, future2, true) // do
+                .fit(timeoutRunner, future3, true) // do
+                .switchToSingleSchedule() //switch
+                .switchToSingleSchedule() //switch
+                .fit(timeoutRunner, future4, true) //do
+                .awaitFuturesCompletedOrTimeout(100,
+                        completableFutures, timeoutFutures, 10) //wait for the future
+                .switchToComputeSchedule() //switch
+                .fit(() -> {
+                    System.out.println("i am a tester->" + Thread.currentThread().getName());
+                 }) // do the stupid work
+                .waitAndShutdown(1000); //wait and shutdown !
+
         if (timeoutFutures != null && !timeoutFutures.isEmpty()) {
             for (SwitcherResultFuture<?> future : timeoutFutures) {
                 System.out.println("timeoutFuture:" + future.getFuture());
@@ -104,7 +107,6 @@ public class TimeoutFutureTest {
         for (SwitcherResultFuture<?> future : completableFutures) {
             System.out.println("result:" + future.fetchResult());
         }
-
 
     }
 

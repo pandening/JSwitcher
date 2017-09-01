@@ -17,6 +17,7 @@
 package com.hujian.switcher.example;
 
 import com.hujian.switcher.core.SwitchRunntimeException;
+import com.hujian.switcher.schedulers.ScheduleHooks;
 import com.hujian.switcher.utils.SwitcherFactory;
 
 import java.util.concurrent.TimeUnit;
