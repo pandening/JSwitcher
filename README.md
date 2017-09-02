@@ -15,7 +15,7 @@ What is JSwitch?
 
 ```
 
-the following legend show the main class of Jswitcher:
+the following legends show the main class of Jswitcher:
 
 ![image](https://github.com/pandening/JSwitcher/blob/facade/src/main/resources/schedule.20170901.png)
 ![image](https://github.com/pandening/JSwitcher/blob/facade/src/main/resources/switcher.20170901.png)
@@ -31,14 +31,14 @@ How Jswitcher works?
   3. you should offer an runnable object to fit on the current schedule, the runnable object
      should contain the work you want to do in the target schedule. you can also offer an 
      object of {@link com.hujian.switcher.ScheduleRunner} , there is an abstract class for
-     you to extent, you can see it at {@link com.hujian.switcher.AbstractScheduleRunner}. 
+     you to extend, you can see it at {@link com.hujian.switcher.AbstractScheduleRunner}. 
      do not forget to set a executor for the object if you want to fix Jswitcher's code.
-  4. you can reference to the legend above to understand how jswitcher works.
+  4. you can reference to the legends above to understand how jswitcher works.
 ```
 
 How to program with Jswitcher?
 =============================
-   the following is the a sample demo to program with Jswitcher, you can find the complete 
+   the following code is the a sample demo to program with Jswitcher, you can find the complete 
 demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
 
 ``` 
