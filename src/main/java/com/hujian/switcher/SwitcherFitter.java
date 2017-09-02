@@ -167,6 +167,11 @@ public final class SwitcherFitter<T> extends AtomicBoolean implements SwitchOffe
                             }
                         } else {
                             int finalI = i;
+                            //the wait job will switch to an new schedule, so after
+                            //schedule the wait future job, you should switch to the
+                            //pre-schedule for caller, or the caller will fuck you ~
+                            Scheduler preSchedule = currentScheduleReference.get();
+
                             switchToNewSchedule().fit(() -> {
                                 try {
                                     completableFutures.get(finalI).getFuture().get(stillWaitTime, TimeUnit.MILLISECONDS);
@@ -174,6 +179,9 @@ public final class SwitcherFitter<T> extends AtomicBoolean implements SwitchOffe
                                     //do some statistic work here
                                 }
                             });
+
+                            //now, it's time to switch back to pre-schedule.
+                            switchTo(preSchedule);
                         }
                     }
                 }
