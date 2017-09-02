@@ -27,7 +27,7 @@ How Jswitcher works?
 ```
   1. base on RxJava
   2. jswitcher always maintain an object refence to the current schedule. if you switch to 
-     andother schedule, the object will change the refence to the new schedule immediately.
+     another schedule, the object will change the refence to the new schedule immediately.
   3. you should offer an runnable object to fit on the current schedule, the runnable object
      should contain the work you want to do in the target schedule. you can also offer an 
      object of {@link com.hujian.switcher.ScheduleRunner} , there is an abstract class for
