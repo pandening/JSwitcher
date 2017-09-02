@@ -17,8 +17,8 @@ What is JSwitch?
 
 the following legend show the main class of Jswitcher:
 
-![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/schedule.20170901.png)
-![image](https://github.com/pandening/JSwitcher/blob/master/src/main/resources/switcher.20170901.png)
+![image](https://github.com/pandening/JSwitcher/blob/extra.0902/src/main/resources/schedule.20170901.png)
+![image](https://github.com/pandening/JSwitcher/blob/extra.0902/src/main/resources/switcher.20170901.png)
 
 
 How Jswitcher works?
