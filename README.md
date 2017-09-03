@@ -38,7 +38,7 @@ How Jswitcher works?
 
 How to program with Jswitcher?
 =============================
-   the following code is the a sample demo to program with Jswitcher, you can find the complete 
+   the following code is a sample demo to program with Jswitcher, you can find the complete 
 demo code at {@link com.hujian.switcher.example.ScheduleDemo.java}
 
 ``` 
