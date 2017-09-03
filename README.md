@@ -5,7 +5,7 @@ What is JSwitch?
  a sample Version Observer/Observable, you can learn how RxJava works from the sample codes. it's 
  easy to switch to Another schedule from current schedule. you just need to care about your 
  bussiness, using 'switchTo' Operator to switch to the longing schedlue when you want to do the work
- on the suitable schedule. There are some especial schedules for you, like I/O Bound Schedule, Compute
+ on the suitable schedule. There are some especial schedules for you, like I/O Bound Schedule, Cpu
  Bound Schedule, And Single Schedule, etc, if you want to create a extra schedule by yourself, it's 
  ok for JSwitcher, and it's very easy to do this .And the most important thing is the jswitch support 
  'chain operator', that means you can switch to a schedule, then fit on this schedule some works, then
